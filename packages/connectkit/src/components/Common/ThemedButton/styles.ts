@@ -8,12 +8,12 @@ export const Container = styled(motion.div)<{
   align-items: center;
   justify-content: flex-start;
   position: relative;
-  height: 40px;
+  height: 45px;
   padding: 0;
   line-height: 0;
   letter-spacing: -0.2px;
   font-size: var(--ck-connectbutton-font-size, 16px);
-  font-weight: var(--ck-connectbutton-font-weight, 500);
+  font-weight: var(--ck-connectbutton-font-weight, 400);
   text-align: center;
   transition: 100ms ease;
   transition-property: color, background, box-shadow, border-radius;
@@ -27,7 +27,7 @@ export const Container = styled(motion.div)<{
     --color: var(--ck-connectbutton-color);
     --background: var(--ck-connectbutton-background);
     --box-shadow: var(--ck-connectbutton-box-shadow);
-    --border-radius: var(--ck-connectbutton-border-radius, 12px);
+    --border-radius: var(--ck-connectbutton-border-radius, 4px);
 
     --hover-color: var(--ck-connectbutton-hover-color, var(--color));
     --hover-background: var(
@@ -63,7 +63,7 @@ export const Container = styled(motion.div)<{
     --box-shadow: var(--ck-connectbutton-balance-box-shadow);
     --border-radius: var(
       --ck-connectbutton-balance-border-radius,
-      var(--ck-connectbutton-border-radius, 12px)
+      var(--ck-connectbutton-border-radius, 4px)
     );
 
     --hover-color: var(--ck-connectbutton-balance-hover-color, var(--color));

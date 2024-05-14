@@ -24,7 +24,7 @@ const Avatar: React.FC<{
   name?: string | undefined;
   size?: number;
   radius?: number;
-}> = ({ address, name, size = 96, radius = 96 }) => {
+}> = ({ address, name, size = 96, radius = 4 }) => {
   const isMounted = useIsMounted();
   const context = useContext();
 

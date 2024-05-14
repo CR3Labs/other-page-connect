@@ -27,7 +27,7 @@ export const IconContainer = styled(motion.div)`
   position: relative;
   width: 24px;
   height: 24px;
-  margin-right: 8px;
+  margin-right: 10px;
 `;
 
 export const UnsupportedNetworkContainer = styled(motion.div)`

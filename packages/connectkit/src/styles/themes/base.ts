@@ -1,7 +1,7 @@
 export default {
   light: {
     /** Connect Wallet Button */
-    '--ck-connectbutton-font-size': '15px',
+    '--ck-connectbutton-font-size': '14px',
     '--ck-connectbutton-color': '#373737',
     '--ck-connectbutton-background': '#F6F7F9',
     '--ck-connectbutton-background-secondary': '#FFFFFF',
@@ -101,9 +101,9 @@ export default {
     '--ck-copytoclipboard-stroke': '#CCCCCC',
   },
   dark: {
-    '--ck-connectbutton-font-size': '15px',
+    '--ck-connectbutton-font-size': '14px',
     '--ck-connectbutton-color': '#ffffff',
-    '--ck-connectbutton-background': '#383838',
+    '--ck-connectbutton-background': '#101213',
     '--ck-connectbutton-background-secondary': '#282828',
 
     '--ck-connectbutton-hover-background': '#404040',
