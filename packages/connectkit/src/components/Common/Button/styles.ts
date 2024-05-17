@@ -60,7 +60,6 @@ export const ButtonContainer = styled.button<{
   disabled?: boolean;
   $variant?: 'primary' | 'secondary' | 'tertiary';
 }>`
-
   ${({ disabled }) =>
     disabled &&
     css`
@@ -84,6 +83,8 @@ export const ButtonContainer = styled.button<{
         --border-width: var(--ck-primary-button-border-width);
         --border-color: var(--ck-primary-button-border-color);
         --font-weight: var(--ck-primary-button-font-weight, 500);
+        --font-size: var(--ck-primary-button-font-size);
+        --line-height: var(--ck-primary-button-line-height);
 
         --hover-color: var(--ck-button-primary-hover-color, var(--color));
         --hover-background: var(
@@ -115,6 +116,8 @@ export const ButtonContainer = styled.button<{
         --border-width: var(--ck-secondary-button-border-width);
         --border-color: var(--ck-secondary-button-border-color);
         --font-weight: var(--ck-secondary-button-font-weight, 500);
+        --font-size: var(--ck-secondary-button-font-size);
+        --line-height: var(--ck-secondary-button-line-height);
 
         --hover-color: var(--ck-secondary-button-hover-color, var(--color));
         --hover-background: var(
@@ -164,6 +167,14 @@ export const ButtonContainer = styled.button<{
           --ck-tertiary-button-font-weight,
           var(--ck-secondary-button-font-weight)
         );
+        --font-size: var(
+          --ck-tertiary-button-font-size,
+          var(--ck-secondary-button-font-size)
+        );
+        --line-height: var(
+          --ck-tertiary-button-line-height,
+          var(--ck-secondary-button-line-height)
+        );
 
         --hover-color: var(
           --button-tertiary-hover-color,
@@ -194,14 +205,14 @@ export const ButtonContainer = styled.button<{
   user-select: none;
   min-width: fit-content;
   width: 100%;
-  display:block;
+  display: block;
   text-align: center;
-  height: 48px;
-  margin: 12px 0 0;
-  line-height: 48px;
+  height: 45px;
+  margin: 10px 0 0;
+  line-height: var(--line-height);
   padding: 0 4px;
-  font-size: 16px;
-  font-weight: var(--font-weight,500);
+  font-size: var(--font-size);
+  font-weight: var(--font-weight, 500);
   text-decoration: none;
   white-space: nowrap;
   transition: 100ms ease;
@@ -225,7 +236,6 @@ export const ButtonContainer = styled.button<{
       }
     }
   }
-}
 
   @media only screen and (min-width: ${defaultTheme.mobileWidth + 1}px) {
     &:hover,
@@ -255,7 +265,10 @@ export const ButtonContainer = styled.button<{
       }
     }
     &:active {
-      box-shadow: var(--ck-secondary-button-active-box-shadow, var(--hover-box-shadow));
+      box-shadow: var(
+        --ck-secondary-button-active-box-shadow,
+        var(--hover-box-shadow)
+      );
     }
   }
   @media only screen and (max-width: ${defaultTheme.mobileWidth}px) {

@@ -27,10 +27,13 @@ export default {
 
     /** Primary Button */
     '--ck-primary-button-border-radius': '4px',
-    '--ck-primary-button-color': '#373737',
-    '--ck-primary-button-background': '#F6F7F9',
+    '--ck-primary-button-color': '#000000',
+    '--ck-primary-button-border-width': '0px',
+    '--ck-primary-button-background': '#F97316',
     //'--ck-primary-button-box-shadow': 'inset 0 0 0 1px #F0F0F0',
-    '--ck-primary-button-font-weight': '600',
+    '--ck-primary-button-font-weight': '400',
+    '--ck-primary-button-font-size': '14px',
+    '--ck-primary-button-line-height': '19.12px',
 
     '--ck-primary-button-hover-color': '#373737',
     '--ck-primary-button-hover-background': '#F0F2F5',
@@ -42,6 +45,8 @@ export default {
     '--ck-secondary-button-border-radius': '4px',
     '--ck-secondary-button-border-width': '1.5px',
     '--ck-secondary-button-border-color': '#373737',
+    '--ck-secondary-button-font-size': '16px',
+    '--ck-secondary-button-line-height': '21.86px',
 
     /** Tertiary Button */
     '--ck-tertiary-button-background': '#FFFFFF',
@@ -122,14 +127,19 @@ export default {
     '--ck-connectbutton-balance-active-box-shadow':
       'inset 0 0 0 1px var(--ck-connectbutton-active-background)',
 
-    '--ck-primary-button-color': '#ffffff',
-    '--ck-primary-button-background': '#383838',
+    '--ck-primary-button-color': '#000000',
+    '--ck-primary-button-background': '#F97316',
     //'--ck-primary-button-box-shadow': 'inset 0 0 0 1px #3D3D3D',
-    '--ck-primary-button-border-radius': '16px',
+    '--ck-primary-button-border-radius': '4px',
+    '--ck-primary-button-border-width': '0px',
     '--ck-secondary-button-border-radius': '4px',
     '--ck-secondary-button-border-width': '1.5px',
     '--ck-secondary-button-border-color': '#6D777C',
-    '--ck-primary-button-font-weight': '600',
+    '--ck-secondary-button-font-size': '16px',
+    '--ck-secondary-button-line-height': '21.86px',
+    '--ck-primary-button-font-weight': '400',
+    '--ck-primary-button-font-size': '14px',
+    '--ck-primary-button-line-height': '19.12px',
 
     '--ck-primary-button-hover-background': '#404040',
     //'--ck-primary-button-hover-box-shadow': 'inset 0 0 0 2px rgba(255, 255, 255, 0.4)',

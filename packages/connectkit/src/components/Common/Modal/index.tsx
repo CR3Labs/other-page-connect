@@ -50,25 +50,11 @@ import { useWallet } from '../../../wallets/useWallets';
 
 const ProfileIcon = ({ isSignedIn }: { isSignedIn?: boolean }) => (
   <div style={{ position: 'relative' }}>
-    {isSignedIn ? (
+    {isSignedIn && (
       <AuthIcon
         style={{
           bottom: -1,
           right: -1,
-        }}
-      />
-    ) : (
-      <div
-        style={{
-          zIndex: 2,
-          position: 'absolute',
-          top: -2,
-          right: -2,
-          background: '#1A88F8',
-          borderRadius: 8,
-          boxShadow: '0 0 0 2px var(--ck-body-background)',
-          width: 8,
-          height: 8,
         }}
       />
     )}
@@ -488,55 +474,26 @@ const Modal: React.FC<ModalProps> = ({
                     </BackButton>
                   ) : context.route === routes.PROFILE &&
                     context.signInWithEthereum ? (
-                    <>
-                      {!isSignedIn && !context.options?.hideTooltips && (
-                        <motion.div
-                          style={{
-                            position: 'absolute',
-                            inset: 0,
-                            pointerEvents: 'none',
-                          }}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{
-                            opacity: 1,
-                            scale: 1,
-                            transition: { delay: 0.5, duration: 0.2 },
-                          }}
-                          exit={{
-                            opacity: 0,
-                            scale: 0.6,
-                            transition: {
-                              delay: 0,
-                              duration: mobile ? 0 : 0.1,
-                            },
-                          }}
-                        >
-                          <SignInTooltip>
-                            {locales.signInWithEthereumScreen_tooltip}
-                          </SignInTooltip>
-                        </motion.div>
-                      )}
-                      <SiweButton
-                        disabled={inTransition}
-                        aria-label={
-                          locales.signInWithEthereumScreen_signedOut_heading
-                        }
-                        key="siweButton"
-                        onClick={() => {
-                          reset();
-                          context.setRoute(routes.SIGNINWITHETHEREUM);
-                        }}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{
-                          duration: mobile ? 0 : 0.1,
-                          delay: mobile ? 0.01 : 0,
-                        }}
-                      >
-                        <ProfileIcon isSignedIn={isSignedIn} />
-                      </SiweButton>
-                    </>
+                    <SiweButton
+                      disabled={inTransition}
+                      aria-label={
+                        locales.signInWithEthereumScreen_signedOut_heading
+                      }
+                      key="siweButton"
+                      onClick={() => {
+                        reset();
+                        context.setRoute(routes.SIGNINWITHETHEREUM);
+                      }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{
+                        duration: mobile ? 0 : 0.1,
+                        delay: mobile ? 0.01 : 0,
+                      }}
+                    >
+                      <ProfileIcon isSignedIn={isSignedIn} />
+                    </SiweButton>
                   ) : (
                     onInfo &&
                     !context.options?.hideQuestionMarkCTA && (
