@@ -97,6 +97,7 @@ export default {
     '--ck-spinner-color': 'var(--ck-focus-color)',
     '--ck-copytoclipboard-stroke': 'var(--ck-body-color)',
     '--ck-connected-indicator-connected-color': '#dbff00',
+    '--ck-modal-background-image-filter': 'invert(100%)',
   },
   dark: {
     '--ck-connectbutton-font-size': '14px',
@@ -184,5 +185,6 @@ export default {
 
     /** Misc */
     '--ck-connected-indicator-connected-color': '#dbff00',
+    '--ck-modal-background-image-filter': 'invert(0%)',
   },
 };

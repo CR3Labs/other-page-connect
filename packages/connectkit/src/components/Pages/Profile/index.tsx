@@ -21,6 +21,7 @@ import {
   LoadingBalance,
   Balance,
   InfoBox,
+  BackgroundImage,
 } from './styles';
 
 import {
@@ -39,6 +40,8 @@ import { AnimatePresence } from 'framer-motion';
 import { useThemeContext } from '../../ConnectKitThemeProvider/ConnectKitThemeProvider';
 import useLocales from '../../../hooks/useLocales';
 import { useEnsFallbackConfig } from '../../../hooks/useEnsFallbackConfig';
+// @ts-ignore don't want to ship types for image imports that may conflict with those set by consumers
+import backgroundImageSrc from './modal-background.webp';
 
 const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
   const context = useContext();
@@ -89,6 +92,7 @@ const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
     : undefined;
   return (
     <PageContent>
+      <BackgroundImage src={backgroundImageSrc} />
       <ModalContent style={{ paddingBottom: 10, gap: 6 }}>
         <AvatarContainer>
           <Avatar address={address} width="100%" height={149} radius={0} />

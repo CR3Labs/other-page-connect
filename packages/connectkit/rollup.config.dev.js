@@ -2,6 +2,7 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import typescript from 'rollup-plugin-typescript2';
 import createStyledComponentsTransformer from 'typescript-plugin-styled-components';
 import packageJson from './package.json';
+import image from '@rollup/plugin-image';
 
 const styledComponentsTransformer = createStyledComponentsTransformer({
   displayName: true,
@@ -19,6 +20,7 @@ export default [
       },
     ],
     plugins: [
+      image(),
       peerDepsExternal(),
       typescript({
         useTsconfigDeclarationDir: true,
