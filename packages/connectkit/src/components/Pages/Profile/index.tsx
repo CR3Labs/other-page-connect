@@ -22,13 +22,13 @@ import {
   Balance,
   InfoBox,
   BackgroundImage,
+  Address,
 } from './styles';
 
 import {
   PageContent,
   ModalBody,
   ModalContent,
-  ModalH1,
 } from '../../Common/Modal/styles';
 import Button from '../../Common/Button';
 import Avatar from '../../Common/Avatar';
@@ -118,11 +118,11 @@ const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
             <ChainSelector />
           </ChainSelectorContainer>
           <InfoBox>
-            <ModalH1>
+            <Address>
               <CopyToClipboard string={address}>
                 {ensName ?? truncateEthAddress(address, separator)}
               </CopyToClipboard>
-            </ModalH1>
+            </Address>
             {context?.options?.hideBalance ? null : (
               <ModalBody>
                 <BalanceContainer>
