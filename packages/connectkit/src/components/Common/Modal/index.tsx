@@ -30,6 +30,7 @@ import {
   Disclaimer,
   SiweButton,
   SignInTooltip,
+  ConnectedIndicator,
 } from './styles';
 
 import { routes, useContext } from '../../ConnectKit';
@@ -345,7 +346,12 @@ const Modal: React.FC<ModalProps> = ({
       case routes.ONBOARDING:
         return locales.onboardingScreen_heading;
       case routes.PROFILE:
-        return locales.profileScreen_heading;
+        return (
+          <>
+            <ConnectedIndicator />
+            {locales.profileScreen_heading}
+          </>
+        );
       case routes.SWITCHNETWORKS:
         return locales.switchNetworkScreen_heading;
       case routes.SIGNINWITHETHEREUM:

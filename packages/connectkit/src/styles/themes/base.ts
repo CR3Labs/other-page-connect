@@ -96,6 +96,7 @@ export default {
     '--ck-focus-color': '#1A88F8',
     '--ck-spinner-color': 'var(--ck-focus-color)',
     '--ck-copytoclipboard-stroke': 'var(--ck-body-color)',
+    '--ck-connected-indicator-connected-color': '#dbff00',
   },
   dark: {
     '--ck-connectbutton-font-size': '14px',
@@ -180,5 +181,8 @@ export default {
 
     '--ck-qr-dot-color': '#ffffff',
     '--ck-qr-border-color': '#3d3d3d',
+
+    /** Misc */
+    '--ck-connected-indicator-connected-color': '#dbff00',
   },
 };

@@ -682,3 +682,11 @@ export const SignInTooltip = styled(motion.div)`
     }
   }
 `;
+
+export const ConnectedIndicator = styled(motion.div)`
+  height: 10px;
+  width: 10px;
+  border-radius: 99px;
+  background: var(--ck-connected-indicator-connected-color);
+  margin-right: 4px;
+`;
