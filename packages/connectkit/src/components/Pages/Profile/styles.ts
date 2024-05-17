@@ -21,6 +21,7 @@ export const ChainSelectorContainer = styled(motion.div)`
 export const BalanceContainer = styled(motion.div)`
   position: relative;
   color: var(--ck-body-color);
+  font-weight: 600;
 `;
 export const Balance = styled(motion.div)`
   position: relative;
