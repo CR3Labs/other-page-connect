@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useContext } from '../../ConnectKit';
+import { routes, useContext } from '../../ConnectKit';
 import {
   isSafeConnector,
   nFormatter,
@@ -42,9 +42,27 @@ import useLocales from '../../../hooks/useLocales';
 import { useEnsFallbackConfig } from '../../../hooks/useEnsFallbackConfig';
 // @ts-ignore don't want to ship types for image imports that may conflict with those set by consumers
 import backgroundImageSrc from './modal-background.webp';
+import { useSIWE } from '../../../siwe';
+
+const ForwardIcon = ({ ...props }) => (
+  <svg
+    width="8"
+    height="13"
+    viewBox="0 0 8 13"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path
+      d="M5.17192 6.5L0.221924 1.55L1.63592 0.136002L7.99992 6.5L1.63592 12.864L0.221924 11.45L5.17192 6.5Z"
+      fill="currentColor"
+    />
+  </svg>
+);
 
 const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
   const context = useContext();
+  const { reset: resetSIWE } = useSIWE();
   const themeContext = useThemeContext();
 
   const locales = useLocales();
@@ -92,8 +110,8 @@ const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
     : undefined;
   return (
     <PageContent>
-      <BackgroundImage src={backgroundImageSrc} />
-      <ModalContent style={{ paddingBottom: 10, gap: 6 }}>
+      <BackgroundImage src={backgroundImageSrc} alt="" />
+      <ModalContent style={{ paddingBottom: 0 }}>
         <AvatarContainer>
           <Avatar address={address} width="100%" height={149} radius={0} />
           <ChainSelectorContainer>
@@ -139,6 +157,19 @@ const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
           </InfoBox>
         </AvatarContainer>
       </ModalContent>
+      {context.signInWithEthereum && (
+        <Button
+          variant="primary"
+          iconPosition="right"
+          onClick={() => {
+            resetSIWE();
+            context.setRoute(routes.SIGNINWITHETHEREUM);
+          }}
+          icon={<ForwardIcon />}
+        >
+          {locales.signInWithEthereumScreen_signedOut_heading}
+        </Button>
+      )}
       {!isSafeConnector(connector?.id) && (
         <Button
           onClick={() => setShouldDisconnect(true)}
