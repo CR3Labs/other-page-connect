@@ -274,9 +274,6 @@ export const ButtonContainer = styled.button<{
   @media only screen and (max-width: ${defaultTheme.mobileWidth}px) {
     transition: transform 100ms ease;
     transform: scale(1);
-    font-size: 17px;
-    &:active {
-    }
   }
 `;
 

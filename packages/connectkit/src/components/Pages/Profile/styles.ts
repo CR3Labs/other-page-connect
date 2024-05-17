@@ -2,6 +2,7 @@ import { keyframes } from 'styled-components';
 import styled from './../../../styles/styled';
 import { motion } from 'framer-motion';
 import { ForceLightMode } from '../../../styles';
+import defaultTheme from '../../../constants/defaultTheme';
 
 export const AvatarContainer = styled(motion.div)`
   display: flex;
@@ -73,4 +74,14 @@ export const BackgroundImage = styled.img`
   mix-blend-mode: hard-light;
   opacity: 0.2;
   filter: var(--ck-modal-background-image-filter);
+
+  @media only screen and (max-width: ${defaultTheme.mobileWidth}px) {
+    display: none;
+  }
+`;
+
+export const Address = styled.h1`
+  line-height: 32.78px;
+  font-size: 24px;
+  font-weight: 700;
 `;
