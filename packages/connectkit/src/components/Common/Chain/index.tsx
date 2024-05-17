@@ -60,7 +60,7 @@ const Chain: React.FC<{
   id,
   unsupported: controlledUnsupported,
   radius = '50%',
-  size = 24,
+  size = 27,
 }) => {
   const isChainSupported = useChainIsSupported(id);
   const unsupported = controlledUnsupported ?? !isChainSupported;

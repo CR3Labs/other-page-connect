@@ -67,8 +67,8 @@ from { opacity: 1; transform: scale(1); }
 
 export const PageContent = styled(motion.div)`
   max-width: 100%;
-  width: 295px;
-  padding-top: 48px;
+  width: 362px;
+  padding-top: 36px;
 `;
 
 export const TextWithHr = styled(motion.div)`
@@ -108,18 +108,19 @@ export const ModalHeading = styled(motion.div)`
   pointer-events: none;
   user-select: none;
   position: absolute;
-  top: 25px;
+  top: 24px;
   left: 50%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 26px;
+  justify-content: flex-start;
+  height: 24px;
   transform: translateX(-50%);
   width: var(--width);
   text-align: center;
-  font-size: 17px;
-  line-height: 20px;
-  font-weight: var(--ck-modal-heading-font-weight, 600);
+  text-transform: uppercase;
+  font-size: 16px;
+  line-height: 21.86px;
+  font-weight: var(--ck-modal-heading-font-weight, 800);
   color: var(--ck-body-color);
   span {
     display: inline-block;
@@ -150,9 +151,9 @@ export const ModalH1 = styled(motion.h1)<{
 }>`
   margin: 0;
   padding: 0;
-  line-height: ${(props) => (props.$small ? 20 : 22)}px;
-  font-size: ${(props) => (props.$small ? 17 : 19)}px;
-  font-weight: var(--ck-modal-h1-font-weight, 600);
+  line-height: ${(props) => (props.$small ? 20 : 37.78)}px;
+  font-size: ${(props) => (props.$small ? 17 : 24)}px;
+  font-weight: var(--ck-modal-h1-font-weight, 700);
   color: ${(props) => {
     if (props.$error) return 'var(--ck-body-color-danger)';
     if (props.$valid) return 'var(--ck-body-color-valid)';
@@ -175,7 +176,7 @@ export const ModalBody = styled.div`
   font-size: 16px;
   font-weight: 400;
   line-height: 21px;
-  color: var(--ck-body-color-muted);
+  color: var(--ck-body-color);
   strong {
     font-weight: 500;
     color: var(--ck-body-color);
@@ -369,7 +370,7 @@ export const PageContainer = styled(motion.div)`
 export const PageContents = styled(motion.div)`
   margin: 0 auto;
   width: fit-content;
-  padding: 29px 24px 24px;
+  padding: 24px;
   backface-visibility: hidden;
 `;
 
@@ -383,7 +384,7 @@ export const CloseButton = styled(motion.button)`
   z-index: 3;
   cursor: pointer;
   position: absolute;
-  top: 22px;
+  top: 21px;
   right: 17px;
   width: 32px;
   height: 32px;
@@ -543,6 +544,7 @@ export const Container = styled(motion.div)`
       width: 100% !important;
     }
     ${ModalHeading} {
+      width: 100%;
       top: 29px;
     }
     ${ModalContent} {

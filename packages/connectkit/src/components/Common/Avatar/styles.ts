@@ -15,7 +15,8 @@ function addressToNumber(address: string) {
 
 export const EnsAvatar = styled(motion.div)<{
   $seed?: string;
-  $size?: number;
+  $width?: number | string;
+  $height?: number | string;
   $radius?: number;
 }>`
   will-change: transform; // Needed for Safari
@@ -25,8 +26,10 @@ export const EnsAvatar = styled(motion.div)<{
   overflow: hidden;
   margin: 0;
   border-radius: ${(props) => `${props.$radius}px`};
-  width: ${(props) => `${props.$size}px`};
-  height: ${(props) => `${props.$size}px`};
+  width: ${(props) =>
+    typeof props.$width === 'number' ? `${props.$width}px` : props.$width};
+  height: ${(props) =>
+    typeof props.$height === 'number' ? `${props.$height}px` : props.$height};
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
   &:before {
     content: '';

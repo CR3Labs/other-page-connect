@@ -242,7 +242,7 @@ function ConnectKitButtonInner({
                   </UnsupportedNetworkContainer>
                 )}
               </AnimatePresence>
-              <Avatar size={24} address={address} />
+              <Avatar width={24} height={24} address={address} />
             </IconContainer>
           )}
 

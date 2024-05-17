@@ -160,7 +160,7 @@ const SignInWithEthereum: React.FC = () => {
             transition={transition}
           >
             <LogoContainer>
-              <Avatar address={address} size={64} />
+              <Avatar address={address} width={64} height={64} />
             </LogoContainer>
           </motion.div>
           <motion.div

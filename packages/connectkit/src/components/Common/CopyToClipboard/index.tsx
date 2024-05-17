@@ -6,7 +6,7 @@ import CopyToClipboardIcon from './CopyToClipboardIcon';
 import Button from '../Button';
 
 const Container = styled.div<{ $disabled?: boolean }>`
-  --color: var(--ck-copytoclipboard-stroke);
+  --color: var(--ck-body-color);
   --bg: var(--ck-body-background);
   transition: all 220ms cubic-bezier(0.175, 0.885, 0.32, 1.1);
 
@@ -28,17 +28,11 @@ const Container = styled.div<{ $disabled?: boolean }>`
         `}
 `;
 const OffsetContainer = styled.div`
-  display: block;
-  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
   transition: inherit;
-  svg {
-    position: absolute;
-    left: 100%;
-    display: block;
-    top: -1px;
-    margin: 0;
-    margin-left: 4px;
-  }
 `;
 
 const CopyToClipboard: React.FC<{

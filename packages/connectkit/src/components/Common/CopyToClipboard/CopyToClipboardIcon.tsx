@@ -9,7 +9,6 @@ const IconContainer = styled(motion.div)<{ $clipboard?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
   svg {
     display: block;
   }
@@ -20,10 +19,10 @@ const IconContainer = styled(motion.div)<{ $clipboard?: boolean }>`
   }
   svg path:first-child {
     transform-origin: 50% 50%;
-    fill: var(--bg);
-    stroke: var(--color);
+    fill: var(--color);
   }
   svg rect {
+    opacity: 0;
     transform-origin: 53% 63%;
     fill: var(--bg);
     stroke: var(--color);
@@ -45,6 +44,7 @@ const IconContainer = styled(motion.div)<{ $clipboard?: boolean }>`
               transform: rotate(-90deg) scale(0.2);
             }
             rect {
+              opacity: 1;
               rx: 10px;
               fill: var(--color);
               transform: rotate(-90deg) scale(1.45);
@@ -52,7 +52,7 @@ const IconContainer = styled(motion.div)<{ $clipboard?: boolean }>`
             path:last-child {
               transition-delay: 100ms;
               opacity: 1;
-              transform: translate(7.75px, 9.5px);
+              transform: translate(7px, 10px);
             }
           }
         `

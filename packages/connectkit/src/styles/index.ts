@@ -14,7 +14,7 @@ const themeGlobals = {
     '--ck-font-family': `-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica,
     'Apple Color Emoji', Arial, sans-serif, 'Segoe UI Emoji',
     'Segoe UI Symbol'`,
-    '--ck-border-radius': '20px',
+    '--ck-border-radius': '16px',
     '--ck-secondary-button-border-radius': '16px',
   },
   graphics: {
@@ -30,7 +30,7 @@ const themeGlobals = {
       '--ck-graphic-scaniconwithlogos-03': '#F8D74A',
       '--ck-graphic-scaniconwithlogos-04': '#F6F7F9',
 
-      '--ck-chain-ethereum-01': '#25292E',
+      '--ck-chain-ethereum-01': '#353B3F',
       '--ck-chain-ethereum-02': '#fff',
       '--ck-chain-ethereum-03': '#DFE0E0',
     },
@@ -339,4 +339,8 @@ export const ResetContainer = styled(motion.div)<{
   button:focus-visible {
     outline: 2px solid var(--ck-focus-color);
   }
+`;
+
+export const ForceLightMode = styled(motion.div)`
+  ${themes.light}
 `;

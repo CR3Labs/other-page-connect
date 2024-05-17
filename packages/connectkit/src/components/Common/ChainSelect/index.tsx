@@ -62,10 +62,10 @@ const SwitchChainButton = styled(motion.button)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 15px;
-  width: 52px;
-  height: 30px;
-  padding: 2px 6px 2px 3px;
+  border-radius: 26px;
+  width: 65.87px;
+  height: 34.89px;
+  padding: 2px 6px 2px 4px;
   font-size: 16px;
   line-height: 19px;
   font-weight: 500;
@@ -115,20 +115,16 @@ const SwitchChainButton = styled(motion.button)`
 
 const ChevronDown = ({ ...props }) => (
   <svg
-    aria-hidden="true"
-    width="11"
-    height="6"
-    viewBox="0 0 11 6"
+    width="12.2"
+    height="7.45"
+    viewBox="0 0 12.2 7.45"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <path
-      d="M1.5 1L5.5 5L9.5 1"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      d="M6.1523 5.20202L10.8961 0.458275L12.2511 1.81336L6.1523 7.91219L0.0534668 1.81336L1.40855 0.458275L6.1523 5.20202Z"
+      fill="currentColor"
     />
   </svg>
 );
@@ -177,7 +173,7 @@ const ChainSelector: React.FC = () => {
             ) : (
               <Chain id={chain?.id} />
             )}
-            {!disabled && <ChevronDown style={{ top: 1, left: -3 }} />}
+            {!disabled && <ChevronDown style={{ top: 0, left: -6 }} />}
           </SwitchChainButton>
         </ChainSelectDropdown>
       </Container>

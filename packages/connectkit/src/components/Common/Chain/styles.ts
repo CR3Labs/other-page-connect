@@ -9,7 +9,7 @@ type ChainContainerProps = {
 
 export const ChainContainer = styled.div<ChainContainerProps>`
   --bg: transparent;
-  --color: #333;
+  --color: #353b3f;
   ${(props) =>
     typeof props.size === 'string'
       ? css`

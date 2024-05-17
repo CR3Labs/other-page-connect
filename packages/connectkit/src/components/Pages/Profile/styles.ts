@@ -1,27 +1,26 @@
 import { keyframes } from 'styled-components';
 import styled from './../../../styles/styled';
 import { motion } from 'framer-motion';
-import defaultTheme from '../../../constants/defaultTheme';
+import { ForceLightMode } from '../../../styles';
 
 export const AvatarContainer = styled(motion.div)`
-  padding: 18px 0 20px;
-  @media only screen and (max-width: ${defaultTheme.mobileWidth}px) {
-    padding: 16px 0 20px;
-  }
-`;
-export const AvatarInner = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
   position: relative;
-  display: inline-block;
+  border-radius: 16px;
+  overflow: hidden;
 `;
 export const ChainSelectorContainer = styled(motion.div)`
   z-index: 3;
   position: absolute;
-  bottom: 0px;
-  right: -16px;
+  top: calc(50% + 7.5px);
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 export const BalanceContainer = styled(motion.div)`
   position: relative;
+  color: var(--ck-body-color);
 `;
 export const Balance = styled(motion.div)`
   position: relative;
@@ -53,4 +52,14 @@ export const LoadingBalance = styled(motion.div)`
     background-size: 200% 100%;
     animation: ${PlaceholderKeyframes} 1000ms linear infinite both;
   }
+`;
+
+export const InfoBox = styled(ForceLightMode)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 134px;
+  background: var(--ck-body-background);
 `;

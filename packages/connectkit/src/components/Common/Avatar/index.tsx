@@ -15,16 +15,18 @@ export type CustomAvatarProps = {
   address?: Hash | undefined;
   ensName?: string | undefined;
   ensImage?: string;
-  size: number;
+  width: number | string;
+  height: number | string;
   radius: number;
 };
 
 const Avatar: React.FC<{
   address?: Hash | undefined;
   name?: string | undefined;
-  size?: number;
+  width?: number | string;
+  height?: number | string;
   radius?: number;
-}> = ({ address, name, size = 96, radius = 4 }) => {
+}> = ({ address, name, width = 96, height = 96, radius = 4 }) => {
   const isMounted = useIsMounted();
   const context = useContext();
 
@@ -67,14 +69,14 @@ const Avatar: React.FC<{
   }, [ensAvatar]);
 
   if (!isMounted)
-    return <div style={{ width: size, height: size, borderRadius: radius }} />;
+    return <div style={{ width, height, borderRadius: radius }} />;
 
   if (context.options?.customAvatar)
     return (
       <div
         style={{
-          width: size,
-          height: size,
+          width,
+          height,
           borderRadius: radius,
           overflow: 'hidden',
         }}
@@ -83,7 +85,8 @@ const Avatar: React.FC<{
           address: address ?? ens?.address,
           ensName: name ?? ens?.name,
           ensImage: ens?.avatar,
-          size,
+          width,
+          height,
           radius,
         })}
       </div>
@@ -92,12 +95,22 @@ const Avatar: React.FC<{
   if (!ens.name || !ens.avatar)
     return (
       <ResetContainer style={{ pointerEvents: 'none' }}>
-        <EnsAvatar $size={size} $seed={ens.address} $radius={radius} />
+        <EnsAvatar
+          $width={width}
+          $height={height}
+          $seed={ens.address}
+          $radius={radius}
+        />
       </ResetContainer>
     );
   return (
     <ResetContainer style={{ pointerEvents: 'none' }}>
-      <EnsAvatar $size={size} $seed={ens.address} $radius={radius}>
+      <EnsAvatar
+        $width={width}
+        $height={height}
+        $seed={ens.address}
+        $radius={radius}
+      >
         <ImageContainer
           ref={imageRef}
           src={ens.avatar}

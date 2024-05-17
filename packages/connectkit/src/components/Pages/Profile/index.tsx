@@ -16,11 +16,11 @@ import {
 
 import {
   AvatarContainer,
-  AvatarInner,
   ChainSelectorContainer,
   BalanceContainer,
   LoadingBalance,
   Balance,
+  InfoBox,
 } from './styles';
 
 import {
@@ -89,51 +89,51 @@ const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
     : undefined;
   return (
     <PageContent>
-      <ModalContent style={{ paddingBottom: 22, gap: 6 }}>
+      <ModalContent style={{ paddingBottom: 10, gap: 6 }}>
         <AvatarContainer>
-          <AvatarInner>
-            <ChainSelectorContainer>
-              <ChainSelector />
-            </ChainSelectorContainer>
-            <Avatar address={address} />
-          </AvatarInner>
+          <Avatar address={address} width="100%" height={149} radius={0} />
+          <ChainSelectorContainer>
+            <ChainSelector />
+          </ChainSelectorContainer>
+          <InfoBox>
+            <ModalH1>
+              <CopyToClipboard string={address}>
+                {ensName ?? truncateEthAddress(address, separator)}
+              </CopyToClipboard>
+            </ModalH1>
+            {context?.options?.hideBalance ? null : (
+              <ModalBody>
+                <BalanceContainer>
+                  <AnimatePresence exitBeforeEnter initial={false}>
+                    {balance && (
+                      <Balance
+                        key={`chain-${chain?.id}`}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        {nFormatter(Number(balance?.formatted))}
+                        {` `}
+                        {balance?.symbol}
+                      </Balance>
+                    )}
+                    {!balance && (
+                      <LoadingBalance
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        &nbsp;
+                      </LoadingBalance>
+                    )}
+                  </AnimatePresence>
+                </BalanceContainer>
+              </ModalBody>
+            )}
+          </InfoBox>
         </AvatarContainer>
-        <ModalH1>
-          <CopyToClipboard string={address}>
-            {ensName ?? truncateEthAddress(address, separator)}
-          </CopyToClipboard>
-        </ModalH1>
-        {context?.options?.hideBalance ? null : (
-          <ModalBody>
-            <BalanceContainer>
-              <AnimatePresence exitBeforeEnter initial={false}>
-                {balance && (
-                  <Balance
-                    key={`chain-${chain?.id}`}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {nFormatter(Number(balance?.formatted))}
-                    {` `}
-                    {balance?.symbol}
-                  </Balance>
-                )}
-                {!balance && (
-                  <LoadingBalance
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    &nbsp;
-                  </LoadingBalance>
-                )}
-              </AnimatePresence>
-            </BalanceContainer>
-          </ModalBody>
-        )}
       </ModalContent>
       {!isSafeConnector(connector?.id) && (
         <Button
