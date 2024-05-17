@@ -26,7 +26,7 @@ export default {
       'inset 0 0 0 1px var(--ck-connectbutton-active-background)',
 
     /** Primary Button */
-    '--ck-primary-button-border-radius': '16px',
+    '--ck-primary-button-border-radius': '4px',
     '--ck-primary-button-color': '#373737',
     '--ck-primary-button-background': '#F6F7F9',
     //'--ck-primary-button-box-shadow': 'inset 0 0 0 1px #F0F0F0',
@@ -39,11 +39,9 @@ export default {
     //'--ck-primary-button-active-background': '#EAECF1',
 
     /** Secondary Button */
-    '--ck-secondary-button-border-radius': '16px',
-    '--ck-secondary-button-color': '#373737',
-    '--ck-secondary-button-background': '#F6F7F9',
-    //'--ck-secondary-button-box-shadow': '',
-    //'--ck-secondary-button-font-weight': '',
+    '--ck-secondary-button-border-radius': '4px',
+    '--ck-secondary-button-border-width': '1.5px',
+    '--ck-secondary-button-border-color': '#373737',
 
     /** Tertiary Button */
     '--ck-tertiary-button-background': '#FFFFFF',
@@ -58,7 +56,6 @@ export default {
     '--ck-body-color-muted-hover': '#111111',
     '--ck-body-background': '#ffffff',
     '--ck-body-background-transparent': 'rgba(255,255,255,0)',
-    '--ck-body-background-secondary': '#f6f7f9',
     '--ck-body-background-secondary-hover-background': '#e0e4eb',
     '--ck-body-background-secondary-hover-outline': '#4282FF',
     '--ck-body-background-tertiary': '#F3F4F7',
@@ -127,6 +124,9 @@ export default {
     '--ck-primary-button-background': '#383838',
     //'--ck-primary-button-box-shadow': 'inset 0 0 0 1px #3D3D3D',
     '--ck-primary-button-border-radius': '16px',
+    '--ck-secondary-button-border-radius': '4px',
+    '--ck-secondary-button-border-width': '1.5px',
+    '--ck-secondary-button-border-color': '#6D777C',
     '--ck-primary-button-font-weight': '600',
 
     '--ck-primary-button-hover-background': '#404040',

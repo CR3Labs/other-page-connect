@@ -81,6 +81,8 @@ export const ButtonContainer = styled.button<{
         );
         --box-shadow: var(--ck-primary-button-box-shadow);
         --border-radius: var(--ck-primary-button-border-radius);
+        --border-width: var(--ck-primary-button-border-width);
+        --border-color: var(--ck-primary-button-border-color);
         --font-weight: var(--ck-primary-button-font-weight, 500);
 
         --hover-color: var(--ck-button-primary-hover-color, var(--color));
@@ -106,10 +108,12 @@ export const ButtonContainer = styled.button<{
         --color: var(--ck-secondary-button-color, var(--ck-body-color));
         --background: var(
           --ck-secondary-button-background,
-          var(--ck-body-background-secondary)
+          var(--ck-body-background)
         );
         --box-shadow: var(--ck-secondary-button-box-shadow);
         --border-radius: var(--ck-secondary-button-border-radius);
+        --border-width: var(--ck-secondary-button-border-width);
+        --border-color: var(--ck-secondary-button-border-color);
         --font-weight: var(--ck-secondary-button-font-weight, 500);
 
         --hover-color: var(--ck-secondary-button-hover-color, var(--color));
@@ -147,6 +151,14 @@ export const ButtonContainer = styled.button<{
         --border-radius: var(
           --ck-tertiary-button-border-radius,
           var(--ck-secondary-button-border-radius)
+        );
+        --border-color: var(
+          --ck-tertiary-button-border-color,
+          var(--ck-secondary-button-border-color)
+        );
+        --border-width: var(
+          --ck-tertiary-button-border-width,
+          var(--ck-secondary-button-border-width)
         );
         --font-weight: var(
           --ck-tertiary-button-font-weight,
@@ -196,6 +208,9 @@ export const ButtonContainer = styled.button<{
   transition-property: box-shadow, background-color;
   color: var(--color);
   background: var(--background);
+  border-width: var(--border-width);
+  border-style: solid;
+  border-color: var(--border-color);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   will-change: transform, box-shadow, background-color, color;
@@ -269,8 +284,8 @@ export const IconContainer = styled(motion.div)<{ $rounded?: boolean }>`
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  max-width: 20px;
-  max-height: 20px;
+  max-width: 24px;
+  max-height: 24px;
   margin: 0 10px;
   &:first-child {
     margin-left: 0;
