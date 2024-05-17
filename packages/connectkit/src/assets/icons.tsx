@@ -212,7 +212,7 @@ export const AuthIcon = ({ ...props }) => (
       right: 0,
       background: '#34C759',
       borderRadius: 10,
-      boxShadow: '0 0 0 1.5px var(--background)',
+      boxShadow: '0 0 0 1.5px var(--ck-body-background)',
       width: 10,
       height: 10,
       ...props?.style,
