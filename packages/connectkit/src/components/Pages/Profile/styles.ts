@@ -64,6 +64,7 @@ export const InfoBox = styled(ForceLightMode)`
   width: 100%;
   height: 134px;
   background: var(--ck-body-background);
+  color: var(--ck-body-color);
 `;
 
 export const BackgroundImage = styled.img`
