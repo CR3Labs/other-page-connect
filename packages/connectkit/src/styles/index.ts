@@ -11,7 +11,7 @@ import predefinedThemes from './themes';
  */
 const themeGlobals = {
   default: {
-    '--ck-font-family': `-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica,
+    '--ck-font-family': `"Manrope", -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica,
     'Apple Color Emoji', Arial, sans-serif, 'Segoe UI Emoji',
     'Segoe UI Symbol'`,
     '--ck-border-radius': '16px',

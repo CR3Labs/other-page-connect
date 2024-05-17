@@ -33,6 +33,7 @@ export function useGoogleFont(font: string) {
 // TODO: This could be dynamic if theming wasn't set up as css variables
 export function useThemeFont(theme: Theme) {
   const themeFonts: any = {
+    auto: 'Manrope',
     web95: 'Lato',
     retro: 'Nunito',
     midnight: 'Inter',
