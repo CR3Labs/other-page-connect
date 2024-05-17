@@ -308,6 +308,8 @@ export const InnerContainer = styled(motion.div)`
 export const PageContainer = styled(motion.div)`
   z-index: 2;
   position: relative;
+  border-radius: var(--ck-border-radius);
+  overflow: hidden;
   top: 0;
   left: 50%;
   margin-left: calc(var(--width) / -2);

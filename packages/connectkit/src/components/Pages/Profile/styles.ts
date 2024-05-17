@@ -64,3 +64,13 @@ export const InfoBox = styled(ForceLightMode)`
   height: 134px;
   background: var(--ck-body-background);
 `;
+
+export const BackgroundImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: -80px;
+  transform: rotate(-90deg);
+  mix-blend-mode: hard-light;
+  opacity: 0.2;
+  filter: var(--ck-modal-background-image-filter);
+`;

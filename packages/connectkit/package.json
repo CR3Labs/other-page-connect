@@ -56,6 +56,7 @@
     "wagmi": "2.x"
   },
   "devDependencies": {
+    "@rollup/plugin-image": "^3.0.3",
     "@types/node": "18.7.18",
     "@types/qrcode": "^1.4.2",
     "@types/react": "^18.0.6",

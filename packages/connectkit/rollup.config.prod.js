@@ -1,5 +1,6 @@
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import typescript from 'rollup-plugin-typescript2';
+import image from '@rollup/plugin-image';
 
 import packageJson from './package.json';
 
@@ -13,6 +14,7 @@ export default [
       sourcemap: true,
     },
     plugins: [
+      image(),
       peerDepsExternal(),
       typescript({
         useTsconfigDeclarationDir: true,
