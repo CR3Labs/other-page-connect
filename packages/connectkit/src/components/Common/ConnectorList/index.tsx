@@ -20,8 +20,10 @@ import { useLastConnector } from '../../../hooks/useLastConnector';
 
 const ConnectorList = ({
   walletsToDisplay,
+  height,
 }: {
   walletsToDisplay: WalletProps[];
+  height?: number;
 }) => {
   const isMobile = useIsMobile();
   const context = useContext();
@@ -29,13 +31,13 @@ const ConnectorList = ({
   const { lastConnectorId } = useLastConnector();
 
   return (
-    <ScrollArea mobileDirection={'horizontal'}>
+    <ScrollArea mobileDirection={'horizontal'} height={height}>
       {walletsToDisplay.length === 0 && (
-        <Alert error>No connectors found in ConnectKit config.</Alert>
+        <Alert error>No connectors found in config.</Alert>
       )}
       {walletsToDisplay.length > 0 && (
         <ConnectorsContainer
-          $mobile={isMobile}
+          $mobile={false}
           $totalResults={walletsToDisplay.length}
         >
           {walletsToDisplay.map((wallet) => (
@@ -54,7 +56,7 @@ const ConnectorList = ({
 
 export default ConnectorList;
 
-const ConnectorItem = ({
+export const ConnectorItem = ({
   wallet,
   isRecent,
   isSelected,

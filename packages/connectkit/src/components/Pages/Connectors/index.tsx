@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useContext, routes } from '../../ConnectKit';
 
 import {
@@ -12,6 +12,7 @@ import {
   WalletNameContainer,
   CustomQRCodeContainer,
   OrContainer,
+  ConnectorIcon,
 } from './styles';
 import {
   PageContent,
@@ -36,6 +37,26 @@ import {
   isWalletConnectConnector,
 } from '../../../utils';
 import ScanIconWithLogos from '../../../assets/ScanIconWithLogos';
+import useWindowSize from '../../../hooks/useWindowSize';
+import ChainSelectDropdown from '../../Common/ChainSelectDropdown';
+import defaultTheme from '../../../constants/defaultTheme';
+import MobileConnectorListDropdown from '../../Common/ConnectorList/MobileConnectorListDropdown';
+import { ForceLightMode } from '../../../styles';
+
+const DownChevron = () => (
+  <svg
+    width="24"
+    height="25"
+    viewBox="0 0 24 25"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M12.0002 13.672L16.9502 8.72205L18.3642 10.136L12.0002 16.5L5.63623 10.136L7.05023 8.72205L12.0002 13.672Z"
+      fill="#060606"
+    />
+  </svg>
+);
 
 const Wallets: React.FC = () => {
   const context = useContext();
@@ -43,7 +64,9 @@ const Wallets: React.FC = () => {
   const wallets = useWallets();
 
   const isMobile = useIsMobile();
+  const windowSize = useWindowSize();
   const { lastConnectorId } = useLastConnector();
+  const [isOpen, setIsOpen] = useState(false);
 
   const walletsToDisplay =
     context.options?.hideRecentBadge || lastConnectorId === 'walletConnect' // do not hoist walletconnect to top of list
@@ -89,18 +112,81 @@ const Wallets: React.FC = () => {
     CONNECTORNAME: selectedWallet?.name,
   });
 
+  let deeplink =
+    !selectedWallet?.isInstalled && isMobile
+      ? selectedWallet?.getWalletConnectDeeplink?.(uri ?? '')
+      : undefined;
+
+  const redirectToMoreWallets =
+    isMobile && isWalletConnectConnector(selectedWallet?.id);
+  if (redirectToMoreWallets) deeplink = undefined; // mobile redirects to more wallets page
+
+  //needs to break at window width 660px
+  //- on mobile dont show connector list
+  //- show dropdown that allows user to select wallet
+  const showMobileView =
+    isMobile ||
+    window?.innerWidth < defaultTheme.mobileWidth ||
+    windowSize?.width < defaultTheme.mobileWidth;
+
   return (
-    <PageContent style={{ width: isMobile ? 312 : 600 }}>
+    <PageContent style={{ width: 600 }}>
       <ConnectorWrapper>
-        <ConnectorList walletsToDisplay={walletsToDisplay} />
+        {showMobileView ? null : (
+          <ConnectorList walletsToDisplay={walletsToDisplay} />
+        )}
 
         <ConnectContainer>
           <QRConnectContainer>
-            <WalletNameContainer>
-              <FitText>
-                {selectedWallet?.shortName ?? selectedWallet?.name}
-              </FitText>
-            </WalletNameContainer>
+            {showMobileView ? (
+              <MobileConnectorListDropdown
+                open={isOpen || !showMobileView}
+                onClose={() => setIsOpen(false)}
+                offsetY={-20}
+                walletsToDisplay={walletsToDisplay}
+              >
+                <Button
+                  style={{
+                    border: '1px solid #EAEDF0',
+                    marginBottom: '12px',
+                    background: 'white',
+                    color: 'black',
+                  }}
+                  fullWidth={true}
+                  onClick={() => setIsOpen(!isOpen)}
+                  icon={<DownChevron />}
+                  iconPosition="right"
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      width: '100%',
+                      gap: '8px',
+                    }}
+                  >
+                    {selectedWallet?.icon && (
+                      <ConnectorIcon
+                        data-small={selectedWallet.iconShouldShrink}
+                        data-shape={selectedWallet.iconShape}
+                        style={{ width: '16px', height: '16px' }}
+                      >
+                        {selectedWallet.iconConnector ?? selectedWallet.icon}
+                      </ConnectorIcon>
+                    )}
+                    <FitText>
+                      {selectedWallet?.shortName ?? selectedWallet?.name}
+                    </FitText>
+                  </div>
+                </Button>
+              </MobileConnectorListDropdown>
+            ) : (
+              <WalletNameContainer>
+                <FitText>
+                  {selectedWallet?.shortName ?? selectedWallet?.name}
+                </FitText>
+              </WalletNameContainer>
+            )}
             <CustomQRCodeContainer>
               <CustomQRCode
                 value={uri}
@@ -124,9 +210,22 @@ const Wallets: React.FC = () => {
             <Button
               arrow
               variant="primary"
+              style={{ minHeight: '45px' }}
               onClick={() => {
-                context.setRoute(routes.CONNECT);
-                context.setConnector({ id: context.selectedConnector.id });
+                //   if(deeplink){
+
+                //   }
+                //   context.setRoute(routes.CONNECT);
+                //   context.setConnector({ id: context.selectedConnector.id });
+                // }
+                if (deeplink) {
+                  window.location.href = deeplink;
+                } else if (redirectToMoreWallets) {
+                  context.setRoute(routes.MOBILECONNECTORS);
+                } else {
+                  context.setRoute(routes.CONNECT);
+                  context.setConnector({ id: context.selectedConnector.id });
+                }
               }}
             >
               Connect Now

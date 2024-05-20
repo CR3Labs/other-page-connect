@@ -13,4 +13,5 @@ export type ButtonProps = {
   href?: string;
   style?: React.CSSProperties;
   onClick?: (e: any) => void;
+  fullWidth?: boolean;
 };

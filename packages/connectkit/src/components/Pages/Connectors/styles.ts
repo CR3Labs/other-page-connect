@@ -3,6 +3,7 @@ import { keyframes } from 'styled-components';
 
 import { motion } from 'framer-motion';
 import { ModalBody } from '../../Common/Modal/styles';
+import defaultTheme from '../../../constants/defaultTheme';
 
 const Shimmer = keyframes`
   0%{ transform: translate(-100%) rotate(-45deg); }
@@ -257,6 +258,9 @@ export const ConnectContainer = styled.div`
   flex-direction: column;
   paddingleft: 16px;
   width: 362px;
+  @media only screen and (max-width: ${defaultTheme.mobileWidth}px) {
+    width: 100%;
+  }
 `;
 
 export const QRConnectContainer = styled.div`
@@ -267,7 +271,10 @@ export const QRConnectContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  border: 1px solid #00000020;
+  border: 1px solid #eaedf0;
+  @media only screen and (max-width: ${defaultTheme.mobileWidth}px) {
+    gap: 4px;
+  }
 `;
 
 export const WalletNameContainer = styled.div`
@@ -286,6 +293,11 @@ export const CustomQRCodeContainer = styled.div`
   margin-bottom: 8px;
   border-radius: var(--ck-qr-border-radius, 24px);
   background-color: var(--ck-custom-qr-code-background);
+  @media only screen and (max-width: ${defaultTheme.mobileWidth}px) {
+    max-height: 350px;
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 export const OrContainer = styled.p`

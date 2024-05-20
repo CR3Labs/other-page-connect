@@ -35,6 +35,7 @@ const Button: React.FC<ButtonProps> = ({
   href,
   style,
   onClick,
+  fullWidth,
 }) => {
   const key =
     typeof children === 'string'
@@ -110,7 +111,12 @@ const Button: React.FC<ButtonProps> = ({
               </DownloadArrowInner>
             </DownloadArrow>
           )}
-          <InnerContainer style={{ paddingLeft: arrow ? 6 : 0 }}>
+          <InnerContainer
+            style={{
+              paddingLeft: arrow ? 6 : 0,
+              width: fullWidth ? '100%' : '',
+            }}
+          >
             <FitText>{children}</FitText>
           </InnerContainer>
           {icon && iconPosition === 'right' && (

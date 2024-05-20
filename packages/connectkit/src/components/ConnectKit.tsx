@@ -147,7 +147,7 @@ export const ConnectKitProvider = ({
     language: 'en-US',
     hideBalance: false,
     hideTooltips: false,
-    hideQuestionMarkCTA: false,
+    hideQuestionMarkCTA: true,
     hideNoWalletCTA: false,
     walletConnectCTA: 'link',
     hideRecentBadge: false,
