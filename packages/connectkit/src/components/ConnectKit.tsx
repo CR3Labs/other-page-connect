@@ -63,6 +63,8 @@ type ContextValue = {
   setRoute: React.Dispatch<React.SetStateAction<string>>;
   connector: Connector;
   setConnector: React.Dispatch<React.SetStateAction<Connector>>;
+  selectedConnector: Connector;
+  setSelectedConnector: React.Dispatch<React.SetStateAction<Connector>>;
   errorMessage: Error;
   options?: ConnectKitOptions;
   signInWithEthereum: boolean;
@@ -188,6 +190,11 @@ export const ConnectKitProvider = ({
   const [connector, setConnector] = useState<ContextValue['connector']>({
     id: '',
   });
+  const [selectedConnector, setSelectedConnector] = useState<
+    ContextValue['connector']
+  >({
+    id: '',
+  });
   const [route, setRoute] = useState<string>(routes.CONNECTORS);
   const [errorMessage, setErrorMessage] = useState<Error>('');
 
@@ -236,6 +243,8 @@ export const ConnectKitProvider = ({
     setRoute,
     connector,
     setConnector,
+    selectedConnector,
+    setSelectedConnector,
     signInWithEthereum: React.useContext(SIWEContext)?.enabled ?? false,
     onConnect,
     // Other configuration

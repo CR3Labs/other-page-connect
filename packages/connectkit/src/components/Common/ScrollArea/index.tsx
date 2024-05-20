@@ -97,7 +97,7 @@ export const ScrollArea = ({
       >
         {children}
       </ScrollAreaContainer>
-      <MoreIndicator
+      {/* <MoreIndicator
         ref={moreRef}
         className="hide"
         onClick={() => {
@@ -112,7 +112,7 @@ export const ScrollArea = ({
         <span>
           <ArrowDown /> More Available
         </span>
-      </MoreIndicator>
+      </MoreIndicator> */}
     </ScrollContainer>
   );
 };

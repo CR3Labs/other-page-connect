@@ -9,6 +9,12 @@ const Shimmer = keyframes`
   100%{ transform: translate(100%) rotate(-80deg); }
 `;
 
+export const ConnectorWrapper = styled.div`
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+`;
+
 export const InfoBox = styled.div`
   padding: 24px 24px 28px;
   border-radius: var(--ck-tertiary-border-radius, 24px);
@@ -28,8 +34,6 @@ export const InfoBoxButtons = styled.div`
 `;
 export const LearnMoreContainer = styled(motion.div)`
   text-align: center;
-  margin-top: 16px;
-  margin-bottom: -6px;
 `;
 export const LearnMoreButton = styled(motion.button)`
   appearance: none;
@@ -48,26 +52,9 @@ export const LearnMoreButton = styled(motion.button)`
   line-height: 18px;
   font-weight: 500;
   /* will-change: transform; */
-  transition: color 200ms ease, transform 100ms ease;
+  transition: color 100ms ease, transform 100ms ease;
   svg {
     transition: all 100ms ease-out;
-    display: block;
-    position: relative;
-    top: 2px;
-    left: 2px;
-    transform: translateZ(0px);
-    path,
-    circle {
-      transition: all 100ms ease-out;
-    }
-    path:last-of-type {
-      transform-origin: 0 0;
-      transform: scaleX(1.3) skewY(-12deg);
-      opacity: 0;
-    }
-    circle {
-      transform: translate(20%, -15%);
-    }
   }
   &:hover {
     color: var(--ck-body-color-muted-hover);
@@ -105,7 +92,7 @@ export const ConnectorButton = styled(motion.button)`
   align-items: center;
   padding: 0 20px;
   width: 100%;
-  height: 64px;
+  height: 45px;
   font-size: 17px;
   font-weight: var(--ck-primary-button-font-weight, 500);
   line-height: 20px;
@@ -250,8 +237,6 @@ export const ConnectorLabel = styled(motion.span)`
 `;
 
 export const ConnectorIcon = styled(motion.div)`
-  position: absolute;
-  right: 20px;
   width: 32px;
   height: 32px;
   overflow: hidden;
@@ -265,4 +250,47 @@ export const ConnectorIcon = styled(motion.div)`
     width: 100%;
     height: 100%;
   }
+`;
+
+export const ConnectContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  paddingleft: 16px;
+  width: 362px;
+`;
+
+export const QRConnectContainer = styled.div`
+  background-color: white;
+  padding: 24px;
+  border-radius: 16px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid #00000020;
+`;
+
+export const WalletNameContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  font-size: 16px;
+  font-weight: var(--ck-modal-heading-font-weight, 800);
+  color: #000000;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+`;
+
+export const CustomQRCodeContainer = styled.div`
+  height: 310px;
+  width: 310px;
+  margin-bottom: 8px;
+  border-radius: var(--ck-qr-border-radius, 24px);
+  background-color: var(--ck-custom-qr-code-background);
+`;
+
+export const OrContainer = styled.p`
+  font-weight: var(--ck-modal-heading-font-weight, 800);
+  font-size: 8px;
+  text-align: center;
+  color: #000000;
 `;

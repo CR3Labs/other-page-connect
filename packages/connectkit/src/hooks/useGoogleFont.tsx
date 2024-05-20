@@ -16,7 +16,7 @@ export function useGoogleFont(font: string) {
     gstatic.crossOrigin = 'true';
 
     const link = document.createElement('link');
-    link.href = `https://fonts.googleapis.com/css2?family=${font}:wght@400;500;600;700&display=swap`;
+    link.href = `https://fonts.googleapis.com/css2?family=${font}:wght@400;500;600;700;800&display=swap`;
     link.rel = 'stylesheet';
 
     document.head.appendChild(googleapis);

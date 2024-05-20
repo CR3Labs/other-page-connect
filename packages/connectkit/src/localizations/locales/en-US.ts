@@ -55,7 +55,7 @@ const enUS: LocaleProps = {
   aboutScreen_ctaText: `Learn More`,
   aboutScreen_ctaUrl: `https://ethereum.org/en/wallets/`,
 
-  connectorsScreen_heading: `Connect Wallet`,
+  connectorsScreen_heading: `Connect Your Wallet`,
   connectorsScreen_newcomer: `I don’t have a wallet`,
   connectorsScreen_h1: `What is a wallet?`,
   connectorsScreen_p: `Wallets are used to send, receive, and store digital assets. Connecting a wallet lets you interact with apps.`,

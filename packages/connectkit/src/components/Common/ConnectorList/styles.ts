@@ -9,8 +9,9 @@ const Shimmer = keyframes`
 `;
 
 export const ConnectorButton = styled(motion.button)`
-  display: block;
+  display: flex;
   text-decoration: none;
+  gap: 12px;
 `;
 export const ConnectorLabel = styled(motion.span)``;
 export const ConnectorIcon = styled(motion.div)``;
@@ -40,11 +41,8 @@ const styles = {
       --fallback-box-shadow: var(--ck-primary-button-box-shadow);
       --fallback-border-radius: var(--ck-primary-button-border-radius);
 
-      --color: var(--ck-primary-button-color, var(--fallback-color));
-      --background: var(
-        --ck-primary-button-background,
-        var(--fallback-background)
-      );
+      --color: var(--ck-connector-button-color, var(--fallback-color));
+      --background: transparent;
       --box-shadow: var(
         --ck-primary-button-box-shadow,
         var(--fallback-box-shadow)
@@ -54,10 +52,11 @@ const styles = {
         var(--fallback-border-radius)
       );
 
-      --hover-color: var(--ck-primary-button-hover-color, var(--color));
+      --hover-color: var(--ck-connector-button-hover-color, var(--color));
+
       --hover-background: var(
-        --ck-primary-button-hover-background,
-        var(--background)
+        --ck-primary-button-background,
+        var(--fallback-background)
       );
       --hover-box-shadow: var(
         --ck-primary-button-hover-box-shadow,
@@ -128,12 +127,13 @@ const styles = {
       text-overflow: ellipsis;
       padding: 2px 0;
       padding-right: 38px;
+      font-size: 14px;
     `,
     ConnectorIcon: css`
-      position: absolute;
-      right: 20px;
-      width: 32px;
-      height: 32px;
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      min-height: 16px;
       overflow: hidden;
       svg,
       img {

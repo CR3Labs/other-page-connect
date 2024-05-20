@@ -18,26 +18,15 @@ import { WalletProps, useWallets } from '../../../wallets/useWallets';
 import { isWalletConnectConnector } from '../../../utils';
 import { useLastConnector } from '../../../hooks/useLastConnector';
 
-const ConnectorList = () => {
-  const context = useContext();
+const ConnectorList = ({
+  walletsToDisplay,
+}: {
+  walletsToDisplay: WalletProps[];
+}) => {
   const isMobile = useIsMobile();
+  const context = useContext();
 
-  const wallets = useWallets();
   const { lastConnectorId } = useLastConnector();
-
-  const walletsToDisplay =
-    context.options?.hideRecentBadge || lastConnectorId === 'walletConnect' // do not hoist walletconnect to top of list
-      ? wallets
-      : [
-          // move last used wallet to top of list
-          // using .filter and spread to avoid mutating original array order with .sort
-          ...wallets.filter(
-            (wallet) => lastConnectorId === wallet.connector.id
-          ),
-          ...wallets.filter(
-            (wallet) => lastConnectorId !== wallet.connector.id
-          ),
-        ];
 
   return (
     <ScrollArea mobileDirection={'horizontal'}>
@@ -54,6 +43,7 @@ const ConnectorList = () => {
               key={wallet.id}
               wallet={wallet}
               isRecent={wallet.id === lastConnectorId}
+              isSelected={wallet.id === context.selectedConnector.id}
             />
           ))}
         </ConnectorsContainer>
@@ -67,8 +57,10 @@ export default ConnectorList;
 const ConnectorItem = ({
   wallet,
   isRecent,
+  isSelected,
 }: {
   wallet: WalletProps;
+  isSelected?: boolean;
   isRecent?: boolean;
 }) => {
   const {
@@ -98,6 +90,11 @@ const ConnectorItem = ({
 
   return (
     <ConnectorButton
+      style={{
+        background: isSelected ? 'var(--ck-primary-button-background)' : '',
+        color: isSelected ? 'var(--ck-primary-button-hover-color)' : '',
+        height: '45px',
+      }}
       type="button"
       as={deeplink ? 'a' : undefined}
       href={deeplink ? deeplink : undefined}
@@ -108,9 +105,12 @@ const ConnectorItem = ({
           : () => {
               if (redirectToMoreWallets) {
                 context.setRoute(routes.MOBILECONNECTORS);
-              } else {
+              } else if (wallet.id === 'walletConnect') {
                 context.setRoute(routes.CONNECT);
                 context.setConnector({ id: wallet.id });
+                // context.setSelectedConnector({ id: '' });
+              } else {
+                context.setSelectedConnector({ id: wallet.id });
               }
             }
       }
@@ -123,11 +123,11 @@ const ConnectorItem = ({
       </ConnectorIcon>
       <ConnectorLabel>
         {isMobile ? wallet.shortName ?? wallet.name : wallet.name}
-        {!context.options?.hideRecentBadge && isRecent && (
+        {/* {!context.options?.hideRecentBadge && isRecent && (
           <RecentlyUsedTag>
             <span>Recent</span>
           </RecentlyUsedTag>
-        )}
+        )} */}
       </ConnectorLabel>
     </ConnectorButton>
   );

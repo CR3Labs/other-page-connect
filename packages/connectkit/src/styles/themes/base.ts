@@ -53,6 +53,9 @@ export default {
 
     '--ck-secondary-button-hover-background': '#e0e4eb',
 
+    '--ck-connector-button-color': '#000000',
+    '--ck-connector-button-hover-color': '#373737',
+
     /** Modal */
     '--ck-modal-box-shadow': '0px 2px 4px rgba(0, 0, 0, 0.02)',
     '--ck-overlay-background': 'rgba(71, 88, 107, 0.24)',
@@ -70,6 +73,8 @@ export default {
     '--ck-body-color-danger': '#FF4E4E',
     '--ck-body-color-valid': '#32D74B',
     '--ck-siwe-border': '#F0F0F0',
+
+    '--ck-custom-qr-code-background': '#eee',
 
     /** Disclaimer */
     //'--ck-body-disclaimer-background': '#E3D6C9',
@@ -146,7 +151,7 @@ export default {
 
     //'--ck-primary-button-active-background': '#4D4D4D',
 
-    '--ck-primary-button-active-border-radius': '16px',
+    // '--ck-primary-button-active-border-radius': '16px',
 
     '--ck-secondary-button-color': '#ffffff',
     '--ck-secondary-button-background': '#060606',
@@ -184,6 +189,11 @@ export default {
     '--ck-tooltip-background-secondary': '#333333',
     '--ck-tooltip-color': '#999999',
     '--ck-tooltip-shadow': '0px 2px 10px rgba(0, 0, 0, 0.08)',
+
+    '--ck-connector-button-color': '#D7DCDE',
+    '--ck-connector-button-hover-color': '#000000',
+
+    '--ck-custom-qr-code-background': '#000000',
 
     /** Network dropdown */
     '--ck-dropdown-button-color': '#C8C8C8',
