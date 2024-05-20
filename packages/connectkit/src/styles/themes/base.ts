@@ -36,7 +36,7 @@ export default {
     '--ck-primary-button-line-height': '19.12px',
 
     '--ck-primary-button-hover-color': '#373737',
-    '--ck-primary-button-hover-background': '#F0F2F5',
+    '--ck-primary-button-hover-background': '#d66413',
     //'--ck-primary-button-hover-box-shadow': 'inset 0 0 0 2px var(--ck-focus-color)',
 
     //'--ck-primary-button-active-background': '#EAECF1',
@@ -141,7 +141,7 @@ export default {
     '--ck-primary-button-font-size': '14px',
     '--ck-primary-button-line-height': '19.12px',
 
-    '--ck-primary-button-hover-background': '#404040',
+    '--ck-primary-button-hover-background': '#d66413',
     //'--ck-primary-button-hover-box-shadow': 'inset 0 0 0 2px rgba(255, 255, 255, 0.4)',
 
     //'--ck-primary-button-active-background': '#4D4D4D',

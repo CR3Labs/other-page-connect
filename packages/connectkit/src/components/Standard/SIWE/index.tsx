@@ -55,6 +55,7 @@ export const SIWEButton: React.FC<ButtonProps> = ({
   if (showSignOutButton && isSignedIn) {
     return (
       <Button
+        variant="primary"
         key="button"
         style={{ margin: 0 }}
         onClick={signOut}
@@ -69,6 +70,7 @@ export const SIWEButton: React.FC<ButtonProps> = ({
     // TODO: discuss non-connected wallet developer expectations
     return (
       <Button
+        variant="primary"
         key="button"
         style={{ margin: 0 }}
         onClick={() => setOpen(true)}
@@ -81,6 +83,7 @@ export const SIWEButton: React.FC<ButtonProps> = ({
 
   return (
     <Button
+      variant={isLoading ? 'secondary' : 'primary'}
       key="button"
       style={{ margin: 0 }}
       arrow={!isSignedIn ? !isLoading && !isRejected : false}

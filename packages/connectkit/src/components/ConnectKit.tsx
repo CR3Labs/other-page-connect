@@ -150,7 +150,7 @@ export const ConnectKitProvider = ({
     walletConnectCTA: 'link',
     hideRecentBadge: false,
     avoidLayoutShift: true,
-    embedGoogleFonts: false,
+    embedGoogleFonts: true,
     truncateLongENSAddress: true,
     walletConnectName: undefined,
     reducedMotion: false,

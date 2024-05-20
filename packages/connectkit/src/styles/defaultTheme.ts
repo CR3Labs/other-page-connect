@@ -2,7 +2,7 @@ import { Theme, ThemeMode, CustomTheme } from './types';
 
 const defaultLightTheme: Theme = {
   font: {
-    family: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, 'Apple Color Emoji', Arial, sans-serif, 'Segoe UI Emoji'`,
+    family: `"Manrope", -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, 'Apple Color Emoji', Arial, sans-serif, 'Segoe UI Emoji'`,
   },
   text: {
     primary: {

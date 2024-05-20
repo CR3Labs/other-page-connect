@@ -62,7 +62,7 @@ const ForwardIcon = ({ ...props }) => (
 
 const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
   const context = useContext();
-  const { reset: resetSIWE } = useSIWE();
+  const { reset: resetSIWE, isSignedIn } = useSIWE();
   const themeContext = useThemeContext();
 
   const locales = useLocales();
@@ -157,7 +157,7 @@ const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
           </InfoBox>
         </AvatarContainer>
       </ModalContent>
-      {context.signInWithEthereum && (
+      {context.signInWithEthereum && !isSignedIn && (
         <Button
           variant="primary"
           iconPosition="right"

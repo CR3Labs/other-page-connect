@@ -16,7 +16,7 @@ export function useGoogleFont(font: string) {
     gstatic.crossOrigin = 'true';
 
     const link = document.createElement('link');
-    link.href = `https://fonts.googleapis.com/css2?family=${font}:wght@400;500;600&display=swap`;
+    link.href = `https://fonts.googleapis.com/css2?family=${font}:wght@400;500;600;700&display=swap`;
     link.rel = 'stylesheet';
 
     document.head.appendChild(googleapis);
@@ -36,8 +36,8 @@ export function useThemeFont(theme: Theme) {
     auto: 'Manrope',
     web95: 'Lato',
     retro: 'Nunito',
-    midnight: 'Inter',
-    minimal: 'Inter',
+    midnight: 'Manrope',
+    minimal: 'Manrope',
     rounded: 'Nunito',
   };
   const font: string = themeFonts[theme] ?? null;

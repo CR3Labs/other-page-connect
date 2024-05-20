@@ -97,22 +97,7 @@ const SignInWithEthereum: React.FC = () => {
 
   return (
     <PageContent style={{ width: 278 }}>
-      <ModalContent style={{ padding: 0, marginTop: -10 }}>
-        <ContentContainer>
-          <AnimatePresence exitBeforeEnter>
-            <motion.div
-              key={flattenChildren(copy.h1).toString()}
-              initial={mobile ? false : { opacity: 0, scale: 0.94 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.94 }}
-              transition={copyTransition}
-            >
-              <ModalBody style={{ height: 42 }}>
-                <FitText>{copy.h1}</FitText>
-              </ModalBody>
-            </motion.div>
-          </AnimatePresence>
-        </ContentContainer>
+      <ModalContent style={{ padding: 0, marginTop: 10 }}>
         <StatusGraphic $connected={isSignedIn} key="status">
           <div style={{ position: 'absolute', inset: 0 }}>
             <StatusGraphicBgSvg
@@ -212,20 +197,56 @@ const SignInWithEthereum: React.FC = () => {
             </LogoContainer>
           </motion.div>
         </StatusGraphic>
-        <AnimatePresence exitBeforeEnter>
-          <motion.div
-            key={flattenChildren(copy.p).toString()}
-            style={{ paddingBottom: mobile ? 24 : 12 }}
-            initial={mobile ? false : { opacity: 0, scale: 0.94 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.94 }}
-            transition={copyTransition}
-          >
-            <ModalBody style={{ height: 42, marginTop: -1, marginBottom: -3 }}>
-              <FitText>{copy.p}</FitText>
-            </ModalBody>
-          </motion.div>
-        </AnimatePresence>
+        <ContentContainer>
+          <AnimatePresence exitBeforeEnter>
+            <motion.div
+              key={'Verify Your Onwership'}
+              // key={flattenChildren(copy.h1).toString()}
+              initial={mobile ? false : { opacity: 0, scale: 0.94 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.94 }}
+              transition={copyTransition}
+            >
+              <ModalBody
+                style={{
+                  height: 42,
+                  fontWeight: 700,
+                  justifyContent: 'start',
+                  display: 'flex',
+                  fontSize: '24px',
+                  marginBottom: 12,
+                }}
+              >
+                <FitText>{'Verify Your Ownership'}</FitText>
+              </ModalBody>
+            </motion.div>
+          </AnimatePresence>
+
+          <AnimatePresence exitBeforeEnter>
+            <motion.div
+              key={flattenChildren(copy.p).toString()}
+              style={{ paddingBottom: mobile ? 24 : 12 }}
+              initial={mobile ? false : { opacity: 0, scale: 0.94 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.94 }}
+              transition={copyTransition}
+            >
+              <ModalBody
+                style={{
+                  height: 42,
+                  marginTop: -1,
+                  marginBottom: -3,
+                  justifyContent: 'start',
+                  display: 'flex',
+                  textAlign: 'left',
+                }}
+              >
+                <FitText>{copy.p}</FitText>
+              </ModalBody>
+            </motion.div>
+          </AnimatePresence>
+        </ContentContainer>
+
         <SIWEButton
           showSignOutButton={status === 'signedIn'}
           onSignIn={() => {
