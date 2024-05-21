@@ -147,6 +147,7 @@ export default {
     '--ck-primary-button-line-height': '19.12px',
 
     '--ck-primary-button-hover-background': '#d66413',
+    '--ck-primary-button-hover-color': '#000000',
     //'--ck-primary-button-hover-box-shadow': 'inset 0 0 0 2px rgba(255, 255, 255, 0.4)',
 
     //'--ck-primary-button-active-background': '#4D4D4D',

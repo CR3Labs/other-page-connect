@@ -186,7 +186,7 @@ const MobileConnectorListDropdown: React.FC<{
                     ref={innerRef}
                     style={{
                       left: offset.x,
-                      top: isMobile ? 158 : 210,
+                      top: isMobile ? 158 : 245,
                       // top: offset.y,
                     }}
                     initial={'collapsed'}

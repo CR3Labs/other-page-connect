@@ -37,7 +37,7 @@ export const TestBenchProvider: React.FC<TestBenchProviderProps> = ({
   children,
   theme = 'auto',
   customTheme = {},
-  mode = 'light',
+  mode = 'dark',
   options = {
     overlayBlur: 0,
     language: 'en-US',
