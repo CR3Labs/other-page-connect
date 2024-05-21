@@ -25,11 +25,13 @@ const ConnectModal: React.FC<{
   theme?: Theme;
   customTheme?: CustomTheme;
   lang?: Languages;
+  primaryColor?: string;
 }> = ({
   mode = 'auto',
   theme = 'auto',
   customTheme = customThemeDefault,
   lang = 'en-US',
+  primaryColor,
 }) => {
   const context = useContext();
   const { isConnected, chain } = useAccount();
@@ -133,6 +135,7 @@ const ConnectModal: React.FC<{
       theme={theme}
       customTheme={customTheme}
       mode={mode}
+      primaryColor={primaryColor}
     >
       <Modal
         open={context.open}

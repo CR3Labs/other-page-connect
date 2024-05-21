@@ -21,7 +21,7 @@ type DefaultConfigProps = {
 } & Partial<CreateConfigParameters>;
 
 const defaultConfig = ({
-  appName = 'ConnectKit',
+  appName = 'Canopy Wallet Connect',
   appIcon,
   appDescription,
   appUrl,

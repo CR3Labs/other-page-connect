@@ -157,6 +157,18 @@ const createCssColors = (scheme: any, override?: boolean) => {
   `;
 };
 
+function darkenColor(hexColor: string, amount = 20) {
+  if (!hexColor.includes('#')) return hexColor;
+  hexColor = hexColor.substring(1); // remove #
+  const num = parseInt(hexColor, 16); // convert to integer
+  const r = (num >> 16) - amount; // extract red
+  const b = ((num >> 8) & 0x00ff) - amount; // extract blue
+  const g = (num & 0x0000ff) - amount; // extract green
+
+  const newColor = g | (b << 8) | (r << 16); // assemble back into a color
+  return '#' + newColor.toString(16);
+}
+
 const themes = {
   default: createCssVars(themeGlobals.default),
   light: createCssColors(themeColors.light),
@@ -200,6 +212,7 @@ export const ResetContainer = styled(motion.div)<{
   $useTheme?: string;
   $useMode?: string;
   $customTheme?: CustomTheme;
+  $primaryColor?: `#${string}`;
 }>`
   ${themes.default}
 
@@ -262,6 +275,21 @@ export const ResetContainer = styled(motion.div)<{
     }
   }}
 
+
+  ${(props) => {
+    if (props.$primaryColor) {
+      const customPrimaryColor =
+        (props.$primaryColor as `#${string}`) ?? '#F97316';
+
+      return {
+        '--ck-primary-button-background': customPrimaryColor,
+        '--ck-primary-button-hover-background': darkenColor(customPrimaryColor),
+      };
+    }
+    if (props.$primaryColor) {
+      return createCssColors(props.$primaryColor, true);
+    }
+  }}
 
   ${(props) => {
     if (

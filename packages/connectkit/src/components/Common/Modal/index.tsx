@@ -365,6 +365,7 @@ const Modal: React.FC<ModalProps> = ({
       $useTheme={demo?.theme ?? themeContext.theme}
       $useMode={demo?.mode ?? themeContext.mode}
       $customTheme={demo?.customTheme ?? themeContext.customTheme}
+      $primaryColor={themeContext.primaryColor ?? context.primaryColor}
     >
       <ModalContainer
         role="dialog"

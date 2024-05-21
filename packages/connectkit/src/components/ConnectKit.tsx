@@ -49,6 +49,7 @@ type Connector = {
 type Error = string | React.ReactNode | null;
 
 type ContextValue = {
+  primaryColor: string;
   theme: Theme;
   setTheme: React.Dispatch<React.SetStateAction<Theme>>;
   mode: Mode;
@@ -86,7 +87,7 @@ export type ConnectKitOptions = {
   hideRecentBadge?: boolean;
   walletConnectCTA?: 'link' | 'modal' | 'both';
   avoidLayoutShift?: boolean; // Avoids layout shift when the ConnectKit modal is open by adding padding to the body
-  embedGoogleFonts?: boolean; // Automatically embeds Google Font of the current theme. Does not work with custom themes
+  embedGoogleFonts?: true; // Automatically embeds Google Font of the current theme. Does not work with custom themes
   truncateLongENSAddress?: boolean;
   walletConnectName?: string;
   reducedMotion?: boolean;
@@ -103,17 +104,21 @@ export type ConnectKitOptions = {
 
 type ConnectKitProviderProps = {
   children?: React.ReactNode;
-  theme?: Theme;
+  // theme?: Theme;
   mode?: Mode;
   customTheme?: CustomTheme;
+  primaryColor?: `#${string}`;
   options?: ConnectKitOptions;
   debugMode?: boolean;
 } & useConnectCallbackProps;
 
+const theme = 'auto';
+
 export const ConnectKitProvider = ({
   children,
-  theme = 'auto',
+  // theme = 'auto',
   mode = 'auto',
+  primaryColor = '#F97316',
   customTheme,
   options,
   onConnect,
@@ -200,8 +205,8 @@ export const ConnectKitProvider = ({
 
   const [resize, onResize] = useState<number>(0);
 
-  // Include Google Font that is needed for a themes
-  if (opts.embedGoogleFonts) useThemeFont(theme);
+  //always use the theme font so Manrope is always loaded
+  useThemeFont(theme);
 
   // Other Configuration
   useEffect(() => setTheme(theme), [theme]);
@@ -231,6 +236,7 @@ export const ConnectKitProvider = ({
   const value = {
     theme: ckTheme,
     setTheme,
+    primaryColor,
     mode: ckMode,
     setMode,
     customTheme,
@@ -275,6 +281,7 @@ export const ConnectKitProvider = ({
             theme={ckTheme}
             mode={mode}
             customTheme={ckCustomTheme}
+            primaryColor={primaryColor}
           />
         </ThemeProvider>
       </Web3ContextProvider>

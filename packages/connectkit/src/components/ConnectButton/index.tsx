@@ -361,6 +361,7 @@ export function ConnectKitButton({
       $useTheme={theme ?? context.theme}
       $useMode={mode ?? context.mode}
       $customTheme={customTheme ?? context.customTheme}
+      $primaryColor={context.primaryColor ?? context.primaryColor}
     >
       <ThemeContainer
         onClick={() => {

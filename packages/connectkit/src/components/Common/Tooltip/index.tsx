@@ -105,6 +105,7 @@ const Tooltip: React.FC<TooltipProps> = ({
               $useTheme={themeContext.theme}
               $useMode={themeContext.mode}
               $customTheme={themeContext.customTheme}
+              $primaryColor={themeContext.primaryColor ?? context.primaryColor}
             >
               <TooltipWindow>
                 <TooltipContainer

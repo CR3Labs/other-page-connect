@@ -39,13 +39,13 @@ const allChains = Object.keys(wagmiChains).map(
 /** TODO: import this data from the connectkit module */
 const themes: SelectProps[] = [
   { label: 'Auto', value: 'auto' },
-  { label: 'Web95', value: 'web95' },
-  { label: 'Retro', value: 'retro' },
-  { label: 'Soft', value: 'soft' },
-  { label: 'Minimal', value: 'minimal' },
-  { label: 'Rounded', value: 'rounded' },
-  { label: 'Midnight', value: 'midnight' },
-  { label: 'Nouns', value: 'nouns' },
+  // { label: 'Web95', value: 'web95' },
+  // { label: 'Retro', value: 'retro' },
+  // { label: 'Soft', value: 'soft' },
+  // { label: 'Minimal', value: 'minimal' },
+  // { label: 'Rounded', value: 'rounded' },
+  // { label: 'Midnight', value: 'midnight' },
+  // { label: 'Nouns', value: 'nouns' },
 ];
 const modes: SelectProps[] = [
   { label: 'Auto', value: 'auto' },
@@ -330,11 +330,12 @@ const Home: NextPage = () => {
           <h2>Avatars</h2>
           <div style={{ display: 'flex', gap: 8 }}>
             <Avatar name="lochie.eth" />
-            <Avatar name="pugson.eth" size={64} radius={6} />
-            <Avatar name="benjitaylor.eth" size={32} radius={0} />
+            <Avatar name="pugson.eth" width={64} height={64} radius={6} />
+            <Avatar name="benjitaylor.eth" width={32} height={32} radius={0} />
             <Avatar
               address="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
-              size={12}
+              width={12}
+              height={12}
             />
           </div>
         </div>
@@ -354,7 +355,7 @@ const Home: NextPage = () => {
                   >
                     {chain?.name}
                     <ChainIcon id={chain?.id} />
-                    <Avatar address={address} size={12} />
+                    <Avatar address={address} width={12} height={12} />
                     {ensName ?? address}
                   </div>
                 ) : (
@@ -559,7 +560,7 @@ const Home: NextPage = () => {
             })
           }
         />
-        <Checkbox
+        {/* <Checkbox
           disabled
           label="embedGoogleFonts"
           value="embedGoogleFonts"
@@ -570,7 +571,7 @@ const Home: NextPage = () => {
               embedGoogleFonts: !options.embedGoogleFonts,
             })
           }
-        />
+        /> */}
         <Checkbox
           disabled
           label="bufferPolyfill"

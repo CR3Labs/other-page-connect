@@ -8,7 +8,7 @@ import { Web3Provider } from '../components/Web3Provider';
 import { useTestBench } from '../TestbenchProvider';
 
 function App({ Component, pageProps }: AppProps) {
-  const { theme, mode, options, customTheme } = useTestBench();
+  const { ckPrimaryColor, mode, options, customTheme } = useTestBench();
   const key = JSON.stringify({ customTheme }); // re-render on customTheme change
 
   return (
@@ -22,8 +22,8 @@ function App({ Component, pageProps }: AppProps) {
     >
       <ConnectKitProvider
         key={key}
-        theme={theme}
         mode={mode}
+        primaryColor={ckPrimaryColor}
         options={options}
         customTheme={customTheme}
         onConnect={(data) => {

@@ -174,6 +174,7 @@ const ChainSelectDropdown: React.FC<{
               $useTheme={themeContext.theme ?? context.theme}
               $useMode={themeContext.mode ?? context.mode}
               $customTheme={themeContext.customTheme ?? context.customTheme}
+              $primaryColor={themeContext.primaryColor ?? context.primaryColor}
             >
               <FocusTrap>
                 <DropdownWindow ref={contentRef}>

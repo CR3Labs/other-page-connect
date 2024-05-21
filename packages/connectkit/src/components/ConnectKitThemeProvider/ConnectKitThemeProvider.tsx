@@ -5,6 +5,7 @@ type ContextValue = {
   theme?: Theme;
   mode?: Mode;
   customTheme?: CustomTheme;
+  primaryColor?: string;
 };
 
 const Context = createContext<ContextValue | null>(null);
@@ -14,15 +15,23 @@ type ConnectKitThemeProviderProps = {
   theme?: Theme;
   mode?: Mode;
   customTheme?: CustomTheme;
+  primaryColor?: string;
 };
 
 export const ConnectKitThemeProvider: React.FC<
   ConnectKitThemeProviderProps
-> = ({ children, theme = 'auto', mode = 'auto', customTheme }) => {
+> = ({
+  children,
+  theme = 'auto',
+  mode = 'auto',
+  customTheme,
+  primaryColor,
+}) => {
   const value = {
     theme,
     mode,
     customTheme,
+    primaryColor,
   };
 
   return createElement(Context.Provider, { value }, <>{children}</>);
