@@ -1,7 +1,13 @@
 import React from 'react';
 import useFitText from '../../../hooks/useFitText';
 
-const FitText = ({ children }: { children: React.ReactNode }) => {
+const FitText = ({
+  children,
+  style,
+}: {
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+}) => {
   const [ready, setReady] = React.useState(false);
   const { fontSize, ref: textRef } = useFitText({
     logLevel: 'none',
@@ -21,6 +27,7 @@ const FitText = ({ children }: { children: React.ReactNode }) => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        ...style,
       }}
     >
       {children}

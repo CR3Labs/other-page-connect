@@ -74,7 +74,7 @@ const CopyToClipboardIcon = ({
   <IconContainer $clipboard={copied}>
     <Icon
       style={{
-        transform: small ? 'scale(1)' : 'translateX(3px) scale(1.5)',
+        transform: small ? 'scale(1)' : 'translateX(3px) scale(1.2)',
         opacity: small || copied ? 1 : 0.3,
       }}
     />

@@ -13,13 +13,10 @@ const lineKeyframes = keyframes`
 `;
 
 export const ContentContainer = styled.div`
-  @media only screen and (max-width: ${defaultTheme.mobileWidth}px) {
-    margin: 5px auto 24px;
-    padding: 16px 16px;
-    border-radius: var(--ck-tertiary-border-radius, 24px);
-    box-shadow: var(--ck-tertiary-box-shadow, none);
-    background: var(--ck-body-background-tertiary);
-  }
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: start;
 `;
 
 export const LogoContainer = styled(motion.div)`
@@ -124,7 +121,7 @@ export const StatusGraphic = styled(motion.div)<{ $connected?: boolean }>`
   justify-content: center;
   gap: 14px;
   width: 100%;
-  margin: 12px auto;
+  margin: 6px auto;
   padding: 42px 32px;
   transition: all 320ms cubic-bezier(0.175, 0.885, 0.32, 1.1);
   border: var(--border-size) var(--border-style) var(--border-color);

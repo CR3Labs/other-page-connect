@@ -96,7 +96,7 @@ const SignInWithEthereum: React.FC = () => {
   const favicon = getAppIcon() ?? favicons.svg ?? favicons.default;
 
   return (
-    <PageContent style={{ width: 278 }}>
+    <PageContent style={{ width: 290 }}>
       <ModalContent style={{ padding: 0, marginTop: 10 }}>
         <StatusGraphic $connected={isSignedIn} key="status">
           <div style={{ position: 'absolute', inset: 0 }}>
@@ -200,8 +200,7 @@ const SignInWithEthereum: React.FC = () => {
         <ContentContainer>
           <AnimatePresence exitBeforeEnter>
             <motion.div
-              key={'Verify Your Onwership'}
-              // key={flattenChildren(copy.h1).toString()}
+              key={flattenChildren(copy.h1).toString()}
               initial={mobile ? false : { opacity: 0, scale: 0.94 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.94 }}
@@ -209,15 +208,16 @@ const SignInWithEthereum: React.FC = () => {
             >
               <ModalBody
                 style={{
-                  height: 42,
+                  height: 38,
                   fontWeight: 700,
-                  justifyContent: 'start',
+                  justifyContent: 'flex-start',
                   display: 'flex',
                   fontSize: '24px',
-                  marginBottom: 12,
+                  marginBottom: 8,
+                  textAlign: 'left',
                 }}
               >
-                <FitText>{'Verify Your Ownership'}</FitText>
+                <FitText>{copy.h1}</FitText>
               </ModalBody>
             </motion.div>
           </AnimatePresence>
@@ -225,7 +225,7 @@ const SignInWithEthereum: React.FC = () => {
           <AnimatePresence exitBeforeEnter>
             <motion.div
               key={flattenChildren(copy.p).toString()}
-              style={{ paddingBottom: mobile ? 24 : 12 }}
+              style={{ paddingBottom: mobile ? 24 : 12, width: '100%' }}
               initial={mobile ? false : { opacity: 0, scale: 0.94 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.94 }}
@@ -239,9 +239,11 @@ const SignInWithEthereum: React.FC = () => {
                   justifyContent: 'start',
                   display: 'flex',
                   textAlign: 'left',
+                  width: '100%',
+                  minWidth: '100%',
                 }}
               >
-                <FitText>{copy.p}</FitText>
+                <FitText style={{ display: 'block' }}>{copy.p}</FitText>
               </ModalBody>
             </motion.div>
           </AnimatePresence>

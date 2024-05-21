@@ -4,8 +4,6 @@ import { useContext, routes } from '../../ConnectKit';
 import {
   LearnMoreContainer,
   LearnMoreButton,
-  InfoBox,
-  InfoBoxButtons,
   ConnectorWrapper,
   ConnectContainer,
   QRConnectContainer,
@@ -14,13 +12,7 @@ import {
   OrContainer,
   ConnectorIcon,
 } from './styles';
-import {
-  PageContent,
-  Disclaimer,
-  ModalContent,
-  ModalH1,
-  ModalBody,
-} from '../../Common/Modal/styles';
+import { PageContent, Disclaimer } from '../../Common/Modal/styles';
 import WalletIcon from '../../../assets/wallet';
 
 import useLocales from '../../../hooks/useLocales';
@@ -37,11 +29,8 @@ import {
   isWalletConnectConnector,
 } from '../../../utils';
 import ScanIconWithLogos from '../../../assets/ScanIconWithLogos';
-import useWindowSize from '../../../hooks/useWindowSize';
-import ChainSelectDropdown from '../../Common/ChainSelectDropdown';
-import defaultTheme from '../../../constants/defaultTheme';
 import MobileConnectorListDropdown from '../../Common/ConnectorList/MobileConnectorListDropdown';
-import { ForceLightMode } from '../../../styles';
+import { useMobileView } from '../../../hooks/useMobileView';
 
 const DownChevron = () => (
   <svg
@@ -62,9 +51,8 @@ const Wallets: React.FC = () => {
   const context = useContext();
   const locales = useLocales({});
   const wallets = useWallets();
-
+  const showMobileView = useMobileView();
   const isMobile = useIsMobile();
-  const windowSize = useWindowSize();
   const { lastConnectorId } = useLastConnector();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -124,10 +112,6 @@ const Wallets: React.FC = () => {
   //needs to break at window width 660px
   //- on mobile dont show connector list
   //- show dropdown that allows user to select wallet
-  const showMobileView =
-    isMobile ||
-    window?.innerWidth < defaultTheme.mobileWidth ||
-    windowSize?.width < defaultTheme.mobileWidth;
 
   return (
     <PageContent style={{ width: 600 }}>

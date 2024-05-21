@@ -42,7 +42,7 @@ export const TestBenchProvider: React.FC<TestBenchProviderProps> = ({
     overlayBlur: 0,
     language: 'en-US',
     hideTooltips: false,
-    hideQuestionMarkCTA: false,
+    hideQuestionMarkCTA: true,
     hideNoWalletCTA: false,
     avoidLayoutShift: true,
     embedGoogleFonts: true,
