@@ -72,6 +72,47 @@ export const LearnMoreButton = styled(motion.button)`
   }
 `;
 
+export const DontSeeWalletButton = styled(motion.button)`
+  appearance: none;
+  user-select: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 6px;
+  background: none;
+  color: var(--ck-body-color-muted);
+  font-size: 15px;
+  line-height: 18px;
+  font-weight: 500;
+  /* will-change: transform; */
+  transition: color 100ms ease, transform 100ms ease;
+  svg {
+    transition: all 100ms ease-out;
+    width: 22px;
+    height: 22px;
+    path {
+      fill: var(--ck-body-color-muted);
+    }
+  }
+  &:hover {
+    svg {
+      path,
+      circle {
+        color: var(--ck-body-color-muted-hover);
+        opacity: 1;
+        transform: none;
+      }
+    }
+  }
+  &:active {
+    transform: scale(0.96);
+  }
+`;
+
 export const ConnectorsContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
@@ -305,4 +346,11 @@ export const OrContainer = styled.p`
   font-size: 8px;
   text-align: center;
   color: #000000;
+`;
+
+export const DesktopConnectContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: space-between;
 `;
