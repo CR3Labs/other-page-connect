@@ -223,6 +223,7 @@ const Wallets: React.FC = () => {
                 </FitText>
               </WalletNameContainer>
             )}
+
             <CustomQRCodeContainer>
               <CustomQRCode
                 value={uri}
@@ -248,12 +249,6 @@ const Wallets: React.FC = () => {
               variant="primary"
               style={{ minHeight: '45px' }}
               onClick={() => {
-                //   if(deeplink){
-
-                //   }
-                //   context.setRoute(routes.CONNECT);
-                //   context.setConnector({ id: context.selectedConnector.id });
-                // }
                 if (deeplink) {
                   window.location.href = deeplink;
                 } else if (redirectToMoreWallets) {

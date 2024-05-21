@@ -110,7 +110,6 @@ export const ConnectorItem = ({
               } else if (wallet.id === 'walletConnect') {
                 context.setRoute(routes.CONNECT);
                 context.setConnector({ id: wallet.id });
-                // context.setSelectedConnector({ id: '' });
               } else {
                 context.setSelectedConnector({ id: wallet.id });
               }

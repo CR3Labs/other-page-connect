@@ -335,7 +335,9 @@ export const CustomQRCodeContainer = styled.div`
   border-radius: var(--ck-qr-border-radius, 24px);
   background-color: var(--ck-custom-qr-code-background);
   @media only screen and (max-width: ${defaultTheme.mobileWidth}px) {
-    max-height: 350px;
+    margin: 0 auto;
+    max-height: 210px;
+    max-width: 210px;
     height: 100%;
     width: 100%;
   }
