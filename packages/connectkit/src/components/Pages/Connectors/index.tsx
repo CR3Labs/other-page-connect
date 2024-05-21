@@ -109,10 +109,6 @@ const Wallets: React.FC = () => {
     isMobile && isWalletConnectConnector(selectedWallet?.id);
   if (redirectToMoreWallets) deeplink = undefined; // mobile redirects to more wallets page
 
-  //needs to break at window width 660px
-  //- on mobile dont show connector list
-  //- show dropdown that allows user to select wallet
-
   return (
     <PageContent style={{ width: 600 }}>
       <ConnectorWrapper>

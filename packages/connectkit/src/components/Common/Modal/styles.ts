@@ -252,7 +252,7 @@ export const BoxContainer = styled(motion.div)`
     bottom: 0;
     left: 50%;
     width: var(--width);
-    height: var(--height);
+    /* height: var(--height); */
     transform: translateX(-50%);
     backface-visibility: hidden;
     transition: all 200ms ease;
@@ -297,7 +297,7 @@ export const ControllerContainer = styled(motion.div)`
 export const InnerContainer = styled(motion.div)`
   position: relative;
   overflow: hidden;
-  height: var(--height);
+  /* height: var(--height); */
   transition: 0.2s ease height;
   @media only screen and (max-width: ${defaultTheme.mobileWidth}px) {
     transition: 0ms height cubic-bezier(0.15, 1.15, 0.6, 1);

@@ -47,6 +47,7 @@ import { useSIWE } from '../../../siwe';
 import useLocales from '../../../hooks/useLocales';
 import FitText from '../FitText';
 import { useWallet } from '../../../wallets/useWallets';
+import { useMobileView } from '../../../hooks/useMobileView';
 
 const ProfileIcon = ({ isSignedIn }: { isSignedIn?: boolean }) => (
   <div style={{ position: 'relative' }}>
@@ -209,7 +210,7 @@ const Modal: React.FC<ModalProps> = ({
   });
 
   const [state, setOpen] = useTransition({
-    timeout: mobile ? 160 : 160, // different animations, 10ms extra to avoid final-frame drops
+    timeout: mobile ? 200 : 200, // different animations, 10ms extra to avoid final-frame drops
     preEnter: true,
     mountOnEnter: true,
     unmountOnExit: true,
@@ -275,11 +276,20 @@ const Modal: React.FC<ModalProps> = ({
   // Update layout on chain/network switch to avoid clipping
   const { chain } = useAccount();
   const { switchChain } = useSwitchChain();
+  const showMobile = useMobileView();
 
   const ref = useRef<any>(null);
   useEffect(() => {
     if (ref.current) updateBounds(ref.current);
-  }, [chain, switchChain, mobile, isSignedIn, context.options, context.resize]);
+  }, [
+    chain,
+    switchChain,
+    showMobile,
+    mobile,
+    isSignedIn,
+    context.options,
+    context.resize,
+  ]);
 
   useEffect(() => {
     if (!mounted) {
@@ -293,6 +303,7 @@ const Modal: React.FC<ModalProps> = ({
     const listener = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && onClose) onClose();
     };
+
     document.addEventListener('keydown', listener);
     return () => {
       document.removeEventListener('keydown', listener);
@@ -370,7 +381,7 @@ const Modal: React.FC<ModalProps> = ({
           />
         )}
         <Container
-          style={dimensionsCSS}
+          style={{ ...dimensionsCSS }}
           initial={false}
           // transition={{
           //   ease: [0.2555, 0.1111, 0.2555, 1.0001],
