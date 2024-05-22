@@ -355,6 +355,8 @@ const Modal: React.FC<ModalProps> = ({
         return isSignedIn
           ? locales.signInWithEthereumScreen_signedIn_heading
           : locales.signInWithEthereumScreen_signedOut_heading;
+      case routes.OAUTHWALLET:
+        return locales.signInWithEthereumScreen_signedOut_button;
       default:
         return '';
     }

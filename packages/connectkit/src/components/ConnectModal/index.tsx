@@ -17,6 +17,7 @@ import SignInWithEthereum from '../Pages/SignInWithEthereum';
 import { getAppIcon, getAppName } from '../../defaultConfig';
 import { ConnectKitThemeProvider } from '../ConnectKitThemeProvider/ConnectKitThemeProvider';
 import { useChainIsSupported } from '../../hooks/useChainIsSupported';
+import OAuthWallet from '../Pages/OAuthWallet';
 
 const customThemeDefault: object = {};
 
@@ -73,6 +74,7 @@ const ConnectModal: React.FC<{
     profile: <Profile />,
     switchNetworks: <SwitchNetworks />,
     signInWithEthereum: <SignInWithEthereum />,
+    oauthWallet: <OAuthWallet />,
   };
 
   function hide() {

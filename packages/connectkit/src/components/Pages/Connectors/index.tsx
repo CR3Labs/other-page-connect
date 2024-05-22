@@ -93,15 +93,23 @@ const Wallets: React.FC = () => {
   const selectedWallet = walletsToDisplay.find(
     (wallet) => wallet.id === context.selectedConnector.id
   );
+
   useEffect(() => {
-    if (
-      !context.selectedConnector.id &&
-      walletsToDisplay &&
-      walletsToDisplay?.length > 0
-    ) {
-      context.setSelectedConnector({ id: walletsToDisplay?.[0].id });
-    }
-  }, [context.selectedConnector.id, walletsToDisplay]);
+    //use timeout so walletsToDisplay to be populated correctly
+    const id = setTimeout(() => {
+      if (
+        !context.selectedConnector.id &&
+        walletsToDisplay &&
+        walletsToDisplay?.length > 0
+      ) {
+        context.setSelectedConnector({
+          id: walletsToDisplay?.[0].id,
+        });
+      }
+    }, 100);
+
+    return () => clearTimeout(id);
+  }, [context.selectedConnector.id, walletsToDisplay, lastConnectorId]);
 
   const walletConnect = walletsToDisplay.find(
     (wallet) => wallet.id === 'walletConnect'
@@ -266,10 +274,22 @@ const Wallets: React.FC = () => {
           <LearnMoreContainer>
             <Button
               variant="secondary"
-              onClick={() => context.setRoute(routes.ONBOARDING)}
+              onClick={() => {
+                // if (hasOAuthConnect) {
+                context.setRoute(routes.OAUTHWALLET);
+                // } else {
+                //   context.setRoute(routes.ONBOARDING);
+                // }
+              }}
             >
               <LearnMoreButton
-                onClick={() => context.setRoute(routes.ONBOARDING)}
+                onClick={() => {
+                  // if (hasOAuthConnect) {
+                  context.setRoute(routes.OAUTHWALLET);
+                  // } else {
+                  //   context.setRoute(routes.ONBOARDING);
+                  // }
+                }}
               >
                 <WalletIcon /> {locales.connectorsScreen_newcomer}
               </LearnMoreButton>

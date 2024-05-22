@@ -396,11 +396,10 @@ export const walletConfigs: {
     },
   },
   walletConnect: {
-    name: 'Other Wallets',
-    shortName: 'Other',
+    name: 'WalletConnect',
+    shortName: 'WalletConnect',
     icon: <Logos.WalletConnect background />,
-    iconConnector: <Logos.OtherWallets />,
-    iconShape: 'square',
+    iconConnector: <Logos.WalletConnect background />,
     getWalletConnectDeeplink: (uri: string) => uri,
   },
 } as const;
