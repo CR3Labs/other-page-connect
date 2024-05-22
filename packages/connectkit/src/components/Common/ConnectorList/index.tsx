@@ -5,7 +5,6 @@ import {
   ConnectorButton,
   ConnectorLabel,
   ConnectorIcon,
-  RecentlyUsedTag,
 } from './styles';
 
 import { useWeb3 } from '../../contexts/web3';
@@ -14,7 +13,7 @@ import useIsMobile from '../../../hooks/useIsMobile';
 import { ScrollArea } from '../../Common/ScrollArea';
 import Alert from '../Alert';
 
-import { WalletProps, useWallets } from '../../../wallets/useWallets';
+import { WalletProps } from '../../../wallets/useWallets';
 import { isWalletConnectConnector } from '../../../utils';
 import { useLastConnector } from '../../../hooks/useLastConnector';
 
@@ -25,7 +24,6 @@ const ConnectorList = ({
   walletsToDisplay: WalletProps[];
   height?: number;
 }) => {
-  const isMobile = useIsMobile();
   const context = useContext();
 
   const { lastConnectorId } = useLastConnector();

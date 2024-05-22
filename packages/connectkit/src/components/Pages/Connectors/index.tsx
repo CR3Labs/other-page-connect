@@ -178,7 +178,7 @@ const Wallets: React.FC = () => {
               <MobileConnectorListDropdown
                 open={isOpen || !showMobileView}
                 onClose={() => setIsOpen(false)}
-                offsetY={-20}
+                offsetY={-11}
                 walletsToDisplay={walletsToDisplay}
               >
                 <Button

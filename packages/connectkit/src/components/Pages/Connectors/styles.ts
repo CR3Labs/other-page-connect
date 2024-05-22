@@ -336,10 +336,11 @@ export const CustomQRCodeContainer = styled.div`
   background-color: var(--ck-custom-qr-code-background);
   @media only screen and (max-width: ${defaultTheme.mobileWidth}px) {
     margin: 0 auto;
-    max-height: 210px;
-    max-width: 210px;
+    max-height: 250px;
+    max-width: 250px;
     height: 100%;
     width: 100%;
+    margin-bottom: 10px;
   }
 `;
 

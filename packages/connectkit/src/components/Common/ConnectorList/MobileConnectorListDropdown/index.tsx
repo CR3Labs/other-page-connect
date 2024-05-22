@@ -40,7 +40,6 @@ const MobileConnectorListDropdown: React.FC<{
   const context = useContext();
   const themeContext = useThemeContext();
   const mounted = useIsMounted();
-  const isMobile = useIsMobile();
 
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
@@ -105,7 +104,7 @@ const MobileConnectorListDropdown: React.FC<{
     [open]
   );
   const [ref, bounds] = useMeasure({
-    debounce: 120, // waits until modal transition has finished before measuring
+    debounce: 300, // waits until modal transition has finished before measuring
     offsetSize: true,
     scroll: true,
   });
@@ -128,8 +127,7 @@ const MobileConnectorListDropdown: React.FC<{
     let y = bounds.top + bounds.height + offsetY;
 
     targetRef.current.style.left = `${x}px`;
-    //@DEV debug this offset y
-    // targetRef.current.style.top = `${y}px`;
+    targetRef.current.style.top = `${y}px`;
 
     // const contentRect = targetRef.current.getBoundingClientRect();
 
@@ -187,8 +185,7 @@ const MobileConnectorListDropdown: React.FC<{
                     ref={innerRef}
                     style={{
                       left: offset.x,
-                      top: isMobile ? 158 : 245,
-                      // top: offset.y,
+                      top: offset.y,
                     }}
                     initial={'collapsed'}
                     animate={'open'}
