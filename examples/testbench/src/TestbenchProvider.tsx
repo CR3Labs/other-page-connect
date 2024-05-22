@@ -55,6 +55,7 @@ export const TestBenchProvider: React.FC<TestBenchProviderProps> = ({
     disclaimer: null,
     bufferPolyfill: true,
     walletConnectCTA: 'link',
+    showOAuthConnectors: true,
     //enforceSupportedChains: false,
     //initialChainId: 0,
   },

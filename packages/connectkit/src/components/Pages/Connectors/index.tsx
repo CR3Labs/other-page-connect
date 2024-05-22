@@ -275,20 +275,20 @@ const Wallets: React.FC = () => {
             <Button
               variant="secondary"
               onClick={() => {
-                // if (hasOAuthConnect) {
-                context.setRoute(routes.OAUTHWALLET);
-                // } else {
-                //   context.setRoute(routes.ONBOARDING);
-                // }
+                if (context?.options?.showOAuthConnectors) {
+                  context.setRoute(routes.OAUTHWALLET);
+                } else {
+                  context.setRoute(routes.ONBOARDING);
+                }
               }}
             >
               <LearnMoreButton
                 onClick={() => {
-                  // if (hasOAuthConnect) {
-                  context.setRoute(routes.OAUTHWALLET);
-                  // } else {
-                  //   context.setRoute(routes.ONBOARDING);
-                  // }
+                  if (context?.options?.showOAuthConnectors) {
+                    context.setRoute(routes.OAUTHWALLET);
+                  } else {
+                    context.setRoute(routes.ONBOARDING);
+                  }
                 }}
               >
                 <WalletIcon /> {locales.connectorsScreen_newcomer}

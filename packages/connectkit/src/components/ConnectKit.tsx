@@ -101,6 +101,7 @@ export type ConnectKitOptions = {
   walletOnboardingUrl?: string;
   disableSiweRedirect?: boolean; // Disable redirect to SIWE page after a wallet is connected
   overlayBlur?: number; // Blur the background when the modal is open
+  showOAuthConnectors?: boolean; // Show OAuth connectors
 };
 
 type ConnectKitProviderProps = {
@@ -170,6 +171,7 @@ export const ConnectKitProvider = ({
     ethereumOnboardingUrl: undefined,
     walletOnboardingUrl: undefined,
     disableSiweRedirect: false,
+    showOAuthConnectors: true,
   };
 
   const opts: ConnectKitOptions = Object.assign({}, defaultOptions, options);
