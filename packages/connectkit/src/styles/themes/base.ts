@@ -30,6 +30,7 @@ export default {
     '--ck-primary-button-color': '#000000',
     '--ck-primary-button-border-width': '0px',
     // '--ck-primary-button-background': '#F97316', //this is now set in ResetContainer from the primaryColor prop
+    '--ck-body-background-primary': '#F97316',
     //'--ck-primary-button-box-shadow': 'inset 0 0 0 1px #F0F0F0',
     '--ck-primary-button-font-weight': '400',
     '--ck-primary-button-font-size': '14px',
@@ -134,6 +135,7 @@ export default {
 
     '--ck-primary-button-color': '#000000',
     // '--ck-primary-button-background': '#F97316',//this is now set in ResetContainer from the primaryColor prop
+    '--ck-body-background-primary': '#F97316',
     //'--ck-primary-button-box-shadow': 'inset 0 0 0 1px #3D3D3D',
     '--ck-primary-button-border-radius': '4px',
     '--ck-primary-button-border-width': '0px',

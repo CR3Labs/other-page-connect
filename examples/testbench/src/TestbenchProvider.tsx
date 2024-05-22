@@ -21,7 +21,7 @@ type ContextValue = {
   setHideAvatar: React.Dispatch<React.SetStateAction<boolean>>;
   label: string;
   setLabel: React.Dispatch<React.SetStateAction<string>>;
-  ckPrimaryColor: string;
+  ckPrimaryColor: `#${string}`;
 };
 
 const Context = createContext<ContextValue | null>(null);
@@ -32,7 +32,7 @@ type TestBenchProviderProps = {
   customTheme?: Types.CustomTheme;
   mode?: Types.Mode;
   options?: Types.ConnectKitOptions;
-  primaryColor?: string;
+  primaryColor?: `#${string}`;
 };
 
 const theme = 'auto';
@@ -59,7 +59,8 @@ export const TestBenchProvider: React.FC<TestBenchProviderProps> = ({
     //initialChainId: 0,
   },
 }) => {
-  const [ckPrimaryColor, setPrimaryColor] = useState<string>(primaryColor);
+  const [ckPrimaryColor, setPrimaryColor] =
+    useState<`#${string}`>(primaryColor);
   const [ckCustomTheme, setCustomTheme] = useState<Types.Theme>(customTheme);
   const [ckTheme, setTheme] = useState<Types.CustomTheme>(theme);
   const [ckMode, setMode] = useState<Types.Mode>(mode);
