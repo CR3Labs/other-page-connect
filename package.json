@@ -19,6 +19,7 @@
     "dev:testbench": "yarn workspace testbench run dev",
     "build": "node build.js && yarn workspace opconnect run build && cp README.md packages/opconnect/README.md",
     "build:opconnect-next-siwe": "yarn workspace opconnect-next-siwe run build",
+    "build:opconnect": "yarn workspace opconnect run build",
     "build:cra": "yarn build && yarn workspace cra build",
     "build:nextjs": "yarn build && yarn workspace nextjs build",
     "build:nextjs-app": "yarn build && yarn workspace nextjs-app build",
