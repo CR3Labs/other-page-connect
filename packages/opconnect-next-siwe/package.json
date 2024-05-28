@@ -7,7 +7,7 @@
   "description": "Connecting a wallet, made simple.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/family/opconnect.git",
+    "url": "git+https://github.com/solidity-io/canopy-wallet-connect.git",
     "directory": "packages/opconnect-next-siwe"
   },
   "type": "module",
@@ -31,9 +31,9 @@
     "react-hook",
     "blockchain",
     "hooks",
-    "family",
     "ethereum",
-    "react"
+    "react",
+    "solidityio"
   ],
   "dependencies": {
     "iron-session": "^6.2.1",

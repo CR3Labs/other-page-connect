@@ -2,12 +2,10 @@
   "name": "opconnect",
   "version": "0.0.1",
   "author": "Family",
-  "homepage": "https://docs.family.co/opconnect",
   "license": "BSD-2-Clause license",
-  "description": "Connecting a wallet, made simple.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/family/opconnect.git",
+    "url": "git+https://github.com/solidity-io/canopy-wallet-connect",
     "directory": "packages/opconnect"
   },
   "type": "module",
@@ -34,7 +32,7 @@
     "react-hook",
     "blockchain",
     "hooks",
-    "family",
+    "solidityio",
     "ethereum",
     "react"
   ],
