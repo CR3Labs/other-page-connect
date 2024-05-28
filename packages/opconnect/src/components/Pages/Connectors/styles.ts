@@ -329,14 +329,14 @@ export const WalletNameContainer = styled.div`
 `;
 
 export const CustomQRCodeContainer = styled.div`
-  height: 310px;
+  height: 312px;
   width: 310px;
   margin-bottom: 8px;
   border-radius: var(--ck-qr-border-radius, 24px);
   background-color: var(--ck-custom-qr-code-background);
   @media only screen and (max-width: ${defaultTheme.mobileWidth}px) {
     margin: 0 auto;
-    max-height: 250px;
+    max-height: 252px;
     max-width: 250px;
     height: 100%;
     width: 100%;
