@@ -1,6 +1,6 @@
 {
   "name": "opconnect-packages",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Other Page Wallet Connect",
   "main": "packages/opconnect/src/index.ts",
   "private": true,
