@@ -1,4 +1,4 @@
-import { ConnectKitButton } from 'connectkit';
+import { OPConnectButton } from 'opconnect';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         height: '100vh',
       }}
     >
-      <ConnectKitButton />
+      <OPConnectButton />
     </div>
   );
 }

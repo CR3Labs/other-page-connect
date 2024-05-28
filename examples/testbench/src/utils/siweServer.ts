@@ -1,4 +1,4 @@
-import { configureServerSideSIWE } from 'connectkit-next-siwe';
+import { configureServerSideSIWE } from 'opconnect-next-siwe';
 
 export const siweServer = configureServerSideSIWE({
   options: {

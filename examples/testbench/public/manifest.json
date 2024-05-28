@@ -1,6 +1,6 @@
 {
-  "name": "ConnectKit Testbench",
-  "description": "Testbench for ConnectKit",
+  "name": "OPConnect Testbench",
+  "description": "Testbench for OPConnect",
   "iconPath": "app.png",
   "providedBy": {
     "name": "Family",

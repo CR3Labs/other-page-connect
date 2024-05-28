@@ -1,7 +1,7 @@
 'use client';
 
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { ConnectKitButton } from 'connectkit';
+import { OPConnectButton } from 'opconnect';
 
 function App() {
   const account = useAccount();
@@ -12,7 +12,7 @@ function App() {
     <>
       <div>
         <h2>Account</h2>
-        <ConnectKitButton />
+        <OPConnectButton />
 
         <div>
           status: {account.status}

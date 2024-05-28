@@ -1,4 +1,4 @@
-import { Types } from 'connectkit';
+import { Types } from 'opconnect';
 
 import { motion } from 'framer-motion';
 

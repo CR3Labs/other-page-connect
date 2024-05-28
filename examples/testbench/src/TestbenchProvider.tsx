@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { Types } from 'connectkit';
+import { Types } from 'opconnect';
 
 type ContextValue = {
   theme: Types.Theme;
@@ -13,8 +13,8 @@ type ContextValue = {
   setCustomTheme: React.Dispatch<React.SetStateAction<Types.CustomTheme>>;
   mode: Types.Mode;
   setMode: React.Dispatch<React.SetStateAction<Types.Mode>>;
-  options: Types.ConnectKitOptions;
-  setOptions: React.Dispatch<React.SetStateAction<Types.ConnectKitOptions>>;
+  options: Types.OPConnectOptions;
+  setOptions: React.Dispatch<React.SetStateAction<Types.OPConnectOptions>>;
   hideBalance: boolean;
   setHideBalance: React.Dispatch<React.SetStateAction<boolean>>;
   hideAvatar: boolean;
@@ -31,7 +31,7 @@ type TestBenchProviderProps = {
   theme?: Types.Theme;
   customTheme?: Types.CustomTheme;
   mode?: Types.Mode;
-  options?: Types.ConnectKitOptions;
+  options?: Types.OPConnectOptions;
   primaryColor?: `#${string}`;
 };
 
@@ -65,7 +65,7 @@ export const TestBenchProvider: React.FC<TestBenchProviderProps> = ({
   const [ckCustomTheme, setCustomTheme] = useState<Types.Theme>(customTheme);
   const [ckTheme, setTheme] = useState<Types.CustomTheme>(theme);
   const [ckMode, setMode] = useState<Types.Mode>(mode);
-  const [ckOptions, setOptions] = useState<Types.ConnectKitOptions>(options);
+  const [ckOptions, setOptions] = useState<Types.OPConnectOptions>(options);
   const [hideBalance, setHideBalance] = useState<boolean>(false);
   const [hideAvatar, setHideAvatar] = useState<boolean>(false);
   const [label, setLabel] = useState<string | undefined>();

@@ -9,10 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "connectkit": "workspace:packages/connectkit",
-    "connectkit-next-siwe": "workspace:packages/connectkit-next-siwe",
     "ethers": "^5",
     "next": "12.3.0",
+    "opconnect": "workspace:packages/opconnect",
+    "opconnect-next-siwe": "workspace:packages/opconnect-next-siwe",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "siwe": "^2.1.4",

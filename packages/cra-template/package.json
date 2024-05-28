@@ -1,19 +1,19 @@
 {
-  "name": "cra-template-connectkit",
+  "name": "cra-template-opconnect",
   "version": "0.0.1",
   "author": "Family",
-  "homepage": "https://docs.family.co/connectkit",
+  "homepage": "https://docs.family.co/opconnect",
   "keywords": [
     "react",
     "create-react-app",
     "template",
     "typescript",
-    "connectkit"
+    "opconnect"
   ],
-  "description": "ConnectKit + TypeScript template for Create React App.",
+  "description": "OPConnect + TypeScript template for Create React App.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/family/connectkit.git",
+    "url": "git+https://github.com/family/opconnect.git",
     "directory": "packages/cra-template"
   },
   "license": "MIT",
@@ -21,7 +21,7 @@
     "node": ">=14"
   },
   "bugs": {
-    "url": "https://github.com/family/connectkit/issues"
+    "url": "https://github.com/family/opconnect/issues"
   },
   "files": [
     "template",

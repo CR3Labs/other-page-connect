@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 
-import { ConnectKitModalDemo } from 'connectkit';
+import { OPConnectModalDemo } from 'opconnect';
 
 const Demo: NextPage = () => {
-  return <ConnectKitModalDemo open />;
+  return <OPConnectModalDemo open />;
 };
 
 export default Demo;

@@ -47,7 +47,7 @@ This update moves peer dependencies wagmi and viem up to their latest versions.
 
 > **Note**
 >
-> This version of ConnectKit has breaking changes. Make sure your application is compatible by following the [ConnectKit migration guide](https://docs.family.co/connectkit/migration-guide#170-breaking-changes), and the [wagmi 2.x migration guide](https://wagmi.sh/react/guides/migrate-from-v1-to-v2).
+> This version of OPConnect has breaking changes. Make sure your application is compatible by following the [OPConnect migration guide](https://docs.family.co/opconnect/migration-guide#170-breaking-changes), and the [wagmi 2.x migration guide](https://wagmi.sh/react/guides/migrate-from-v1-to-v2).
 
 ## New
 
@@ -61,7 +61,7 @@ This update moves peer dependencies wagmi and viem up to their latest versions.
 
 # 1.6.0
 
-This update adds [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) support for enhanced wallet discovery and improves the functionality and developer experience of using ConnectKit.
+This update adds [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) support for enhanced wallet discovery and improves the functionality and developer experience of using OPConnect.
 
 ## New
 
@@ -75,7 +75,7 @@ This update adds [EIP-6963](https://eips.ethereum.org/EIPS/eip-6963) support for
 
 # 1.5.3
 
-This update adds branding support for additional detectable injected connectors and improves the functionality and developer experience of using ConnectKit.
+This update adds branding support for additional detectable injected connectors and improves the functionality and developer experience of using OPConnect.
 
 ## New
 
@@ -94,7 +94,7 @@ This update adds branding support for additional detectable injected connectors 
 
 # 1.5.2
 
-This update addresses a few bugs and improves the overall experience of ConnectKit.
+This update addresses a few bugs and improves the overall experience of OPConnect.
 
 ## Fixed
 
@@ -104,7 +104,7 @@ This update addresses a few bugs and improves the overall experience of ConnectK
 
 # 1.5.1
 
-This update improves how ConnectKit handles multiple injected wallets.
+This update improves how OPConnect handles multiple injected wallets.
 
 ## Improved
 
@@ -116,7 +116,7 @@ This update improves how ConnectKit handles multiple injected wallets.
 
 # 1.5.0
 
-This update improves the developer experience of using ConnectKit by upgrading the peer dependency, [wagmi](https://wagmi.sh), to version `1.1.x`, updating [viem](https://viem.sh/) to version `1.x.x`, and providing additional wallet branding support.
+This update improves the developer experience of using OPConnect by upgrading the peer dependency, [wagmi](https://wagmi.sh), to version `1.1.x`, updating [viem](https://viem.sh/) to version `1.x.x`, and providing additional wallet branding support.
 
 ## New
 
@@ -145,11 +145,11 @@ This update improves the developer experience of using ConnectKit by upgrading t
 
 # 1.4.0
 
-This update improves the developer experience of using ConnectKit by upgrading the peer dependency wagmi up a version to `1.x.x`, and removes the peer dependency `ethers` in favor of [`viem`](https://viem.sh).
+This update improves the developer experience of using OPConnect by upgrading the peer dependency wagmi up a version to `1.x.x`, and removes the peer dependency `ethers` in favor of [`viem`](https://viem.sh).
 
 > **Note**
 >
-> This version of ConnectKit has breaking changes. Make sure your application is compatible by following the [migration guide](https://docs.family.co/connectkit/migration-guide#140-breaking-changes).
+> This version of OPConnect has breaking changes. Make sure your application is compatible by following the [migration guide](https://docs.family.co/opconnect/migration-guide#140-breaking-changes).
 
 ## New
 
@@ -168,7 +168,7 @@ WalletConnect v1 is scheduled to shut down and will be no longer be supported af
 
 > **Note**
 >
-> This version of ConnectKit has breaking changes. Make sure your application is compatible by following the [migration guide](https://docs.family.co/connectkit/migration-guide#130-breaking-changes).
+> This version of OPConnect has breaking changes. Make sure your application is compatible by following the [migration guide](https://docs.family.co/opconnect/migration-guide#130-breaking-changes).
 
 ## New
 
@@ -180,7 +180,7 @@ WalletConnect v1 is scheduled to shut down and will be no longer be supported af
 
 # 1.2.4
 
-This update adds branding support for additional detectable injected connectors and improves the functionality and developer experience of using ConnectKit with Sign In With Ethereum.
+This update adds branding support for additional detectable injected connectors and improves the functionality and developer experience of using OPConnect with Sign In With Ethereum.
 
 ## New
 
@@ -188,22 +188,22 @@ This update adds branding support for additional detectable injected connectors 
   - Frame
   - Phantom
   - Dawn
-- `connectkit-next-siwe` version `0.1.1` add adds `afterNonce` `afterVerify` `afterSession` and `afterLogout` callbacks to the server-side SIWE helper functions.
-- `connectkit-next-siwe` version `0.2.0` updates peer dependency `siwe` to `2.0.0`.
+- `opconnect-next-siwe` version `0.1.1` add adds `afterNonce` `afterVerify` `afterSession` and `afterLogout` callbacks to the server-side SIWE helper functions.
+- `opconnect-next-siwe` version `0.2.0` updates peer dependency `siwe` to `2.0.0`.
 
 # 1.2.3
 
-This update adds some minor quality of life features to ConnectKit.
+This update adds some minor quality of life features to OPConnect.
 
 ## Improved
 
 - Updated styling of the switch chain page for better readability.
 - Adds prefix to LocalStorage keys to avoid collisions with other apps.
-- Restyled [documentation site](https://docs.family.co/connectkit) to make following guides even easier.
+- Restyled [documentation site](https://docs.family.co/opconnect) to make following guides even easier.
 
 # 1.2.2
 
-This update improves the functionality and developer experience of using ConnectKit and moves the peer dependency wagmi up a version to `0.12.x`.
+This update improves the functionality and developer experience of using OPConnect and moves the peer dependency wagmi up a version to `0.12.x`.
 
 > **Note**
 >
@@ -213,8 +213,8 @@ This update improves the functionality and developer experience of using Connect
 
 - Adds a `Recent` badge to the most recently used connector button by a user. This helps returning users reconnect easily and save time.
 - Introduce [`SafeConnector`](https://wagmi.sh/react/connectors/safe) into the default configuration for better support for Safe Apps. Learn more about this connector in the [wagmi](https://wagmi.sh/react/connectors/safe) docs.
-- Convenient `onConnect` and `onDisconnect` callbacks on the `ConnectKitProvider` component and `useModal` Hook.
-- Added dedicated `overlayBlur` prop to `ConnectKitProvider` to allow for blurring the background when the modal is open.
+- Convenient `onConnect` and `onDisconnect` callbacks on the `OPConnectProvider` component and `useModal` Hook.
+- Added dedicated `overlayBlur` prop to `OPConnectProvider` to allow for blurring the background when the modal is open.
 - Update peer dependency wagmi to version `0.12.x`.
 
 ## Improved
@@ -222,7 +222,7 @@ This update improves the functionality and developer experience of using Connect
 - Added support for Node 14.
 - Improved aria-labels on buttons for better accessibility.
 - Icons within buttons are now properly horizontally centered on FireFox.
-- Optimise some of the SVGs used in ConnectKit.
+- Optimise some of the SVGs used in OPConnect.
 
 ## Fixed
 
@@ -230,7 +230,7 @@ This update improves the functionality and developer experience of using Connect
 
 # 1.2.1
 
-This update improves the functionality and developer experience of using ConnectKit and moves the peer dependency wagmi up a version to `0.11.x`.
+This update improves the functionality and developer experience of using OPConnect and moves the peer dependency wagmi up a version to `0.11.x`.
 This update does not yet include support for WalletConnect 2.0 (wagmi `0.12.x`)
 
 > **Note**
@@ -269,14 +269,14 @@ This update does not yet include support for WalletConnect 2.0 (wagmi `0.12.x`)
 ## Improved
 
 - Update testbench for better developer experience.
-- Improve logic for `isConnecting` within the Custom `ConnectKitButton`.
+- Improve logic for `isConnecting` within the Custom `OPConnectButton`.
 - Replace `getGlobalChains` with `useChains` Hook
 - Tidy up some internal component structure and include a few useful dev updates (thanks [pugson](https://github.com/pugson)).
 - Export `useIsMounted` and `Context` (thanks [shahruz](https://github.com/shahruz)).
 
 # 1.2.0
 
-This update improves the functionality and developer experience of using ConnectKit with Sign In With Ethereum.
+This update improves the functionality and developer experience of using OPConnect with Sign In With Ethereum.
 
 ## New
 
@@ -289,18 +289,18 @@ This update improves the functionality and developer experience of using Connect
 
 # 1.1.4
 
-This update adds some minor quality of life features to ConnectKit.
+This update adds some minor quality of life features to OPConnect.
 
 ## Improved
 
 - Included `shimChainChangedDisconnect` option to `MetaMaskConnector` to automatically disconnect the wallet when the chain changes in particular version of MetaMask (thanks [Songkeys](https://github.com/Songkeys)).
 - Added `size` prop to `ChainIcon` component to allow for custom sizing (thanks [JamieLottering](https://github.com/JamieLottering)).
-- Exported type `ConnectKitOptions` for better TypeScript support when creating a wagmi client (thanks [ryanberckmans](https://github.com/ryanberckmans)).
-- Included `chain` to `ConnectKitButton.custom` to allow for chains to be passed to custom buttons.
+- Exported type `OPConnectOptions` for better TypeScript support when creating a wagmi client (thanks [ryanberckmans](https://github.com/ryanberckmans)).
+- Included `chain` to `OPConnectButton.custom` to allow for chains to be passed to custom buttons.
 
 # 1.1.3
 
-This update fixes compatibility issues that were found with Next 13's default configuration. If you would like to use previous versions of ConnectKit you will need to make sure your application [supports Terser compression](https://nextjs.org/docs/advanced-features/compiler#minification).
+This update fixes compatibility issues that were found with Next 13's default configuration. If you would like to use previous versions of OPConnect you will need to make sure your application [supports Terser compression](https://nextjs.org/docs/advanced-features/compiler#minification).
 
 ## Removed
 
@@ -345,7 +345,7 @@ This update moves the peer dependency wagmi up to the latest version (`0.8.x`).
 
 > **Note**
 >
-> This version of ConnectKit has breaking changes. Make sure your application is compatible by following the [migration guide](https://docs.family.co/connectkit/migration-guide#110-breaking-changes).
+> This version of OPConnect has breaking changes. Make sure your application is compatible by following the [migration guide](https://docs.family.co/opconnect/migration-guide#110-breaking-changes).
 
 ## New
 
@@ -357,7 +357,7 @@ This update moves the peer dependency wagmi up to the latest version (`0.8.x`).
 
 # 1.0.1
 
-This update introduces localisations to ConnectKit.
+This update introduces localisations to OPConnect.
 
 ## New
 
@@ -365,7 +365,7 @@ This update introduces localisations to ConnectKit.
 
 ## Fixed
 
-- Removed layered background on the injected connectors flow to allow for transparent modal background colors ([issue #41](https://github.com/family/connectkit/issues/41)).
+- Removed layered background on the injected connectors flow to allow for transparent modal background colors ([issue #41](https://github.com/family/opconnect/issues/41)).
 
 # 1.0.0
 
@@ -374,7 +374,7 @@ This update introduces Sign In With Ethereum and other helpful changes and addit
 ## New
 
 - Added **Sign In With Ethereum** support with a Next.js package to help with quick setup.
-- Added an `<Avatar />` component for developers to utilize the default ConnectKit avatar.
+- Added an `<Avatar />` component for developers to utilize the default OPConnect avatar.
 - Created a `<CustomAvatar />` component for developers to override the default avatar.
 - Added a `walletConnectCTA` option under `options` to choose whether to display the 'Copy to Clipboard' option under the WalletConnect QR code.
 - Added a `initialChainId` option under `options` to customize the initially connected chain.
@@ -391,9 +391,9 @@ This update introduces Sign In With Ethereum and other helpful changes and addit
 - Wrong Network UX now suggests a network change and no longer blocks users from changing networks.
 - Enabled TypeScript strict mode (bumped target to `es6`).
 - Line break for "Scan with Coinbase Wallet" title if the font is too wide.
-- Fix an SVG `stop-color` vs `stopColor` issue (thanks [@keon](https://github.com/family/connectkit/pull/25)).
-- Added icon support for Arbitrum Goerli (thanks [@mirshko](https://github.com/family/connectkit/pull/26)).
-- Unknown chain icon fallback (thanks [@Bridgerz](https://github.com/family/connectkit/pull/29)).
+- Fix an SVG `stop-color` vs `stopColor` issue (thanks [@keon](https://github.com/family/opconnect/pull/25)).
+- Added icon support for Arbitrum Goerli (thanks [@mirshko](https://github.com/family/opconnect/pull/26)).
+- Unknown chain icon fallback (thanks [@Bridgerz](https://github.com/family/opconnect/pull/29)).
 
 ## Removed
 
@@ -410,20 +410,20 @@ This update introduces Sign In With Ethereum and other helpful changes and addit
 
 ## General
 
-- Add `buffer` as a dependency to ConnectKit. Developers no longer need to maintain their own installation of the `buffer` package.
+- Add `buffer` as a dependency to OPConnect. Developers no longer need to maintain their own installation of the `buffer` package.
 - Remove Slope as a suggested wallet in the UI
 - Default connector buttons in the modal are now filled instead of previously stroked
 - Improvements and update to the default themes
 - Wallet Connection now requests the first `chain` in the chains array given when creating your client configuration
 
-## ConnectKitButton
+## OPConnectButton
 
-- Add props to `<ConnectKitButton />` for additional button configuration
+- Add props to `<OPConnectButton />` for additional button configuration
   - `label` to customize the connect button text/label
   - `showBalance` to show wallet balance when connected (false default)
   - `showAvatar` to show ENS/wallet avatar when connected (true default)
 
-## ConnectKitProvider
+## OPConnectProvider
 
 - Add `disclaimer` option under `options` that accepts a string or ReactNode to be displayed in the first screen of the modal when a wallet is not connected
 

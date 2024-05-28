@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { ConnectKitButton } from 'connectkit';
+import { OPConnectButton } from 'opconnect';
 
 const Home: NextPage = () => {
   return (
@@ -11,7 +11,7 @@ const Home: NextPage = () => {
         height: '100vh',
       }}
     >
-      <ConnectKitButton />
+      <OPConnectButton />
     </div>
   );
 };

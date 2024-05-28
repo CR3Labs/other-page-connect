@@ -2,11 +2,11 @@ import React from 'react';
 
 import { WagmiProvider, createConfig } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ConnectKitProvider, getDefaultConfig } from 'connectkit';
+import { OPConnectProvider, getDefaultConfig } from 'opconnect';
 
 const config = createConfig(
   getDefaultConfig({
-    appName: 'ConnectKit Vite demo',
+    appName: 'OPConnect Vite demo',
     walletConnectProjectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID!,
   })
 );
@@ -17,7 +17,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <ConnectKitProvider debugMode>{children}</ConnectKitProvider>
+        <OPConnectProvider debugMode>{children}</OPConnectProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );

@@ -1,13 +1,13 @@
 import '@/styles/globals.css';
 import { siweClient } from '@/utils/siweClient';
-import { ConnectKitProvider, getDefaultConfig } from 'connectkit';
+import { OPConnectProvider, getDefaultConfig } from 'opconnect';
 import type { AppProps } from 'next/app';
 import { WagmiProvider, createConfig } from 'wagmi';
 
 const config = createConfig(
   getDefaultConfig({
     walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
-    appName: 'My ConnectKit App',
+    appName: 'My OPConnect App',
   })
 );
 
@@ -15,9 +15,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiProvider config={config}>
       <siweClient.Provider>
-        <ConnectKitProvider>
+        <OPConnectProvider>
           <Component {...pageProps} />
-        </ConnectKitProvider>
+        </OPConnectProvider>
       </siweClient.Provider>
     </WagmiProvider>
   );

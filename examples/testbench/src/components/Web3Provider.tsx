@@ -1,7 +1,7 @@
 import { createElement, createContext, useContext, useState } from 'react';
 import { TestBenchProvider } from '../TestbenchProvider';
 
-import { getDefaultConfig, wallets } from 'connectkit';
+import { getDefaultConfig, wallets } from 'opconnect';
 
 import { WagmiProvider, createConfig } from 'wagmi';
 import { defineChain, type Chain, http } from 'viem';
@@ -38,7 +38,7 @@ const ckConfig = getDefaultConfig({
     //[avalanche.id]: http(avalanche.rpcUrls.default.http[0]),
   },
   */
-  appName: 'ConnectKit testbench',
+  appName: 'OPConnect testbench',
   appIcon: '/app.png',
   walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
   ssr: true,

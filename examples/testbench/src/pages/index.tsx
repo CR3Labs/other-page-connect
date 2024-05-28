@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import {
   Types,
-  ConnectKitButton,
+  OPConnectButton,
   Avatar,
   SIWEButton,
   ChainIcon,
@@ -12,7 +12,7 @@ import {
   useChains,
   useModal,
   useSIWE,
-} from 'connectkit';
+} from 'opconnect';
 
 import {
   useAccount,
@@ -36,7 +36,7 @@ const allChains = Object.keys(wagmiChains).map(
   (key) => wagmiChains[key as keyof typeof wagmiChains]
 );
 
-/** TODO: import this data from the connectkit module */
+/** TODO: import this data from the opconnect module */
 const themes: SelectProps[] = [
   { label: 'Auto', value: 'auto' },
   // { label: 'Web95', value: 'web95' },
@@ -278,7 +278,7 @@ const Home: NextPage = () => {
       <main>
         <div className="panel">
           <h2>Connect Button</h2>
-          <ConnectKitButton label={label} />
+          <OPConnectButton label={label} />
           {isConnected && (
             <button onClick={handleDisconnect}>Disconnect</button>
           )}
@@ -341,7 +341,7 @@ const Home: NextPage = () => {
         </div>
       </main>
       <aside>
-        <ConnectKitButton.Custom>
+        <OPConnectButton.Custom>
           {({ isConnected, isConnecting, show, address, ensName, chain }) => {
             return (
               <button onClick={show}>
@@ -366,14 +366,14 @@ const Home: NextPage = () => {
               </button>
             );
           }}
-        </ConnectKitButton.Custom>
+        </OPConnectButton.Custom>
 
         <p>isConnecting: {isConnecting.toString()}</p>
 
         <Actions />
-        <h2>ConnectKitButton props</h2>
+        <h2>OPConnectButton props</h2>
         <Textbox
-          label="ConnectKitButton Label"
+          label="OPConnectButton Label"
           value={label}
           onChange={(e: any) => {
             setLabel(e.target.value);
@@ -391,7 +391,7 @@ const Home: NextPage = () => {
           checked={hideBalance}
           onChange={() => setHideBalance(!hideBalance)}
         />
-        <h2>ConnectKitProvider props</h2>
+        <h2>OPConnectProvider props</h2>
         <Select
           label="Theme"
           value={theme ?? themes[0].value}

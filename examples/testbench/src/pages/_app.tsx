@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 
-import { ConnectKitProvider, SIWESession } from 'connectkit';
+import { OPConnectProvider, SIWESession } from 'opconnect';
 import { siweClient } from '../utils/siweClient';
 import { Web3Provider } from '../components/Web3Provider';
 import { useTestBench } from '../TestbenchProvider';
@@ -20,7 +20,7 @@ function App({ Component, pageProps }: AppProps) {
         console.log('onSignOut Provider');
       }}
     >
-      <ConnectKitProvider
+      <OPConnectProvider
         key={key}
         mode={mode}
         primaryColor={ckPrimaryColor}
@@ -35,7 +35,7 @@ function App({ Component, pageProps }: AppProps) {
         debugMode
       >
         <Component {...pageProps} />
-      </ConnectKitProvider>
+      </OPConnectProvider>
     </siweClient.Provider>
   );
 }
@@ -44,7 +44,7 @@ function MyApp(appProps: AppProps) {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <title>ConnectKit Testbench</title>
+        <title>OPConnect Testbench</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1"
