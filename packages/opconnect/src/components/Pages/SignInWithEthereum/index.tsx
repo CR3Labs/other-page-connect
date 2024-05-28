@@ -29,6 +29,7 @@ import LazyImage from '../../Common/LazyImage';
 import { isMobile, flattenChildren } from '../../../utils';
 import useLocales from '../../../hooks/useLocales';
 import FitText from '../../Common/FitText';
+import Logos from '../../../assets/logos';
 
 const transition = { duration: 0.2, ease: [0.26, 0.08, 0.25, 1] };
 const copyTransition = { duration: 0.16, ease: [0.26, 0.08, 0.25, 1] };
@@ -189,11 +190,13 @@ const SignInWithEthereum: React.FC = () => {
             }}
           >
             <LogoContainer>
-              {favicon ? (
+              <Logos.OtherPage />
+              {/* @DEV @TODO - Ask client if we want a hardcoded OtherPage Logo here, or the reg. favicon */}
+              {/* {favicon ? (
                 <LazyImage src={favicon} alt={'app'} />
               ) : (
                 <Chains.UnknownChain />
-              )}
+              )} */}
             </LogoContainer>
           </motion.div>
         </StatusGraphic>
