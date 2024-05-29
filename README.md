@@ -62,7 +62,7 @@ You can try out some OPConnect examples directly in your browser through CodeSan
 Clone the OPConnect project and install the necessary dependencies:
 
 ```sh
-$ git clone git@github.com:family/opconnect.git
+$ git clone git@github.com/solidity-io/canopy-wallet-connect.git
 $ cd opconnect
 $ yarn install
 ```
