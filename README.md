@@ -33,13 +33,149 @@ yarn create react-app my-app --template cra-template-opconnect
 pnpm dlx create-react-app ./my-app --template cra-template-opconnect
 ```
 
-## Documentation
+## Getting Started
 
-You can find the full OPConnect documentation in the Family docs [here](https://docs.family.co/connectkit).
+OPConnect is the simplest way to integrate a connect wallet experience into your React.js web application. It comes with sensible defaults out of the box so you can focus on building.
 
-## API Reference
+## 1\. Install
 
-You can find the full API Reference in the Family docs [here](https://docs.family.co/connectkit/api-reference).
+Install OPConnect and its peer dependencies:
+
+```bash
+npm install opconnect wagmi viem@2.x @tanstack/react-query
+```
+
+- [Wagmi](https://wagmi.sh/) is a React Hooks library for Ethereum, this is the library you will use to interact with the connected wallet.
+
+- [Viem](https://viem.sh/) is a TypeScript interface for Ethereum that performs blockchain operations.
+
+- [TanStack Query](https://tanstack.com/query/v5) is an async state manager that handles requests, caching, and more.
+
+- [TypeScript](https://wagmi.sh/react/typescript) is optional, but highly recommended.
+
+## 2\. API Keys
+
+OPConnect utilises WalletConnect's SDK to help with connecting wallets. WalletConnect 2.0 requires a `walletConnectProjectId` which you can create quickly and easily for free over at [WalletConnect Cloud](https://cloud.walletconnect.com/sign-in).
+
+## 3\. Implementation
+
+It is recommended to wrap your app within a new component that will help you set up OPConnect and its dependencies.
+
+Start by creating a new component called `Web3Provider`. Here you will import the required providers and create a config using wagmi's [createConfig](https://wagmi.sh/react/api/createConfig) method. OPConnect supplies a pre-configured `getDefaultConfig` function to simplify the process of creating a config.
+
+Below is a simple example app using `getDefaultConfig()` to help you get started:
+
+_When using a framework that supports [React Server Components](https://react.dev/learn/start-a-new-react-project#bleeding-edge-react-frameworks), you will need to include the `"use client"` directive at the beginning of this file._
+
+```javascript
+import { WagmiProvider, createConfig, http } from 'wagmi';
+import { mainnet } from 'wagmi/chains';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { OPConnectProvider, getDefaultConfig } from 'opconnect';
+
+const config = createConfig(
+  getDefaultConfig({
+    // Your dApps chains
+    chains: [mainnet],
+    transports: {
+      // RPC URL for each chain
+      [mainnet.id]: http(
+        `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}`
+      ),
+    },
+
+    // Required API Keys
+    walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
+
+    // Required App Info
+    appName: 'Your App Name',
+  })
+);
+
+const queryClient = new QueryClient();
+
+export const Web3Provider = ({ children }) => {
+  return (
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <OPConnectProvider>{children}</OPConnectProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
+  );
+};
+```
+
+Now that you have your `Web3Provider` component, you can wrap your app with it:
+
+```javascript
+import { Web3Provider } from './Web3Provider';
+import { OPConnectButton } from 'opconnect';
+
+const App = () => {
+  return (
+    <Web3Provider>
+      <OPConnectButton />
+    </Web3Provider>
+  );
+};
+```
+
+## 4\. Connected Wallet Info
+
+In a lot of use cases, you will want to access the connected wallet from OPConnect in order to be able to interact with it further. You can do so by using the different hooks, such as [useAccount](https://wagmi.sh/docs/hooks/useAccount), from wagmi (a OPConnect dependency).
+
+In the previous example above we wrapped our app with a <OPConnectProvider> top-level. Before utilizing any wagmi hook, make sure the components you build are mounted under this provider.
+
+Below is a simple example component that utilizes the useAccount hook to access connection state and the connected wallet address:
+
+```javascript
+import { useAccount } from 'wagmi';
+
+// Make sure that this component is wrapped with OPConnectProvider
+const MyComponent = () => {
+  const { address, isConnecting, isDisconnected } = useAccount();
+  if (isConnecting) return <div>Connecting...</div>;
+  if (isDisconnected) return <div>Disconnected</div>;
+  return <div>Connected Wallet: {address}</div>;
+};
+```
+
+## Additional Build Tooling Setup
+
+Some build tools require additional setup to work with ConnectKit.
+
+[](https://docs.family.co/connectkit/getting-started#getting-started-nextjs)
+
+### Next.js
+
+OPConnect uses [WalletConnect](https://walletconnect.com/)'s SDK to help with connecting wallets. WalletConnect 2.0 pulls in Node.js dependencies that Next.js does not support by default.
+
+You can mitigate this by adding the following to your `next.config.js` file:
+
+```javascript
+module.exports = {
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false, net: false, tls: false };
+    return config;
+  },
+};
+```
+
+### Next.js App Router
+
+If using Next.js App Router, or any framework that supports React Server Components, you will need to include the `"use client"` directive at the beginning of your `Web3Provider` file.
+
+```javascript
+"use client"
+
+...
+
+export const Web3Provider = ({ children }) => {
+  return (
+    ...
+  );
+};
+```
 
 ## Examples
 
