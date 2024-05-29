@@ -1,7 +1,3 @@
-<a href="https://docs.family.co/opconnect">
-  <img width="1080" alt="opconnect" src="https://github.com/family/opconnect/assets/1930210/87c2e868-3228-44b8-82c3-a38adf6d1bbf">
-</a>
-
 # OPConnect
 
 OPConnect is a powerful [React](https://reactjs.org/) component library for connecting a wallet to your dApp. It supports the most popular connectors and chains out of the box and provides a beautiful, seamless experience.
@@ -11,7 +7,7 @@ OPConnect is a powerful [React](https://reactjs.org/) component library for conn
 - 💡 TypeScript Ready — Get types straight out of the box.
 - 🌱 Ecosystem Standards — Uses top libraries such as [wagmi](https://github.com/wagmi-dev/wagmi).
 - 🖥️ Simple UX — Give users a simple, attractive experience.
-- 🎨 Beautiful Themes — Predesigned themes or full customization.
+- 🌞🌚 Light/Dark/Auto Modes — Predesigned color themes.
 
 and much more...
 
@@ -39,19 +35,19 @@ pnpm dlx create-react-app ./my-app --template cra-template-opconnect
 
 ## Documentation
 
-You can find the full OPConnect documentation in the Family docs [here](https://docs.family.co/opconnect).
+You can find the full OPConnect documentation in the Family docs [here](https://docs.family.co/connectkit).
 
 ## API Reference
 
-You can find the full API Reference in the Family docs [here](https://docs.family.co/opconnect/api-reference).
+You can find the full API Reference in the Family docs [here](https://docs.family.co/connectkit/api-reference).
 
 ## Examples
 
-There are various runnable examples included in this repository in the [examples folder](https://github.com/family/opconnect/tree/main/examples):
+There are various runnable examples included in this repository in the [examples folder](https://github.com/solidity-io/canopy-wallet-connect/tree/main/examples):
 
-- [Create React App Example (TypeScript)](https://github.com/family/opconnect/tree/main/examples/cra)
-- [Next.js Example (TypeScript)](https://github.com/family/opconnect/tree/main/examples/nextjs)
-- [Vite Example (TypeScript)](https://github.com/family/opconnect/tree/main/examples/vite)
+- [Create React App Example (TypeScript)](https://github.com/solidity-io/canopy-wallet-connect/main/examples/cra)
+- [Next.js Example (TypeScript)](https://github.com/solidity-io/canopy-wallet-connect/main/examples/nextjs)
+- [Vite Example (TypeScript)](https://github.com/solidity-io/canopy-wallet-connect/main/examples/vite)
 
 ### Try in CodeSandbox
 
@@ -86,15 +82,3 @@ $ yarn dev:nextjs # Next.js
 $ yarn dev:nextjs-siwe # Next.js with SIWE
 $ yarn dev:cra # Create React App
 ```
-
-## Contribute
-
-Before starting on anything, please have a read through our [Contribution Guidelines](https://github.com/family/opconnect/blob/main/CONTRIBUTING.md).
-
-## Twitter
-
-Follow [@family](https://twitter.com/family) on Twitter for the latest updates on OPConnect.
-
-## License
-
-See [LICENSE](https://github.com/family/opconnect/blob/main/LICENSE) for more information.

@@ -12,4 +12,4 @@ yarn add siwe opconnect-next-siwe
 
 ## 2. Configure
 
-You can find the full configuration documentation for this package in the Family docs [here](https://docs.family.co/conneckit/auth-with-nextjs).
+You can find the full configuration documentation for this package in the Family docs [here](https://docs.family.co/connectkit/auth-with-nextjs).
