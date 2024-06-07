@@ -91,7 +91,6 @@ const SwitchChainButton = styled(motion.button)`
           width: auto;
           padding: 3px;
           position: relative;
-          left: -22px;
         `
       : css`
           cursor: pointer;
