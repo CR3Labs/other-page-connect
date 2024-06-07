@@ -26,10 +26,7 @@ import { useLastConnector } from '../../../hooks/useLastConnector';
 import FitText from '../../Common/FitText';
 import CustomQRCode from '../../Common/CustomQRCode';
 import { useWeb3 } from '../../contexts/web3';
-import {
-  isCoinbaseWalletConnector,
-  isWalletConnectConnector,
-} from '../../../utils';
+import { isWalletConnectConnector } from '../../../utils';
 import ScanIconWithLogos from '../../../assets/ScanIconWithLogos';
 import MobileConnectorListDropdown from '../../Common/ConnectorList/MobileConnectorListDropdown';
 import { useMobileView } from '../../../hooks/useMobileView';
@@ -121,12 +118,7 @@ const Wallets: React.FC = () => {
     connect: { getUri },
   } = useWeb3();
 
-  const wcUri = getUri(id);
-  const uri = isCoinbaseWalletConnector(id)
-    ? wcUri
-    : wcUri
-    ? selectedWallet?.getWalletConnectDeeplink?.(wcUri) ?? wcUri
-    : undefined;
+  const uri = getUri();
 
   const _locales = useLocales({
     CONNECTORNAME: selectedWallet?.name,
