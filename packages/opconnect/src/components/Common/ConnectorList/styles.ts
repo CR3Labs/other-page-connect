@@ -52,7 +52,7 @@ const styles = {
         var(--fallback-border-radius)
       );
 
-      --hover-color: var(--ck-connector-button-hover-color, var(--color));
+      --hover-color: var(--ck-primary-button-hover-color, var(--color));
 
       --hover-background: var(
         --ck-primary-button-background,

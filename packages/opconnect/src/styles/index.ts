@@ -157,17 +157,44 @@ const createCssColors = (scheme: any, override?: boolean) => {
   `;
 };
 
-function darkenColor(hexColor: string, amount = 20) {
+function hoverColor(hexColor: string) {
   if (!hexColor.includes('#')) return hexColor;
-  hexColor = hexColor.substring(1); // remove #
-  const num = parseInt(hexColor, 16); // convert to integer
-  const r = (num >> 16) - amount; // extract red
-  const b = ((num >> 8) & 0x00ff) - amount; // extract blue
-  const g = (num & 0x0000ff) - amount; // extract green
 
-  const newColor = g | (b << 8) | (r << 16); // assemble back into a color
-  return '#' + newColor.toString(16);
+  return `${hexColor}F2`;
 }
+
+const hexToRgb = (hex: string): [number, number, number] => {
+  hex = hex.replace('#', '');
+  if (hex.length === 3) {
+    hex = hex
+      .split('')
+      .map((c) => c + c)
+      .join('');
+  }
+  const bigint = parseInt(hex, 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return [r, g, b];
+};
+
+const linearize = (value: number): number => {
+  value /= 255.0;
+  return value <= 0.03928
+    ? value / 12.92
+    : Math.pow((value + 0.055) / 1.055, 2.4);
+};
+
+const calculateLuminance = (rgb: [number, number, number]): number => {
+  const [r, g, b] = rgb.map(linearize);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+
+const chooseTextColor = (hex: string): string => {
+  const rgb = hexToRgb(hex);
+  const luminance = calculateLuminance(rgb);
+  return luminance > 0.5 ? '#000000' : '#ffffff';
+};
 
 const themes = {
   default: createCssVars(themeGlobals.default),
@@ -281,9 +308,13 @@ export const ResetContainer = styled(motion.div)<{
       const customPrimaryColor =
         (props.$primaryColor as `#${string}`) ?? '#F97316';
 
+      const textColor = chooseTextColor(customPrimaryColor);
+
       return {
         '--ck-primary-button-background': customPrimaryColor,
-        '--ck-primary-button-hover-background': darkenColor(customPrimaryColor),
+        '--ck-primary-button-hover-background': hoverColor(customPrimaryColor),
+        '--ck-primary-button-color': textColor,
+        '--ck-primary-button-hover-color': textColor,
       };
     }
     if (props.$primaryColor) {

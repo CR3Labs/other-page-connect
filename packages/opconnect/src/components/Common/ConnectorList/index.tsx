@@ -16,6 +16,7 @@ import Alert from '../Alert';
 import { WalletProps } from '../../../wallets/useWallets';
 import { isWalletConnectConnector } from '../../../utils';
 import { useLastConnector } from '../../../hooks/useLastConnector';
+import { MouseEvent } from 'react';
 
 const ConnectorList = ({
   walletsToDisplay,

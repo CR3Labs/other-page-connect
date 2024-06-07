@@ -441,23 +441,6 @@ const Home: NextPage = () => {
             })
           }
         />
-        <Checkbox
-          label="Custom Font"
-          value="customFont"
-          checked={customTheme['--ck-font-family'] !== undefined}
-          onChange={() => {
-            const name = '--ck-font-family';
-            if (customTheme[name] !== undefined) {
-              const { [name]: _, ...rest } = customTheme;
-              setCustomTheme(rest);
-            } else {
-              setCustomTheme({
-                ...customTheme,
-                [name]: 'monospace',
-              });
-            }
-          }}
-        />
         <Select
           label={'Custom Accent'}
           value={customTheme['--ck-accent-color'] ?? ''}

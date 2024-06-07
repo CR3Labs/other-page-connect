@@ -27,7 +27,7 @@ export default {
 
     /** Primary Button */
     '--ck-primary-button-border-radius': '4px',
-    '--ck-primary-button-color': '#000000',
+    // '--ck-primary-button-color': '#000000', //this is now set in ResetContainer from the primaryColor prop for contrast reasons
     '--ck-primary-button-border-width': '0px',
     // '--ck-primary-button-background': '#F97316', //this is now set in ResetContainer from the primaryColor prop
     '--ck-body-background-primary': '#F97316',
@@ -36,7 +36,7 @@ export default {
     '--ck-primary-button-font-size': '14px',
     '--ck-primary-button-line-height': '19.12px',
 
-    '--ck-primary-button-hover-color': '#373737',
+    // '--ck-primary-button-hover-color': '#373737',  //this is now set in ResetContainer from the primaryColor prop for contrast reasons
     // '--ck-primary-button-hover-background': '#d66413', //this is now set in ResetContainer from the primaryColor prop
     //'--ck-primary-button-hover-box-shadow': 'inset 0 0 0 2px var(--ck-focus-color)',
 
@@ -54,8 +54,9 @@ export default {
 
     '--ck-secondary-button-hover-background': '#e0e4eb',
 
+    /** ConnectorButton Button */
     '--ck-connector-button-color': '#000000',
-    '--ck-connector-button-hover-color': '#373737',
+    // '--ck-connector-button-hover-color': '#373737',
 
     /** Modal */
     '--ck-modal-box-shadow': '0px 2px 4px rgba(0, 0, 0, 0.02)',
@@ -133,7 +134,7 @@ export default {
     '--ck-connectbutton-balance-active-box-shadow':
       'inset 0 0 0 1px var(--ck-connectbutton-active-background)',
 
-    '--ck-primary-button-color': '#000000',
+    // '--ck-primary-button-color': '#000000', //this is now set in ResetContainer from the primaryColor prop for contrast reasons
     // '--ck-primary-button-background': '#F97316',//this is now set in ResetContainer from the primaryColor prop
     '--ck-body-background-primary': '#F97316',
     //'--ck-primary-button-box-shadow': 'inset 0 0 0 1px #3D3D3D',
@@ -149,7 +150,7 @@ export default {
     '--ck-primary-button-line-height': '19.12px',
 
     // '--ck-primary-button-hover-background': '#d66413',//this is now set in ResetContainer from the primaryColor prop
-    '--ck-primary-button-hover-color': '#000000',
+    // '--ck-primary-button-hover-color': '#000000',  //this is now set in ResetContainer from the primaryColor prop for contrast reasons
     //'--ck-primary-button-hover-box-shadow': 'inset 0 0 0 2px rgba(255, 255, 255, 0.4)',
 
     //'--ck-primary-button-active-background': '#4D4D4D',
@@ -194,7 +195,7 @@ export default {
     '--ck-tooltip-shadow': '0px 2px 10px rgba(0, 0, 0, 0.08)',
 
     '--ck-connector-button-color': '#D7DCDE',
-    '--ck-connector-button-hover-color': '#000000',
+    // '--ck-connector-button-hover-color': '#000000',
 
     '--ck-custom-qr-code-background': '#000000',
 
