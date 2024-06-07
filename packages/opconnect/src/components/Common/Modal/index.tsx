@@ -31,6 +31,8 @@ import {
   SiweButton,
   SignInTooltip,
   ConnectedIndicator,
+  ModalFooter,
+  PoweredByContainer,
 } from './styles';
 
 import { routes, useContext } from '../../OPConnect';
@@ -48,6 +50,7 @@ import useLocales from '../../../hooks/useLocales';
 import FitText from '../FitText';
 import { useWallet } from '../../../wallets/useWallets';
 import { useMobileView } from '../../../hooks/useMobileView';
+import { PoweredByOtherPage } from '../../../assets/logos';
 
 const ProfileIcon = ({ isSignedIn }: { isSignedIn?: boolean }) => (
   <div style={{ position: 'relative' }}>
@@ -599,6 +602,11 @@ const Modal: React.FC<ModalProps> = ({
                   </Page>
                 );
               })}
+              <ModalFooter>
+                <PoweredByContainer>
+                  <PoweredByOtherPage />
+                </PoweredByContainer>
+              </ModalFooter>
             </InnerContainer>
           </BoxContainer>
         </Container>

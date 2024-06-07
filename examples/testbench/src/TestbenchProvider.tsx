@@ -40,8 +40,7 @@ const theme = 'auto';
 export const TestBenchProvider: React.FC<TestBenchProviderProps> = ({
   children,
   customTheme = {},
-  // primaryColor = '#F97316',
-  primaryColor = '#123d17',
+  primaryColor = '#F97316',
   mode = 'dark',
   options = {
     overlayBlur: 0,

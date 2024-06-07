@@ -215,6 +215,20 @@ export const BackgroundOverlay = styled(motion.div)<{
     both;
 `;
 
+export const ModalFooter = styled(motion.div)`
+  position: relative;
+  margin: auto;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 12px 24px 12px 24px;
+  width: var(--width);
+`;
+
+export const PoweredByContainer = styled(motion.div)`
+  width: 80px;
+`;
+
 const BoxIn = keyframes`
   from{ opacity: 0; transform: scale(0.97); }
   to{ opacity: 1; transform: scale(1); }
@@ -372,7 +386,7 @@ export const PageContainer = styled(motion.div)`
 export const PageContents = styled(motion.div)`
   margin: 0 auto;
   width: fit-content;
-  padding: 24px;
+  padding: 24px 24px 0 24px;
   backface-visibility: hidden;
 `;
 
@@ -558,7 +572,7 @@ export const Container = styled(motion.div)`
     }
     ${PageContents} {
       width: 100%;
-      padding: 31px 24px;
+      padding: 31px 24px 0px 24px;
     }
     ${ControllerContainer} {
       width: 100%;
