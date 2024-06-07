@@ -67,20 +67,6 @@ export const InfoBox = styled(ForceLightMode)`
   color: var(--ck-body-color);
 `;
 
-export const BackgroundImage = styled.img`
-  position: absolute;
-  top: 0;
-  left: -80px;
-  transform: rotate(-90deg);
-  mix-blend-mode: hard-light;
-  opacity: 0.2;
-  filter: var(--ck-modal-background-image-filter);
-
-  @media only screen and (max-width: ${defaultTheme.mobileWidth}px) {
-    display: none;
-  }
-`;
-
 export const Address = styled.h1`
   line-height: 32.78px;
   font-size: 24px;
