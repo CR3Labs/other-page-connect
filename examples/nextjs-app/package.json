@@ -9,13 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.17.15",
     "next": "14.0.4",
     "opconnect": "workspace:packages/opconnect",
+    "opconnect-next-siwe": "workspace:packages/opconnect-next-siwe",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "viem": "^2.0.6",
-    "wagmi": "^2.2.1"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/node": "^18.19.3",
@@ -24,5 +22,10 @@
     "eslint-config-next": "^14.0.4",
     "next": "^14.0.4",
     "typescript": "^5.0.4"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "^5.17.15",
+    "viem": "^2.0.6",
+    "wagmi": "^2.2.1"
   }
 }

@@ -14,10 +14,7 @@
     "opconnect": "workspace:packages/opconnect",
     "opconnect-next-siwe": "workspace:packages/opconnect-next-siwe",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "siwe": "^2.1.4",
-    "viem": "^2.0.6",
-    "wagmi": "^2.2.1"
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "@types/node": "18.7.18",
@@ -26,5 +23,11 @@
     "eslint": "8.23.1",
     "eslint-config-next": "12.3.0",
     "typescript": "^5.0.4"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "^5.17.15",
+    "siwe": "^2.1.4",
+    "viem": "^2.0.6",
+    "wagmi": "^2.2.1"
   }
 }
