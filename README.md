@@ -217,4 +217,5 @@ $ yarn dev:vite # Vite
 $ yarn dev:nextjs # Next.js
 $ yarn dev:nextjs-siwe # Next.js with SIWE
 $ yarn dev:cra # Create React App
+$ yarn dev:testbench # Testbench app
 ```
