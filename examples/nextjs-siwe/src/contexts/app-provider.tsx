@@ -14,8 +14,8 @@ type AppContextType = {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const AppProvider: FC<AppProviderProps> = ({ children }) => {
-	const [mode, setMode] = useState<"light" | "dark" | "auto">("dark");
-	const [primaryColor, setPrimaryColor] = useState<`#${string}`>("#F97316");
+	const [mode, setMode] = useState<"light" | "dark" | "auto">("light");
+	const [primaryColor, setPrimaryColor] = useState<`#${string}`>("#156DF9");
 
 	const handleToggleMode = () => {
 		setMode((prev) => (prev === "light" ? "dark" : prev === "dark" ? "auto" : "light"));

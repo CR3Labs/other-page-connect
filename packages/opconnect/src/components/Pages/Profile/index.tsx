@@ -109,7 +109,7 @@ const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
     <PageContent>
       <ModalContent style={{ paddingBottom: 0 }}>
         <AvatarContainer>
-          <Avatar address={address} width="100%" height={149} radius={0} />
+          <Avatar address={address} width="100%" radius={0} />
           <ChainSelectorContainer>
             <ChainSelector />
           </ChainSelectorContainer>
@@ -153,7 +153,7 @@ const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
           </InfoBox>
         </AvatarContainer>
       </ModalContent>
-      {context.signInWithEthereum && !isSignedIn && (
+      {context.signInWithEthereum && !isSignedIn && !window.location.search?.includes('code') && (
         <Button
           variant="primary"
           iconPosition="right"
