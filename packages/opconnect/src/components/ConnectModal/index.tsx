@@ -18,6 +18,7 @@ import { getAppIcon, getAppName } from '../../defaultConfig';
 import { OPConnectThemeProvider } from '../OPConnectThemeProvider/OPConnectThemeProvider';
 import { useChainIsSupported } from '../../hooks/useChainIsSupported';
 import OAuthWallet from '../Pages/OAuthWallet';
+import SignInWithOtherPage from '../Pages/SignInWithOtherPage';
 
 const customThemeDefault: object = {};
 
@@ -73,7 +74,7 @@ const ConnectModal: React.FC<{
     connect: <ConnectUsing />,
     profile: <Profile />,
     switchNetworks: <SwitchNetworks />,
-    signInWithEthereum: <SignInWithEthereum />,
+    signInWithEthereum: <SignInWithOtherPage />,
     oauthWallet: <OAuthWallet />,
   };
 
@@ -82,6 +83,11 @@ const ConnectModal: React.FC<{
   }
 
   useEffect(() => {
+    if (window.location.search.includes('code')) {
+      context.setOpen(true);
+      context.setRoute(routes.SIGNINWITHETHEREUM);
+    }
+
     if (isConnected) {
       if (
         context.route !== routes.PROFILE ||
