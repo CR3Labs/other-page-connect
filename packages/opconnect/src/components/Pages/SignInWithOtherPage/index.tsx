@@ -65,7 +65,7 @@ const SignInWithOtherPage: React.FC = () => {
       // TODO pass code to API for validation
       setTimeout(() => context.setOpen(false), 2000);
     } else {
-     setTimeout(() => window.location.href = encodeURI('http://127.0.0.1:3001/connect?client_id=testclient&callback_uri=http://localhost:3003&state=randomsecretcookie'), 2000);
+     setTimeout(() => window.location.href = encodeURI(`http://127.0.0.1:3001/connect?client_id=Test+Game&callback_uri=${window.location.href}&state=randomsecretcookie`), 2000);
     }
   }, []);
 
