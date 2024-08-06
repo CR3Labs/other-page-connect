@@ -27,8 +27,7 @@ const avalanche: Chain = defineChain({
   testnet: false,
 });
 
-const ckConfig = getDefaultConfig({
-  /*
+export const ckConfig = getDefaultConfig({
   chains: [
     mainnet,
     //avalanche
@@ -37,7 +36,7 @@ const ckConfig = getDefaultConfig({
     [mainnet.id]: http(mainnet.rpcUrls.default.http[0]),
     //[avalanche.id]: http(avalanche.rpcUrls.default.http[0]),
   },
-  */
+
   appName: 'OPConnect testbench',
   appIcon: '/app.png',
   walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,

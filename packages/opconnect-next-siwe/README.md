@@ -11,7 +11,7 @@ OPConnect provides a simple way to add [Sign In With Ethereum](https://login.xy
 Once you've set up OPConnect, install the official [Sign In With Ethereum package](https://www.npmjs.com/package/siwe) and our [SIWE helper package](https://www.npmjs.com/package/connectkit-next-siwe) to your Next.js project.
 
 ```bash
-npm install siwe connectkit-next-siwe
+npm install connectkit-next-siwe viem@">=2.13.3"
 ```
 
 ## 2\. Configure
@@ -32,11 +32,27 @@ export const siweClient = configureClientSIWE({
 
 The server configuration needs to be separate from the client so it does not get built into the frontend bundle.
 
+You can import your `config` from your `Web3Provider` component to bring over your `chains` and `transports` configuration to use as the public client to verify the SIWE signature.
+
+```javascript
+// @/components/Web3Provider.tsx
+import { getDefaultConfig } from "opconnect";
+
+export const config = getDefaultConfig({ ... });
+```
+
 ```javascript
 // @/utils/siweServer.ts
 import { configureServerSideSIWE } from 'opconnect-next-siwe';
+import { config } from '@/components/Web3Provider';
 
 export const siweServer = configureServerSideSIWE({
+  // OPTIONAL Config
+  config: {
+    chains: config.chains,
+    transports: config.transports,
+  },
+  // MANDATORY
   session: {
     cookieName: 'opconnect-next-siwe',
     password: process.env.SESSION_SECRET,
