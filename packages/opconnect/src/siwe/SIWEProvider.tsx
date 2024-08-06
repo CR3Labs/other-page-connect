@@ -118,6 +118,7 @@ export const SIWEProvider = ({
         chainId,
         nonce: nonce?.data,
       });
+      console.log('message', message);
 
       // Ask user to sign message with their wallet
       const signature = await signMessageAsync({

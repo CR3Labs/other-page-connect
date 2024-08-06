@@ -1,74 +1,38 @@
-import { useOAuthProviders } from '../../../oauth/useOAuthProviders';
 import {
   OAuthConnectorButton,
   OAuthConnectorIcon,
   OAuthConnectorLabel,
 } from './styles';
-import useIsMobile from '../../../hooks/useIsMobile';
 import { routes, useContext } from '../../OPConnect';
-import { IOAuthConfig } from '../../../oauth/oauthConfigs';
 import { ScrollArea } from '../ScrollArea';
 import { OAuthConnectorContainer } from './styles';
+import { WalletProps } from '../../../wallets/useWallets';
+import { useSmartWallets } from '../../../wallets/useSmartWallets';
+import Alert from '../Alert';
 
 export const OAuthList = () => {
-  const { otherProviders, socialProviders } = useOAuthProviders();
+  const smartWallets = useSmartWallets();
 
   return (
     <ScrollArea height={450}>
-      <OAuthConnectorContainer
-        $mobile={false}
-        $totalResults={otherProviders.length + socialProviders.length}
-      >
-        {otherProviders.map((oauthConnector) => (
-          <OAuthConnectorItem
-            key={oauthConnector.name}
-            oauthConnector={oauthConnector}
-          />
-        ))}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '8px',
-          }}
+      {smartWallets?.length === 0 && (
+        <Alert error>No smart wallet connectors found in config.</Alert>
+      )}
+      {smartWallets?.length > 0 && (
+        <OAuthConnectorContainer
+          $mobile={false}
+          $totalResults={smartWallets?.length}
         >
-          <div
-            style={{
-              background:
-                'var(--ck-body-divider-secondary,var(--ck-body-divider)',
-              width: '100%',
-              height: '1px',
-            }}
-          />
-          <p
-            style={{
-              textTransform: 'uppercase',
-              color: 'var(--ck-connector-button-color)',
-              fontSize: '10px',
-              textAlign: 'left',
-            }}
-          >
-            Socials
-          </p>
-        </div>
-
-        {socialProviders.map((oauthConnector) => (
-          <OAuthConnectorItem
-            key={oauthConnector.name}
-            oauthConnector={oauthConnector}
-          />
-        ))}
-      </OAuthConnectorContainer>
+          {smartWallets?.map((wallet, idx) => (
+            <OAuthConnectorItem key={idx} wallet={wallet} />
+          ))}
+        </OAuthConnectorContainer>
+      )}
     </ScrollArea>
   );
 };
 
-const OAuthConnectorItem = ({
-  oauthConnector,
-}: {
-  oauthConnector: IOAuthConfig;
-}) => {
-  const isMobile = useIsMobile();
+const OAuthConnectorItem = ({ wallet }: { wallet: WalletProps }) => {
   const context = useContext();
 
   return (
@@ -77,16 +41,17 @@ const OAuthConnectorItem = ({
         height: '45px',
       }}
       type="button"
-      // as={externalLink ? 'a' : undefined}
-      // href={externalLink ? externalLink : undefined}
       disabled={context.route !== routes.OAUTHWALLET}
-      onClick={() => alert(`OAuth Connector ${oauthConnector.name} Clicked`)}
+      onClick={() => {
+        context.setRoute(routes.CONNECT);
+        context.setConnector({ id: wallet.id });
+      }}
     >
       <OAuthConnectorIcon data-small={false}>
-        {oauthConnector.icon}
+        {wallet.iconConnector ?? wallet.icon}
       </OAuthConnectorIcon>
       <OAuthConnectorLabel>
-        {isMobile ? oauthConnector.shortName : oauthConnector.name}
+        {wallet.name === 'Coinbase Wallet' ? 'Smart Wallet' : wallet.name}
       </OAuthConnectorLabel>
     </OAuthConnectorButton>
   );

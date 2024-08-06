@@ -215,14 +215,13 @@ export const OAuthConnectorContainer = styled.div<{
 }>`
   transition: opacity 300ms ease;
   min-width: fit-content;
-
+  min-height: 300px;
   ${(props) =>
     props.$disabled &&
     css`
       pointer-events: none;
       opacity: 0.4;
     `}
-
   ${(props) =>
     !props.$mobile
       ? css`
@@ -259,5 +258,5 @@ export const OAuthConnectorContainer = styled.div<{
               ${styles.mobile.OAuthConnectorIcon}
             }
           }
-        `}
+        `};
 `;

@@ -40,6 +40,7 @@ export type WalletConfigProps = {
   };
   // Create URI for QR code, where uri is encoded data from WalletConnect
   getWalletConnectDeeplink?: (uri: string) => string;
+  shouldDeeplinkDesktop?: boolean;
 };
 
 // Organised in alphabetical order by key
@@ -61,11 +62,28 @@ export const walletConfigs: {
         : `https://argent.link/app/wc?uri=${encodeURIComponent(uri)}`;
     },
   },
-  'coinbaseWallet, com.coinbase.wallet, coinbaseWalletSDK': {
+  'coinbaseWallet, coinbaseWalletSDK': {
     name: 'Coinbase Wallet',
     shortName: 'Coinbase',
     icon: <Logos.Coinbase background />,
     iconShape: 'squircle',
+    downloadUrls: {
+      download: 'https://connect.family.co/v0/download/coinbasewallet',
+      website: 'https://www.coinbase.com/wallet/getting-started-extension',
+      android: 'https://play.google.com/store/apps/details?id=org.toshi',
+      ios: 'https://apps.apple.com/app/coinbase-wallet-store-crypto/id1278383455',
+      chrome:
+        'https://chrome.google.com/webstore/detail/coinbase-wallet-extension/hnfanknocfeofbddgcijnmhnfnkdnaad',
+    },
+    getWalletConnectDeeplink: (uri: string) => {
+      return `https://go.cb-w.com/wc?uri=${encodeURIComponent(uri)}`;
+    },
+  },
+  'com.coinbase.wallet': {
+    name: 'Coinbase Wallet',
+    shortName: 'Coinbase',
+    icon: <Logos.Coinbase background />,
+    iconShape: 'circle',
     downloadUrls: {
       download: 'https://connect.family.co/v0/download/coinbasewallet',
       website: 'https://www.coinbase.com/wallet/getting-started-extension',
@@ -145,7 +163,7 @@ export const walletConfigs: {
     shortName: 'Browser',
     icon: <Logos.Injected />,
   },
-  'metaMask, metaMask-io, io.metamask, io.metamask.mobile': {
+  'metaMask, metaMask-io, io.metamask, io.metamask.mobile, metaMaskSDK': {
     name: 'MetaMask',
     icon: <Logos.MetaMask />,
     iconConnector: <Logos.MetaMask />,
@@ -179,20 +197,20 @@ export const walletConfigs: {
     iconShape: 'squircle',
     downloadUrls: {
       download: 'https://connect.family.co/v0/download/rainbow',
-      website: 'https://rainbow.me/?utm_source=opconnect',
+      website: 'https://rainbow.me/?utm_source=connectkit',
       android:
-        'https://play.google.com/store/apps/details?id=me.rainbow&referrer=utm_source%3Dopconnect&utm_source=opconnect',
-      ios: 'https://apps.apple.com/app/rainbow-ethereum-wallet/id1457119021?pt=119997837&ct=opconnect&mt=8',
-      chrome: 'https://rainbow.me/extension?utm_source=opconnect',
-      edge: 'https://rainbow.me/extension?utm_source=opconnect',
-      brave: 'https://rainbow.me/extension?utm_source=opconnect',
+        'https://play.google.com/store/apps/details?id=me.rainbow&referrer=utm_source%3Dconnectkit&utm_source=connectkit',
+      ios: 'https://apps.apple.com/app/rainbow-ethereum-wallet/id1457119021?pt=119997837&ct=connectkit&mt=8',
+      chrome: 'https://rainbow.me/extension?utm_source=connectkit',
+      edge: 'https://rainbow.me/extension?utm_source=connectkit',
+      brave: 'https://rainbow.me/extension?utm_source=connectkit',
     },
     getWalletConnectDeeplink: (uri: string) => {
       return isAndroid()
         ? uri
         : `https://rnbwapp.com/wc?uri=${encodeURIComponent(
             uri
-          )}&connector=opconnect`;
+          )}&connector=connectkit`;
     },
   },
   'io.rabby': {
@@ -336,6 +354,7 @@ export const walletConfigs: {
         ? uri
         : `ledgerlive://wc?uri=${encodeURIComponent(uri)}`;
     },
+    shouldDeeplinkDesktop: true,
   },
   zerion: {
     name: 'Zerion',
@@ -396,10 +415,11 @@ export const walletConfigs: {
     },
   },
   walletConnect: {
-    name: 'WalletConnect',
-    shortName: 'WalletConnect',
+    name: 'Other Wallets',
+    shortName: 'Other',
     icon: <Logos.WalletConnect background />,
-    iconConnector: <Logos.WalletConnect background />,
+    iconConnector: <Logos.OtherWallets />,
+    iconShape: 'square',
     getWalletConnectDeeplink: (uri: string) => uri,
   },
 } as const;

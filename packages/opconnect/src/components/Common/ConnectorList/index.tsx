@@ -14,9 +14,12 @@ import { ScrollArea } from '../ScrollArea';
 import Alert from '../Alert';
 
 import { WalletProps } from '../../../wallets/useWallets';
-import { isWalletConnectConnector } from '../../../utils';
+import {
+  detectBrowser,
+  isCoinbaseWalletConnector,
+  isWalletConnectConnector,
+} from '../../../utils';
 import { useLastConnector } from '../../../hooks/useLastConnector';
-import { MouseEvent } from 'react';
 
 const ConnectorList = ({
   walletsToDisplay,
@@ -70,7 +73,6 @@ export const ConnectorItem = ({
   const uri = getUri();
   const isMobile = useIsMobile();
   const context = useContext();
-
   /*
   const [ready, setReady] = useState(false);
   useEffect(() => {
@@ -87,7 +89,13 @@ export const ConnectorItem = ({
       : undefined;
 
   const redirectToMoreWallets = isMobile && isWalletConnectConnector(wallet.id);
-  if (redirectToMoreWallets) deeplink = undefined; // mobile redirects to more wallets page
+
+  // Safari requires opening popup on user gesture, so we connect immediately here
+  const shouldConnectImmediately =
+    (detectBrowser() === 'safari' || detectBrowser() === 'ios') &&
+    isCoinbaseWalletConnector(wallet.connector.id);
+
+  if (redirectToMoreWallets || shouldConnectImmediately) deeplink = undefined; // mobile redirects to more wallets page
 
   return (
     <ConnectorButton
