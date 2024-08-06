@@ -14,7 +14,8 @@
     "opconnect": "workspace:packages/opconnect",
     "opconnect-next-siwe": "workspace:packages/opconnect-next-siwe",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-unity-webgl": "^9.5.2"
   },
   "devDependencies": {
     "@types/node": "18.7.18",
