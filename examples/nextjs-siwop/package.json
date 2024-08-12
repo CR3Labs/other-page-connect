@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-siwe",
+  "name": "nextjs-siwop",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,9 +12,10 @@
     "ethers": "^5",
     "next": "12.3.0",
     "opconnect": "workspace:packages/opconnect",
-    "opconnect-next-siwe": "workspace:packages/opconnect-next-siwe",
+    "opconnect-next-siwop": "workspace:packages/opconnect-next-siwop",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-unity-webgl": "^9.5.2"
   },
   "devDependencies": {
     "@types/node": "18.7.18",

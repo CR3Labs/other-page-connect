@@ -5,6 +5,7 @@ import {
   useConnectCallback,
   useConnectCallbackProps,
 } from './useConnectCallback';
+import { useSIWOP } from '../siwop';
 
 type ModalRoutes = (typeof routes)[keyof typeof routes];
 
@@ -19,7 +20,7 @@ const safeRoutes: {
     routes.MOBILECONNECTORS,
     routes.ONBOARDING,
   ],
-  connected: [routes.PROFILE, routes.SWITCHNETWORKS, routes.SIGNINWITHETHEREUM],
+  connected: [routes.PROFILE, routes.SWITCHNETWORKS, routes.SIGNINWITHETHEREUM, routes.SIGNINWITHOP],
 };
 const allRoutes: ModalRoutes[] = [
   ...safeRoutes.connected,
@@ -40,6 +41,7 @@ export const useModal = ({ onConnect, onDisconnect }: UseModalProps = {}) => {
 
   const { isConnected } = useAccount();
   const { signIn } = useSIWE();
+  const { signIn: signInWithOP } = useSIWOP();
 
   const close = () => {
     context.setOpen(false);
@@ -96,6 +98,10 @@ export const useModal = ({ onConnect, onDisconnect }: UseModalProps = {}) => {
     openSIWE: (triggerSIWE?: boolean) => {
       gotoAndOpen(routes.SIGNINWITHETHEREUM);
       if (triggerSIWE) signIn();
+    },
+    openSIWOP: (triggerSIWOP?: boolean) => {
+      gotoAndOpen(routes.SIGNINWITHOP);
+      if (triggerSIWOP) signInWithOP();
     },
   };
 };

@@ -74,7 +74,8 @@ const ConnectModal: React.FC<{
     connect: <ConnectUsing />,
     profile: <Profile />,
     switchNetworks: <SwitchNetworks />,
-    signInWithEthereum: <SignInWithOtherPage />,
+    signInWithEthereum: <SignInWithEthereum />,
+    signInWithOP: <SignInWithOtherPage />,
     oauthWallet: <OAuthWallet />,
   };
 

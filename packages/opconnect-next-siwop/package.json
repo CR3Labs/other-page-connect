@@ -1,11 +1,11 @@
 {
-  "name": "opconnect-next-siwe",
+  "name": "opconnect-next-siwop",
   "version": "0.0.1",
   "license": "BSD-2-Clause license",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cr3labs/other-page-connect.git",
-    "directory": "packages/opconnect-next-siwe"
+    "directory": "packages/opconnect-next-siwop"
   },
   "type": "module",
   "exports": "./build/index.es.js",

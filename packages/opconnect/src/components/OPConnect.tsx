@@ -41,6 +41,7 @@ export const routes = {
   PROFILE: 'profile',
   SWITCHNETWORKS: 'switchNetworks',
   SIGNINWITHETHEREUM: 'signInWithEthereum',
+  SIGNINWITHOP: 'signInWithOtherPage',
   OAUTHWALLET: 'oauthWallet',
 };
 
