@@ -1,9 +1,10 @@
 import { useAppContext } from '@/contexts/app-provider';
-import { OPConnectButton, useSIWE } from 'opconnect';
-import { use, useEffect, useState } from 'react';
+import { OPConnectButton, useSIWOP } from 'opconnect';
+import { useEffect, useState } from 'react';
 // import { Unity, useUnityContext } from "react-unity-webgl";
 
 export default function Home({ address }: { address?: string }) {
+  const { clientId } = useSIWOP();
   const [connected, setConnected] = useState(false);
   const { toggleMode, handleSetPrimaryColor, mode, primaryColor } =
     useAppContext();
@@ -11,14 +12,13 @@ export default function Home({ address }: { address?: string }) {
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleSetPrimaryColor(e.target.value as `#${string}`);
   };
-  const { data, isSignedIn, signOut, signIn } = useSIWE();
+  const { data, isSignedIn, signOut, signIn } = useSIWOP();
   console.log({ data, isSignedIn, signOut, signIn });
 
   const openAccount = () => {
     const left = (window.innerWidth / 2) - 400;
     const top = (window.innerHeight / 2) - 380;
-    const clientId = '019f608c-04c6-4568-b4d1-8e6ee24789b2';
-    window.open(`http://127.0.0.1:3001/connect/settings?client_id=${clientId}`, "mozillaWindow", `left=${left},top=${top},width=800,height=760`)
+    window.open(`https://alpha.other.page/connect/settings?client_id=${clientId}`, "mozillaWindow", `left=${left},top=${top},width=800,height=760`)
   };
 
   useEffect(() => {

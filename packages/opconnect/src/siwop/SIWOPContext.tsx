@@ -19,8 +19,7 @@ export type SIWOPConfig = {
   createAuthorizationUrl: (args: {
     nonce: string;
     address: string;
-    redirectURI: string;
-    scope: string;
+    code_challenge: string;
     // ...
   }) => string;
   verifyCode: (args: {
@@ -32,7 +31,7 @@ export type SIWOPConfig = {
 
   // Optional, we have default values but they can be overridden
   clientId?: string;
-  redirectURI?: string;
+  redirectUri?: string;
   scope?: string;
   enabled?: boolean;
   nonceRefetchInterval?: number;

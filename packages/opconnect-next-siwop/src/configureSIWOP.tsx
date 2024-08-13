@@ -30,7 +30,7 @@ type RouteHandlerOptions = {
 type NextServerSIWOPConfig = {
   config?: {
     clientId?: string;
-    redirectURI?: string;
+    redirectUri?: string;
     clientSecret?: string;
     scope?: string;
   };
@@ -40,9 +40,9 @@ type NextServerSIWOPConfig = {
 
 type NextClientSIWOPConfig = {
   apiRoutePrefix: string;
-  clientId?: string;
-  redirectURI?: string;
-  scope?: string;
+  clientId: string;
+  redirectUri: string;
+  scope: string;
 };
 
 type NextSIWOPSession<TSessionData extends Object = {}> = IronSession &
@@ -174,10 +174,11 @@ const verifyCodeRoute = async (
         //   return res.status(422).end('Unable to fetch access token.');
         // }
 
-        const session = await getSession(req, res, sessionConfig);
+        // fetch account data
+        // TODO
 
         // persist session data
-        // TODO
+        const session = await getSession(req, res, sessionConfig);
         // session.address = accessToken.address;
         // session.uid = accessToken.uid;
         
@@ -251,12 +252,15 @@ export const configureServerSideSIWOP = <TSessionData extends Object = {}>({
 export const configureClientSIWOP = <TSessionData extends Object = {}>({
   apiRoutePrefix,
   clientId,
-  redirectURI,
+  redirectUri,
   scope,
 }: NextClientSIWOPConfig): ConfigureClientSIWOPResult<TSessionData> => {
   const NextSIWOPProvider = (props: NextSIWOPProviderProps) => {
     return (
       <SIWOPProvider
+        clientId={clientId}
+        redirectUri={redirectUri}
+        scope={scope}
         getNonce={async () => {
           const res = await fetch(`${apiRoutePrefix}/nonce`);
           if (!res.ok) {
@@ -265,8 +269,8 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
           const nonce = await res.text();
           return nonce;
         }}
-        createAuthorizationUrl={({ nonce, address }) =>
-          `http://127.0.0.1:3001/connect?client_id=${clientId}&scope=${scope}&response_type=code&redirect_uri=${encodeURIComponent(redirectURI)}&state=${nonce}&address=${address}`
+        createAuthorizationUrl={({ nonce, address, code_challenge }) =>
+          `https://alpha.other.page/connect?client_id=${clientId}&scope=${scope}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&state=${nonce}&address=${address}&code_challenge=${code_challenge}&code_challenge_method=S256`
         }
         verifyCode={({ code }) =>
           fetch(`${apiRoutePrefix}/verify`, {

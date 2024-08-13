@@ -59,17 +59,7 @@ const SignInWithOtherPage: React.FC = () => {
         };
 
   useEffect(() => {
-    console.log(signIn);
-    setTimeout(signIn, 2000);
-    // if(window.location.search.includes('code')) {
-    //   setStatus('signedIn');
-    //   // TODO pass code to API for validation
-    //   setTimeout(() => context.setOpen(false), 2000);
-    // } else {
-      // const clientId = '019f608c-04c6-4568-b4d1-8e6ee24789b2';
-      // const oauth = `client_id=${clientId}&response_type=code&redirect_uri=http://127.0.0.1:3004&scope=avatar.read+wallets.read+twitter.read+discord.read+tokens.read+communities.read&state=random-cookie&code_challenge=ok_XaQvFqt2mVvGtiZOv2bwDU3tZg09_ebzmtG_77FI&code_challenge_method=S256&wallet=${connectedAddress}`
-      // setTimeout(() => window.location.href = encodeURI(`http://127.0.0.1:3001/connect?${oauth}`), 2000);
-    // }
+    setTimeout(()=> signIn(), 2000);
   }, []);
 
   const { address } = useAccount();

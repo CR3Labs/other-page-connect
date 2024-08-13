@@ -124,24 +124,13 @@ export const SIWOPProvider = ({
         return data as SIWOPSession;
       }
 
-      if (code) {
-        // verify code
-        const verified = await siwopConfig.verifyCode({ code });
-        // replace code in path?
-        setStatus(StatusState.READY);
-        return data;
-      } else {
-        const url = siwopConfig.createAuthorizationUrl({
-          nonce: nonce.data,
-          address,
-          redirectURI: siwopConfig.redirectURI || '',
-          scope: siwopConfig.scope || '',
-        });
-        console.log(url);
-        window.location.href = url;
-        return false;
-      }
-      
+      const url = siwopConfig.createAuthorizationUrl({
+        nonce: nonce.data,
+        address,
+        code_challenge: 'ok_XaQvFqt2mVvGtiZOv2bwDU3tZg09_ebzmtG_77FI',
+      });
+      window.location.href = url;
+      return false;
     } catch (error) {
       onError(error);
       return false;
@@ -152,8 +141,13 @@ export const SIWOPProvider = ({
     // retrieve code from url
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
+    console.log(code);
     if (code) {
       setCode(code);
+      siwopConfig.verifyCode({ code }).then((res) => {
+        console.log(res);
+        setStatus(StatusState.READY);
+      });
     }
   
     // Skip if we're still fetching session state from backend
@@ -171,23 +165,23 @@ export const SIWOPProvider = ({
     }
     // The SIWOP spec includes a chainId parameter for contract-based accounts,
     // so we're being extra cautious about keeping the SIWOP session and the
-    // connected account/network in sync. But this can be disabled when
+    // connected account in sync. But this can be disabled when
     // configuring the SIWOPProvider.
     else if (signOutOnNetworkChange && sessionData.address !== connectedAddress) {
       console.warn('Wallet changed, signing out of SIWOP session');
       signOutAndRefetch();
     }
-  }, [sessionData, connectedAddress, chain]);
+  }, [sessionData, connectedAddress]);
 
   // TODO fix types here
 
   return (
     <SIWOPContext.Provider
       value={{
-        clientId: siwopConfig.clientId || '',
-        redirectURI: siwopConfig.redirectURI || '',
-        scope: siwopConfig.scope || '',
         enabled,
+        clientId: '',
+        redirectUri: '',
+        scope: '',
         nonceRefetchInterval,
         sessionRefetchInterval,
         signOutOnDisconnect,
