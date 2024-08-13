@@ -54,6 +54,9 @@ type NextSIWOPSession<TSessionData extends Object = {}> = IronSession &
 
 type NextSIWOPProviderProps = Omit<
   ComponentProps<typeof SIWOPProvider>,
+  | 'clientId'
+  | 'redirectUri'
+  | 'scope'
   | 'getNonce'
   | 'createAuthorizationUrl'
   | 'verifyCode'

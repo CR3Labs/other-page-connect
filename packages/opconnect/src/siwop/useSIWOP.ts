@@ -44,7 +44,7 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
     };
   }
 
-  const { session, nonce, status, signOut, signIn, resetStatus } =
+  const { clientId, session, nonce, status, signOut, signIn, resetStatus } =
     siweContextValue;
   const { address } = session.data || {};
 
@@ -65,6 +65,7 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
   const isSignedIn = !!address;
 
   return {
+    clientId,
     isSignedIn,
     data: isSignedIn
       ? {

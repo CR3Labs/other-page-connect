@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 // import { Unity, useUnityContext } from "react-unity-webgl";
 
 export default function Home({ address }: { address?: string }) {
-  const { clientId } = useSIWOP();
   const [connected, setConnected] = useState(false);
   const { toggleMode, handleSetPrimaryColor, mode, primaryColor } =
     useAppContext();
@@ -12,8 +11,8 @@ export default function Home({ address }: { address?: string }) {
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleSetPrimaryColor(e.target.value as `#${string}`);
   };
-  const { data, isSignedIn, signOut, signIn } = useSIWOP();
-  console.log({ data, isSignedIn, signOut, signIn });
+  const { clientId, data, isSignedIn, signOut, signIn } = useSIWOP();
+  console.log({ clientId, data, isSignedIn, signOut, signIn });
 
   const openAccount = () => {
     const left = (window.innerWidth / 2) - 400;

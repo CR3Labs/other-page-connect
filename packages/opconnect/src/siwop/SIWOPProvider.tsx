@@ -141,7 +141,6 @@ export const SIWOPProvider = ({
     // retrieve code from url
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
-    console.log(code);
     if (code) {
       setCode(code);
       siwopConfig.verifyCode({ code }).then((res) => {
@@ -179,9 +178,6 @@ export const SIWOPProvider = ({
     <SIWOPContext.Provider
       value={{
         enabled,
-        clientId: '',
-        redirectUri: '',
-        scope: '',
         nonceRefetchInterval,
         sessionRefetchInterval,
         signOutOnDisconnect,
@@ -190,10 +186,13 @@ export const SIWOPProvider = ({
         ...siwopConfig,
         nonce,
         session,
-        signIn: signIn as any,
+        signIn,
         signOut: signOutAndRefetch,
         status,
         resetStatus,
+        clientId: siwopConfig.clientId,
+        redirectUri: siwopConfig.redirectUri,
+        scope: siwopConfig.scope,
       }}
     >
       {children}
