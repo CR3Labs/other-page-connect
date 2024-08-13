@@ -16,8 +16,7 @@ import {
 } from './styles';
 
 import { useAccount } from 'wagmi';
-import { SIWEButton } from '../../Standard/SIWE';
-import { useSIWE } from '../../../siwe';
+import { useSIWOP } from '../../../siwop';
 
 import { TickIcon } from '../../../assets/icons';
 import Chains from '../../../assets/chains';
@@ -35,8 +34,7 @@ const transition = { duration: 0.2, ease: [0.26, 0.08, 0.25, 1] };
 const copyTransition = { duration: 0.16, ease: [0.26, 0.08, 0.25, 1] };
 
 const SignInWithOtherPage: React.FC = () => {
-  const context = useContext();
-  const { isSignedIn, reset } = useSIWE();
+  const { signIn, isSignedIn } = useSIWOP();
   const { address: connectedAddress } = useAccount();
   const mobile = isMobile();
 
@@ -48,35 +46,31 @@ const SignInWithOtherPage: React.FC = () => {
   const copy =
     status === 'signedIn'
       ? {
-          heading: locales.signInWithEthereumScreen_signedIn_heading,
-          h1: locales.signInWithEthereumScreen_signedIn_h1,
-          p: locales.signInWithEthereumScreen_signedIn_p,
-          button: locales.signInWithEthereumScreen_signedIn_button,
+          heading: locales.signInWithOtherPageScreen_signedIn_heading,
+          h1: locales.signInWithOtherPageScreen_signedIn_h1,
+          p: locales.signInWithOtherPageScreen_signedIn_p,
+          button: locales.signInWithOtherPageScreen_signedIn_button,
         }
       : {
-          heading: locales.signInWithEthereumScreen_signedOut_heading,
-          h1: locales.signInWithEthereumScreen_signedOut_h1,
-          p: locales.signInWithEthereumScreen_signedOut_p,
-          button: locales.signInWithEthereumScreen_signedOut_button,
+          heading: locales.signInWithOtherPageScreen_signedOut_heading,
+          h1: locales.signInWithOtherPageScreen_signedOut_h1,
+          p: locales.signInWithOtherPageScreen_signedOut_p,
+          button: locales.signInWithOtherPageScreen_signedOut_button,
         };
 
   useEffect(() => {
-    if(window.location.search.includes('code')) {
-      setStatus('signedIn');
-      // TODO pass code to API for validation
-      setTimeout(() => context.setOpen(false), 2000);
-    } else {
-      const clientId = '019f608c-04c6-4568-b4d1-8e6ee24789b2';
-      const oauth = `client_id=${clientId}&response_type=code&redirect_uri=http://127.0.0.1:3004&scope=avatar.read+wallets.read+twitter.read+discord.read+tokens.read+communities.read&state=random-cookie&code_challenge=ok_XaQvFqt2mVvGtiZOv2bwDU3tZg09_ebzmtG_77FI&code_challenge_method=S256&wallet=${connectedAddress}`
-     setTimeout(() => window.location.href = encodeURI(`http://127.0.0.1:3001/connect?${oauth}`), 2000);
-    }
+    console.log(signIn);
+    setTimeout(signIn, 2000);
+    // if(window.location.search.includes('code')) {
+    //   setStatus('signedIn');
+    //   // TODO pass code to API for validation
+    //   setTimeout(() => context.setOpen(false), 2000);
+    // } else {
+      // const clientId = '019f608c-04c6-4568-b4d1-8e6ee24789b2';
+      // const oauth = `client_id=${clientId}&response_type=code&redirect_uri=http://127.0.0.1:3004&scope=avatar.read+wallets.read+twitter.read+discord.read+tokens.read+communities.read&state=random-cookie&code_challenge=ok_XaQvFqt2mVvGtiZOv2bwDU3tZg09_ebzmtG_77FI&code_challenge_method=S256&wallet=${connectedAddress}`
+      // setTimeout(() => window.location.href = encodeURI(`http://127.0.0.1:3001/connect?${oauth}`), 2000);
+    // }
   }, []);
-
-  // useEffect(() => {
-  //   if (!isSignedIn) {
-  //     setStatus('signedOut');
-  //   }
-  // }, [isSignedIn]);
 
   const { address } = useAccount();
 
@@ -106,8 +100,6 @@ const SignInWithOtherPage: React.FC = () => {
   };
   const favicons = getFavicons();
   const favicon = getAppIcon() ?? favicons.svg ?? favicons.default;
-
-  console.log(status);
 
   return (
     <PageContent style={{ width: 290 }}>
@@ -214,66 +206,6 @@ const SignInWithOtherPage: React.FC = () => {
             </LogoContainer>
           </motion.div>
         </StatusGraphic>
-        {/* <ContentContainer>
-          <AnimatePresence exitBeforeEnter>
-            <motion.div
-              key={flattenChildren(copy.h1).toString()}
-              initial={mobile ? false : { opacity: 0, scale: 0.94 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.94 }}
-              transition={copyTransition}
-            >
-              <ModalBody
-                style={{
-                  height: 38,
-                  fontWeight: 700,
-                  justifyContent: 'flex-start',
-                  display: 'flex',
-                  fontSize: '24px',
-                  marginBottom: 8,
-                  textAlign: 'left',
-                }}
-              >
-                <FitText>{copy.h1}</FitText>
-              </ModalBody>
-            </motion.div>
-          </AnimatePresence>
-
-          <AnimatePresence exitBeforeEnter>
-            <motion.div
-              key={flattenChildren(copy.p).toString()}
-              style={{ paddingBottom: mobile ? 24 : 12, width: '100%' }}
-              initial={mobile ? false : { opacity: 0, scale: 0.94 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.94 }}
-              transition={copyTransition}
-            >
-              <ModalBody
-                style={{
-                  height: 42,
-                  marginTop: -1,
-                  marginBottom: -3,
-                  justifyContent: 'start',
-                  display: 'flex',
-                  textAlign: 'left',
-                  width: '100%',
-                  minWidth: '100%',
-                }}
-              >
-                <FitText style={{ display: 'block' }}>{copy.p}</FitText>
-              </ModalBody>
-            </motion.div>
-          </AnimatePresence>
-        </ContentContainer> */}
-
-        {/* <SIWEButton
-          showSignOutButton={status === 'signedIn'}
-          onSignIn={() => {
-            setTimeout(() => {
-              context.setOpen(false);
-            }, 1000);
-          }}
-        /> */}
       </ModalContent>
     </PageContent>
   );

@@ -153,17 +153,17 @@ const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
           </InfoBox>
         </AvatarContainer>
       </ModalContent>
-      {context.signInWithEthereum && !isSignedIn && !window.location.search?.includes('code') && (
+      {context.signInWithOtherPage && !isSignedIn && !window.location.search?.includes('code') && (
         <Button
           variant="primary"
           iconPosition="right"
           onClick={() => {
-            resetSIWE();
-            context.setRoute(routes.SIGNINWITHETHEREUM);
+            // resetSIWOP();
+            context.setRoute(routes.SIGNINWITHOTHERPAGE);
           }}
           icon={<ForwardIcon />}
         >
-          {locales.signInWithEthereumScreen_signedOut_heading}
+          {locales.signInWithOtherPageScreen_signedOut_heading}
         </Button>
       )}
       {!isSafeConnector(connector?.id) && (

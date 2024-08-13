@@ -29,8 +29,10 @@ type RouteHandlerOptions = {
 
 type NextServerSIWOPConfig = {
   config?: {
-    clientId: string;
-    redirectURI: string;
+    clientId?: string;
+    redirectURI?: string;
+    clientSecret?: string;
+    scope?: string;
   };
   session?: Partial<IronSessionOptions>;
   options?: RouteHandlerOptions;
@@ -38,7 +40,9 @@ type NextServerSIWOPConfig = {
 
 type NextClientSIWOPConfig = {
   apiRoutePrefix: string;
-  statement?: string;
+  clientId?: string;
+  redirectURI?: string;
+  scope?: string;
 };
 
 type NextSIWOPSession<TSessionData extends Object = {}> = IronSession &
@@ -154,7 +158,7 @@ const sessionRoute = async (
   }
 };
 
-const accessTokenRoute = async (
+const verifyCodeRoute = async (
   req: NextApiRequest,
   res: NextApiResponse<void>,
   sessionConfig: IronSessionOptions,
@@ -164,17 +168,13 @@ const accessTokenRoute = async (
   switch (req.method) {
     case 'POST':
       try {
-        const session = await getSession(req, res, sessionConfig);
-        
-        // fetch
+        // fetch access token
         const accessToken = null;
+        // if (!accessToken) {
+        //   return res.status(422).end('Unable to fetch access token.');
+        // }
 
-        if (!accessToken) {
-          return res.status(422).end('Unable to fetch access token.');
-        }
-
-        // retrieve account using accessToken
-        // TODO
+        const session = await getSession(req, res, sessionConfig);
 
         // persist session data
         // TODO
@@ -231,7 +231,7 @@ export const configureServerSideSIWOP = <TSessionData extends Object = {}>({
       case 'nonce':
         return await nonceRoute(req, res, sessionConfig, afterNonce);
       case 'verify':
-        return await accessTokenRoute(req, res, sessionConfig, config, afterToken);
+        return await verifyCodeRoute(req, res, sessionConfig, config, afterToken);
       case 'session':
         return await sessionRoute(req, res, sessionConfig, afterSession);
       case 'logout':
@@ -250,6 +250,9 @@ export const configureServerSideSIWOP = <TSessionData extends Object = {}>({
 
 export const configureClientSIWOP = <TSessionData extends Object = {}>({
   apiRoutePrefix,
+  clientId,
+  redirectURI,
+  scope,
 }: NextClientSIWOPConfig): ConfigureClientSIWOPResult<TSessionData> => {
   const NextSIWOPProvider = (props: NextSIWOPProviderProps) => {
     return (
@@ -262,9 +265,8 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
           const nonce = await res.text();
           return nonce;
         }}
-        createAuthorizationUrl={({ nonce, address, redirectURI }) =>
-          // TODO create URL from config
-          `http://localhost:3001/connect?state=${nonce}&address=${address}`
+        createAuthorizationUrl={({ nonce, address }) =>
+          `http://127.0.0.1:3001/connect?client_id=${clientId}&scope=${scope}&response_type=code&redirect_uri=${encodeURIComponent(redirectURI)}&state=${nonce}&address=${address}`
         }
         verifyCode={({ code }) =>
           fetch(`${apiRoutePrefix}/verify`, {

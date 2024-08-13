@@ -8,8 +8,6 @@ export default function Home({ address }: { address?: string }) {
   const { toggleMode, handleSetPrimaryColor, mode, primaryColor } =
     useAppContext();
 
-    
-
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleSetPrimaryColor(e.target.value as `#${string}`);
   };
@@ -39,7 +37,7 @@ export default function Home({ address }: { address?: string }) {
   return (
     <main className="flex min-h-[calc(100vh-100px)] w-screen relative flex-col">
       <div className="flex justify-between bg-black p-4">
-        <img className="w-20" src="https://media.10ktf.com/static/images/10ktf-logo.png" />
+        <img className="w-10" src="https://cdn-icons-png.freepik.com/512/16440/16440737.png" />
         <div className="flex items-center">
         <OPConnectButton />
         {connected && <button className="bg-neutral-900 text-white rounded-md p-3 ml-1 text-sm" onClick={openAccount}>

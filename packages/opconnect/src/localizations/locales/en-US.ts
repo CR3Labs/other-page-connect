@@ -102,20 +102,26 @@ const enUS: LocaleProps = {
   signInWithEthereumScreen_tooltip:
     'You’re not signed in to this app.\n**Sign In With Ethereum** to continue.',
 
-  signInWithEthereumScreen_signedOut_heading: 'Sign In With Other Page',
+  signInWithEthereumScreen_signedOut_heading: 'Sign In With Ethereum',
   signInWithEthereumScreen_signedOut_h1: 'Verify Your Ownership',
   signInWithEthereumScreen_signedOut_p: `Please sign the message request in your wallet to continue.`,
   signInWithEthereumScreen_signedOut_button: 'Sign In',
 
-  signInWithEthereumScreen_signedIn_heading: 'Signed In With Other Page',
+  signInWithEthereumScreen_signedIn_heading: 'Signed In With Ethereum',
   signInWithEthereumScreen_signedIn_h1: 'Ownership Verified!',
   signInWithEthereumScreen_signedIn_p: `Signing out will require you to authenticate again in the future.`,
   signInWithEthereumScreen_signedIn_button: 'Sign Out',
 
-  // signInWithOtherPageScreen_signedOut_heading: 'Sign In With Other Page',
-  // signInWithOtherPageScreen_signedOut_h1: 'Verify Your Ownership',
-  // signInWithOtherPageScreen_signedOut_p: `Please sign the message request in your wallet to continue.`,
-  // signInWithOtherPageScreen_signedOut_button: 'Sign In',
+  signInWithOtherPageScreen_signedOut_heading: 'Sign In With Other Page',
+  signInWithOtherPageScreen_signedOut_h1: 'Verify Your Ownership',
+  signInWithOtherPageScreen_signedOut_p: `Redirecting you to Other Page...`,
+  signInWithOtherPageScreen_signedOut_button: 'Sign In',
+
+  signInWithOtherPageScreen_signedIn_heading: 'Signed In With Other Page',
+  signInWithOtherPageScreen_signedIn_h1: 'Ownership Verified!',
+  signInWithOtherPageScreen_signedIn_p: `Signing out will require you to authenticate again in the future.`,
+  signInWithOtherPageScreen_signedIn_button: 'Sign Out',
+
 };
 
 export default enUS;

@@ -20,7 +20,7 @@ const safeRoutes: {
     routes.MOBILECONNECTORS,
     routes.ONBOARDING,
   ],
-  connected: [routes.PROFILE, routes.SWITCHNETWORKS, routes.SIGNINWITHETHEREUM, routes.SIGNINWITHOP],
+  connected: [routes.PROFILE, routes.SWITCHNETWORKS, routes.SIGNINWITHETHEREUM, routes.SIGNINWITHOTHERPAGE],
 };
 const allRoutes: ModalRoutes[] = [
   ...safeRoutes.connected,
@@ -41,7 +41,7 @@ export const useModal = ({ onConnect, onDisconnect }: UseModalProps = {}) => {
 
   const { isConnected } = useAccount();
   const { signIn } = useSIWE();
-  const { signIn: signInWithOP } = useSIWOP();
+  const { signIn: signInWithOtherPage } = useSIWOP();
 
   const close = () => {
     context.setOpen(false);
@@ -100,8 +100,8 @@ export const useModal = ({ onConnect, onDisconnect }: UseModalProps = {}) => {
       if (triggerSIWE) signIn();
     },
     openSIWOP: (triggerSIWOP?: boolean) => {
-      gotoAndOpen(routes.SIGNINWITHOP);
-      if (triggerSIWOP) signInWithOP();
+      gotoAndOpen(routes.SIGNINWITHOTHERPAGE);
+      if (triggerSIWOP) signInWithOtherPage();
     },
   };
 };

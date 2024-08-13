@@ -29,6 +29,7 @@ export const SIWOPProvider = ({
   onSignOut,
   ...siwopConfig
 }: Props) => {
+  const [code, setCode] = useState<string | null>(null);
   const [status, setStatus] = useState<StatusState>(StatusState.READY);
   const resetStatus = () => setStatus(StatusState.READY);
 
@@ -46,13 +47,13 @@ export const SIWOPProvider = ({
   }
 
   const nonce = useQuery({
-    queryKey: ['ckSiweNonce'],
+    queryKey: ['ckSiwopNonce'],
     queryFn: () => siwopConfig.getNonce(),
     refetchInterval: nonceRefetchInterval,
   });
 
   const session = useQuery({
-    queryKey: ['ckSiweSession'],
+    queryKey: ['ckSiwopSession'],
     queryFn: () => siwopConfig.getSession(),
     refetchInterval: sessionRefetchInterval,
   });
@@ -82,14 +83,12 @@ export const SIWOPProvider = ({
   });
 
   const { address, chain } = useAccount();
-  const { signMessageAsync } = useSignMessage();
 
   const onError = (error: any) => {
     console.error('signIn error', error.code, error.message);
     switch (error.code) {
-      case -32000: // WalletConnect: user rejected
-      case 4001: // MetaMask: user rejected
-      case 'ACTION_REJECTED': // MetaMask: user rejected
+      case 400: // User denied scopes
+      case 'ACTION_REJECTED': // User denied scopes
         setStatus(StatusState.REJECTED);
         break;
       default:
@@ -112,16 +111,7 @@ export const SIWOPProvider = ({
       }
 
       setStatus(StatusState.LOADING);
-
-      const url = siwopConfig.createAuthorizationUrl({
-        address,
-        nonce: nonce?.data,
-        redirectURI: window.location.href,
-      });
-      console.log('url', url);
-
-      // redirect user to Authorization URL
-
+      
       // TODO refetch session after 
       // redirect if code exists in url
       const data = await session.refetch().then((res) => {
@@ -129,8 +119,29 @@ export const SIWOPProvider = ({
         return res?.data;
       });
 
-      setStatus(StatusState.READY);
-      return data as SIWOPSession;
+      if (data) {
+        setStatus(StatusState.READY);
+        return data as SIWOPSession;
+      }
+
+      if (code) {
+        // verify code
+        const verified = await siwopConfig.verifyCode({ code });
+        // replace code in path?
+        setStatus(StatusState.READY);
+        return data;
+      } else {
+        const url = siwopConfig.createAuthorizationUrl({
+          nonce: nonce.data,
+          address,
+          redirectURI: siwopConfig.redirectURI || '',
+          scope: siwopConfig.scope || '',
+        });
+        console.log(url);
+        window.location.href = url;
+        return false;
+      }
+      
     } catch (error) {
       onError(error);
       return false;
@@ -138,6 +149,13 @@ export const SIWOPProvider = ({
   };
 
   useEffect(() => {
+    // retrieve code from url
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    if (code) {
+      setCode(code);
+    }
+  
     // Skip if we're still fetching session state from backend
     if (!sessionData || !sessionData.address) return;
     // Skip if wallet isn't connected (i.e. initial page load)
@@ -161,9 +179,14 @@ export const SIWOPProvider = ({
     }
   }, [sessionData, connectedAddress, chain]);
 
+  // TODO fix types here
+
   return (
     <SIWOPContext.Provider
       value={{
+        clientId: siwopConfig.clientId || '',
+        redirectURI: siwopConfig.redirectURI || '',
+        scope: siwopConfig.scope || '',
         enabled,
         nonceRefetchInterval,
         sessionRefetchInterval,
@@ -173,7 +196,7 @@ export const SIWOPProvider = ({
         ...siwopConfig,
         nonce,
         session,
-        signIn,
+        signIn: signIn as any,
         signOut: signOutAndRefetch,
         status,
         resetStatus,

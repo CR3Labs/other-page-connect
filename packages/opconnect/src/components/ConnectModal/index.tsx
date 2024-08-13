@@ -75,7 +75,7 @@ const ConnectModal: React.FC<{
     profile: <Profile />,
     switchNetworks: <SwitchNetworks />,
     signInWithEthereum: <SignInWithEthereum />,
-    signInWithOP: <SignInWithOtherPage />,
+    signInWithOtherPage: <SignInWithOtherPage />,
     oauthWallet: <OAuthWallet />,
   };
 
@@ -86,19 +86,24 @@ const ConnectModal: React.FC<{
   useEffect(() => {
     if (window.location.search.includes('code')) {
       context.setOpen(true);
-      context.setRoute(routes.SIGNINWITHETHEREUM);
+      context.setRoute(routes.SIGNINWITHOTHERPAGE);
     }
 
     if (isConnected) {
+      console.log(context);
       if (
         context.route !== routes.PROFILE ||
-        context.route !== routes.SIGNINWITHETHEREUM
+        context.route !== routes.SIGNINWITHETHEREUM ||
+        context.route !== routes.SIGNINWITHOTHERPAGE
       ) {
         if (
           context.signInWithEthereum &&
           !context.options?.disableSiweRedirect
         ) {
           context.setRoute(routes.SIGNINWITHETHEREUM);
+        } else if (context.signInWithOtherPage) {
+          console.log('context.signInWithOtherPage', context.signInWithOtherPage);
+          context.setRoute(routes.SIGNINWITHOTHERPAGE);
         } else {
           hide(); // Hide on connect
         }

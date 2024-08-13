@@ -1,5 +1,5 @@
 import '@/styles/globals.css';
-import { siweClient } from '@/utils/siweClient';
+import { siwopClient } from '@/utils/siwopClient';
 import { OPConnectProvider, getDefaultConfig } from 'opconnect';
 import type { AppProps } from 'next/app';
 import { WagmiProvider, createConfig } from 'wagmi';
@@ -21,11 +21,11 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <siweClient.Provider>
+        <siwopClient.Provider>
           <OPConnectProvider mode={mode} primaryColor={primaryColor}>
             <Component {...pageProps} />
           </OPConnectProvider>
-        </siweClient.Provider>
+        </siwopClient.Provider>
       </QueryClientProvider>
     </WagmiProvider>
   );

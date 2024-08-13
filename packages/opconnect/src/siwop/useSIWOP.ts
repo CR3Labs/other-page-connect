@@ -28,8 +28,6 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
   | any => {
   const siweContextValue = useContext(SIWOPContext);
   if (!siweContextValue) {
-    // If we throw an error here then this will break non-SIWOP apps, so best to just respond with not signed in.
-    //throw new Error('useSIWOP hook must be inside a SIWOPProvider.');
     return {
       isSignedIn: false,
       data: undefined,

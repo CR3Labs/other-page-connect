@@ -14,12 +14,13 @@ export type SIWOPSession = {
 };
 
 export type SIWOPConfig = {
-  // Required
+  // Required functions
   getNonce: () => Promise<string>;
   createAuthorizationUrl: (args: {
     nonce: string;
     address: string;
     redirectURI: string;
+    scope: string;
     // ...
   }) => string;
   verifyCode: (args: {
@@ -30,6 +31,9 @@ export type SIWOPConfig = {
   signOut: () => Promise<boolean>;
 
   // Optional, we have default values but they can be overridden
+  clientId?: string;
+  redirectURI?: string;
+  scope?: string;
   enabled?: boolean;
   nonceRefetchInterval?: number;
   sessionRefetchInterval?: number;
@@ -42,7 +46,7 @@ export type SIWOPContextValue = Required<SIWOPConfig> & {
   nonce: ReturnType<typeof useQuery<string | null>>;
   session: ReturnType<typeof useQuery<SIWOPSession | null>>;
   status: StatusState;
-  signIn: () => Promise<SIWOPSession | false>;
+  signIn: () => Promise<SIWOPSession | false >;
   resetStatus: () => void;
 };
 
