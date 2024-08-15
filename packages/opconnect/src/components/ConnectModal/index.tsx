@@ -107,11 +107,7 @@ const ConnectModal: React.FC<{
           context.setRoute(routes.SIGNINWITHETHEREUM);
         } 
         else if (context.signInWithOtherPage) {
-          if (isSignedIn) {
-            context.setRoute(routes.SIGNINWITHOTHERPAGE);
-          } else {
-            context.setRoute(routes.PROFILE);
-          }
+          context.setRoute(routes.SIGNINWITHOTHERPAGE);
         } 
         else {
           hide(); // Hide on connect

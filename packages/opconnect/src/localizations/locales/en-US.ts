@@ -28,6 +28,7 @@ const enUS: LocaleProps = {
   approveInWallet: 'Approve in Wallet',
   confirmInWallet: 'Confirm in Wallet',
   awaitingConfirmation: 'Awaiting Confirmation',
+  redirecting: 'Redirecting...',
   signIn: 'Sign In',
   signOut: 'Sign Out',
   signedIn: 'Signed In',
@@ -113,12 +114,12 @@ const enUS: LocaleProps = {
   signInWithEthereumScreen_signedIn_button: 'Sign Out',
 
   signInWithOtherPageScreen_signedOut_heading: 'Sign In With Other Page',
-  signInWithOtherPageScreen_signedOut_h1: 'Verify Your Ownership',
-  signInWithOtherPageScreen_signedOut_p: `Redirecting you to Other Page...`,
+  signInWithOtherPageScreen_signedOut_h1: 'Sign In With Other Page',
+  signInWithOtherPageScreen_signedOut_p: `You will be redirected to Other Page to sign in.`,
   signInWithOtherPageScreen_signedOut_button: 'Sign In',
 
   signInWithOtherPageScreen_signedIn_heading: 'Signed In With Other Page',
-  signInWithOtherPageScreen_signedIn_h1: 'Ownership Verified!',
+  signInWithOtherPageScreen_signedIn_h1: 'Other Page Connected!',
   signInWithOtherPageScreen_signedIn_p: `Signing out will require you to authenticate again in the future.`,
   signInWithOtherPageScreen_signedIn_button: 'Sign Out',
 

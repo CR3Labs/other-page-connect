@@ -22,7 +22,20 @@ function App({ Component, pageProps }: AppProps) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <siwopClient.Provider>
-          <OPConnectProvider mode={mode} primaryColor={primaryColor}>
+          <OPConnectProvider mode={mode} primaryColor={primaryColor} options={{
+            disclaimer: (
+              <div>
+                By connecting your wallet you agree to the{' '}
+                <a href="https://cr3labs.com/terms" target="_blank" rel="noreferrer">
+                  Terms of Service
+                </a>{' '}
+                and{' '}
+                <a href="https://cr3labs.com/privacy" target="_blank" rel="noreferrer">
+                  Privacy Policy
+                </a>
+              </div>
+            ),
+          }}>
             <Component {...pageProps} />
           </OPConnectProvider>
         </siwopClient.Provider>

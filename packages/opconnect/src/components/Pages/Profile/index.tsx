@@ -62,7 +62,7 @@ const ForwardIcon = ({ ...props }) => (
 const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
   const context = useContext();
   const { reset: resetSIWE, isSignedIn: isSIWESignedIn } = useSIWE();
-  const { signIn, isSignedIn: isSIWOPSignedIn } = useSIWOP();
+  const { reset: resetSIWOP, isSignedIn: isSIWOPSignedIn } = useSIWOP();
   const themeContext = useThemeContext();
 
   const locales = useLocales();
@@ -158,9 +158,12 @@ const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
       </ModalContent>
       {context.signInWithOtherPage && !isSIWOPSignedIn && (
         <Button
-          onClick={signIn}
+        onClick={() => {
+          resetSIWOP();
+          context.setRoute(routes.SIGNINWITHOTHERPAGE);
+        }}
         >
-          <div style={{ width: '24px', marginRight: '10px' }}><Logos.OtherPage /></div>
+          {/* <div style={{ width: '24px', marginRight: '10px' }}><Logos.OtherPage /></div> */}
           {locales.signInWithOtherPageScreen_signedOut_heading}
         </Button>
       )}

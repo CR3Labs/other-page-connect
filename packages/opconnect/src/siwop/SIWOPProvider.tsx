@@ -165,7 +165,8 @@ export const SIWOPProvider = ({
 
         // remove code from url
         window.history.replaceState({}, document.title, window.location.pathname);
-      }).catch(() => {
+      }).catch((e) => {
+        console.error(e);
         setStatus(StatusState.ERROR);
       });
     }
@@ -176,14 +177,16 @@ export const SIWOPProvider = ({
     if (!connectedAddress || !chain) return;
 
     // If SIWOP session no longer matches connected account, sign out
-    if (
-      signOutOnAccountChange &&
-      getAddress(sessionData.address) !== getAddress(connectedAddress)
-    ) {
-      console.warn('Wallet account changed, signing out of SIWOP session');
-      console.log(sessionData.address, connectedAddress);
-      // signOutAndRefetch();
-    }
+    // TODO would have to validate against linked wallets
+    // if (
+    //   signOutOnAccountChange &&
+    //   getAddress(sessionData.address) !== getAddress(connectedAddress)
+    // ) {
+    //   console.warn('Wallet account changed, signing out of SIWOP session');
+    //   console.log(sessionData.address, connectedAddress);
+    //   setStatus(StatusState.ERROR);
+    //   signOutAndRefetch();
+    // }
     // // The SIWE spec includes a chainId parameter for contract-based accounts,
     // // so we're being extra cautious about keeping the SIWOP session and the
     // // connected account in sync. But this can be disabled when

@@ -9,8 +9,7 @@ import {
 } from 'viem/siwe';
 import { jwtDecode, JwtPayload } from './util';
 
-// TODO config?
-const API_URL = 'http://127.0.0.1:3003/v1';
+const API_URL = 'https://alpha-api.other.page/v1';
 
 type RouteHandlerOptions = {
   afterNonce?: (
@@ -42,7 +41,9 @@ type NextServerSIWOPToken = {
 };
 
 type NextServerSIWOPConfig = {
-  config?: {
+  config: {
+    authApiUrl?: string;
+    audience?: string;
     clientId?: string;
     redirectUri?: string;
     clientSecret?: string;
@@ -53,6 +54,7 @@ type NextServerSIWOPConfig = {
 };
 
 type NextClientSIWOPConfig = {
+  appUrl?: string;
   apiRoutePrefix: string;
   clientId: string;
   redirectUri: string;
@@ -69,6 +71,7 @@ type NextSIWOPSession<TSessionData extends Object = {}> = IronSession &
 
 type NextSIWOPProviderProps = Omit<
   ComponentProps<typeof SIWOPProvider>,
+  | 'authApiUrl'
   | 'clientId'
   | 'redirectUri'
   | 'scope'
@@ -177,23 +180,23 @@ const verifyCodeRoute = async (
   req: NextApiRequest,
   res: NextApiResponse<void>,
   sessionConfig: IronSessionOptions,
-  config?: NextServerSIWOPConfig['config'],
+  config: NextServerSIWOPConfig['config'],
   afterCallback?: RouteHandlerOptions['afterToken']
 ) => {
   switch (req.method) {
     case 'POST':
       try {
         // fetch access token
-        const response = await fetch(`${API_URL}/connect/oauth2-token`, {
+        const response = await fetch(`${config?.authApiUrl}/connect/oauth2-token`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             grant_type: 'authorization_code',
-            aud: 'http://127.0.0.1:3004', // TODO from config
             code: req.body.code,
             code_verifier: 'n5qH3d6tJ7lGi1BEB1tb9BAqkgRm9nRpUTkcODDajpUXD8Se', // TODO where to store this?
+            aud: config?.audience,
             client_id: config?.clientId,
             client_secret: config?.clientSecret,
             redirect_uri: config?.redirectUri,
@@ -246,6 +249,9 @@ export const configureServerSideSIWOP = <TSessionData extends Object = {}>({
   session: { cookieName, password, cookieOptions, ...otherSessionOptions } = {},
   options: { afterNonce, afterToken, afterSession, afterLogout } = {},
 }: NextServerSIWOPConfig): ConfigureServerSIWOPResult<TSessionData> => {
+
+  config.authApiUrl = config.authApiUrl || API_URL;
+
   const sessionConfig: IronSessionOptions = {
     cookieName: cookieName ?? 'opconnect-next-siwop',
     password: password ?? envVar('SESSION_SECRET'),
@@ -286,12 +292,14 @@ export const configureServerSideSIWOP = <TSessionData extends Object = {}>({
 };
 
 export const configureClientSIWOP = <TSessionData extends Object = {}>({
+  appUrl,
   apiRoutePrefix,
   clientId,
   redirectUri,
   scope,
 }: NextClientSIWOPConfig): ConfigureClientSIWOPResult<TSessionData> => {
   const NextSIWOPProvider = (props: NextSIWOPProviderProps) => {
+    const APP_URL = appUrl || 'https://alpha.other.page';
     return (
       <SIWOPProvider
         clientId={clientId}
@@ -305,9 +313,9 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
           const nonce = await res.text();
           return nonce;
         }}
-        // TODO app URL from config
+        // TODO: config to require wallet sync between OP and App
         createAuthorizationUrl={({ nonce, address, code_challenge }) =>
-          `http://127.0.0.1:3001/connect?client_id=${clientId}&scope=${scope}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&state=${nonce}&address=${address}&code_challenge=${code_challenge}&code_challenge_method=S256`
+          `${APP_URL}/connect?client_id=${clientId}&scope=${scope.replace(' ', '+')}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&state=${nonce}&address=${address}&code_challenge=${code_challenge}&code_challenge_method=S256`
         }
         verifyCode={({ code }) =>
           fetch(`${apiRoutePrefix}/verify`, {

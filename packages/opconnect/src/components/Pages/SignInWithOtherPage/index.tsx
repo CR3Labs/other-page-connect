@@ -19,24 +19,21 @@ import { useAccount } from 'wagmi';
 import { useSIWOP } from '../../../siwop';
 
 import { TickIcon } from '../../../assets/icons';
-import Chains from '../../../assets/chains';
 import Avatar from '../../Common/Avatar';
-import { getAppIcon } from '../../../defaultConfig';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import LazyImage from '../../Common/LazyImage';
-import { isMobile, flattenChildren } from '../../../utils';
+import { flattenChildren, isMobile } from '../../../utils';
 import useLocales from '../../../hooks/useLocales';
-import FitText from '../../Common/FitText';
 import Logos from '../../../assets/logos';
 import Button from '../../Common/Button';
 import { SIWOPButton } from '../../Standard/SIWOP';
+import FitText from '../../Common/FitText';
 
 const transition = { duration: 0.2, ease: [0.26, 0.08, 0.25, 1] };
-// const copyTransition = { duration: 0.16, ease: [0.26, 0.08, 0.25, 1] };
+const copyTransition = { duration: 0.16, ease: [0.26, 0.08, 0.25, 1] };
 
 const SignInWithOtherPage: React.FC = () => {
-  const { clientId, isSignedIn } = useSIWOP();
+  const { clientId, isSignedIn, error } = useSIWOP();
   const mobile = isMobile();
 
   const [status, setStatus] = useState<'signedOut' | 'signedIn'>(
@@ -44,20 +41,12 @@ const SignInWithOtherPage: React.FC = () => {
   );
 
   const locales = useLocales({});
-  const copy =
-    status === 'signedIn'
-      ? {
-          heading: locales.signInWithOtherPageScreen_signedIn_heading,
-          h1: locales.signInWithOtherPageScreen_signedIn_h1,
-          p: locales.signInWithOtherPageScreen_signedIn_p,
-          button: locales.signInWithOtherPageScreen_signedIn_button,
-        }
-      : {
-          heading: locales.signInWithOtherPageScreen_signedOut_heading,
-          h1: locales.signInWithOtherPageScreen_signedOut_h1,
-          p: locales.signInWithOtherPageScreen_signedOut_p,
-          button: locales.signInWithOtherPageScreen_signedOut_button,
-        };
+  const copy = {
+    heading: locales.signInWithOtherPageScreen_signedOut_heading,
+    h1: locales.signInWithOtherPageScreen_signedOut_h1,
+    p: locales.signInWithOtherPageScreen_signedOut_p,
+    button: locales.signInWithOtherPageScreen_signedOut_button,
+  };
 
   useEffect(() => {
     if (isSignedIn) {
@@ -131,6 +120,7 @@ const SignInWithOtherPage: React.FC = () => {
             transition={transition}
           >
             <LogoContainer>
+              {/* TODO Connected OP Avatar? */}
               <Avatar address={address} width={64} height={64} />
             </LogoContainer>
           </motion.div>
@@ -176,12 +166,6 @@ const SignInWithOtherPage: React.FC = () => {
           >
             <LogoContainer>
               <Logos.OtherPage />
-              {/* @DEV @TODO - Ask client if we want a hardcoded OtherPage Logo here, or the reg. favicon */}
-              {/* {favicon ? (
-                <LazyImage src={favicon} alt={'app'} />
-              ) : (
-                <Chains.UnknownChain />
-              )} */}
             </LogoContainer>
           </motion.div>
         </StatusGraphic>
@@ -193,6 +177,35 @@ const SignInWithOtherPage: React.FC = () => {
             padding: '0px 16px',
           }}
         >
+          {!isSignedIn && (
+            <ContentContainer>
+              <AnimatePresence exitBeforeEnter>
+                <motion.div
+                  key={flattenChildren(copy.p).toString()}
+                  style={{ paddingBottom: mobile ? 24 : 12, width: '100%' }}
+                  initial={mobile ? false : { opacity: 0, scale: 0.94 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.94 }}
+                  transition={copyTransition}
+                >
+                  <ModalBody
+                    style={{
+                      height: 42,
+                      marginTop: -1,
+                      marginBottom: -3,
+                      justifyContent: 'start',
+                      display: 'flex',
+                      textAlign: 'left',
+                      width: '100%',
+                      minWidth: '100%',
+                    }}
+                  >
+                    <FitText style={{ display: 'block' }}>{error ? 'Error occured' : copy.p}</FitText>
+                  </ModalBody>
+                </motion.div>
+              </AnimatePresence>
+            </ContentContainer>
+          )}
           {isSignedIn && (
             <Button
               onClick={openAccount}
@@ -201,7 +214,7 @@ const SignInWithOtherPage: React.FC = () => {
             </Button>
           )}
           <SIWOPButton
-            showSignOutButton={status === 'signedIn'}
+            showSignOutButton={isSignedIn}
           />
         </ModalBody>
       </ModalContent>

@@ -28,11 +28,9 @@ export type SIWOPConfig = {
     nonce: string;
     address: string;
     code_challenge: string;
-    // ...
   }) => string;
   verifyCode: (args: {
     code: string;
-    // ...
   }) => Promise<boolean>;
   getSession: () => Promise<SIWOPSession | null>;
   signOut: () => Promise<boolean>;
