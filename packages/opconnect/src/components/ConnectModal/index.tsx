@@ -19,6 +19,7 @@ import { OPConnectThemeProvider } from '../OPConnectThemeProvider/OPConnectTheme
 import { useChainIsSupported } from '../../hooks/useChainIsSupported';
 import OAuthWallet from '../Pages/OAuthWallet';
 import SignInWithOtherPage from '../Pages/SignInWithOtherPage';
+import { useSIWOP } from '../../siwop';
 
 const customThemeDefault: object = {};
 
@@ -37,6 +38,7 @@ const ConnectModal: React.FC<{
 }) => {
   const context = useContext();
   const { isConnected, chain } = useAccount();
+  const { isSignedIn } = useSIWOP();
   const chainIsSupported = useChainIsSupported(chain?.id);
 
   //if chain is unsupported we enforce a "switch chain" prompt
@@ -55,6 +57,8 @@ const ConnectModal: React.FC<{
 
   const onBack = () => {
     if (context.route === routes.SIGNINWITHETHEREUM) {
+      context.setRoute(routes.PROFILE);
+    } if (context.route === routes.SIGNINWITHOTHERPAGE) {
       context.setRoute(routes.PROFILE);
     } else if (context.route === routes.SWITCHNETWORKS) {
       context.setRoute(routes.PROFILE);
@@ -84,13 +88,13 @@ const ConnectModal: React.FC<{
   }
 
   useEffect(() => {
-    if (window.location.search.includes('code')) {
+    if (context.signInWithOtherPage && window.location.search.includes('code')) {
       context.setOpen(true);
       context.setRoute(routes.SIGNINWITHOTHERPAGE);
+      return;
     }
 
     if (isConnected) {
-      console.log(context);
       if (
         context.route !== routes.PROFILE ||
         context.route !== routes.SIGNINWITHETHEREUM ||
@@ -101,10 +105,15 @@ const ConnectModal: React.FC<{
           !context.options?.disableSiweRedirect
         ) {
           context.setRoute(routes.SIGNINWITHETHEREUM);
-        } else if (context.signInWithOtherPage) {
-          console.log('context.signInWithOtherPage', context.signInWithOtherPage);
-          context.setRoute(routes.SIGNINWITHOTHERPAGE);
-        } else {
+        } 
+        else if (context.signInWithOtherPage) {
+          if (isSignedIn) {
+            context.setRoute(routes.SIGNINWITHOTHERPAGE);
+          } else {
+            context.setRoute(routes.PROFILE);
+          }
+        } 
+        else {
           hide(); // Hide on connect
         }
       }

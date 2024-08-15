@@ -29,13 +29,14 @@ import { isMobile, flattenChildren } from '../../../utils';
 import useLocales from '../../../hooks/useLocales';
 import FitText from '../../Common/FitText';
 import Logos from '../../../assets/logos';
+import Button from '../../Common/Button';
+import { SIWOPButton } from '../../Standard/SIWOP';
 
 const transition = { duration: 0.2, ease: [0.26, 0.08, 0.25, 1] };
-const copyTransition = { duration: 0.16, ease: [0.26, 0.08, 0.25, 1] };
+// const copyTransition = { duration: 0.16, ease: [0.26, 0.08, 0.25, 1] };
 
 const SignInWithOtherPage: React.FC = () => {
-  const { signIn, isSignedIn } = useSIWOP();
-  const { address: connectedAddress } = useAccount();
+  const { clientId, isSignedIn } = useSIWOP();
   const mobile = isMobile();
 
   const [status, setStatus] = useState<'signedOut' | 'signedIn'>(
@@ -59,42 +60,31 @@ const SignInWithOtherPage: React.FC = () => {
         };
 
   useEffect(() => {
-    setTimeout(()=> signIn(), 2000);
+    if (isSignedIn) {
+      setStatus('signedIn');
+    } else {
+      setStatus('signedOut');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isSignedIn) setStatus('signedOut');
   }, []);
 
   const { address } = useAccount();
 
-  // We use the favicon for the dApp logo because that's how the connectors do it
-  // TODO: Allow for dev customisation
-  const getFavicons = () => {
-    const favicons: { svg: string | null; default: string | null } = {
-      svg: null,
-      default: null,
-    };
-    const nodeList: HTMLCollectionOf<HTMLLinkElement> =
-      document.getElementsByTagName('link');
-    Array.from(nodeList).forEach((node) => {
-      if (
-        (node.getAttribute('rel') === 'icon' ||
-          node.getAttribute('rel') === 'shortcut icon') &&
-        node.getAttribute('href')
-      ) {
-        if (node.getAttribute('type') === 'image/svg+xml') {
-          favicons.svg = node.getAttribute('href');
-        } else {
-          favicons.default = node.getAttribute('href');
-        }
-      }
-    });
-    return favicons;
+  // TODO custom button component?
+  const openAccount = () => {
+    const left = (window.innerWidth / 2) - 400;
+    const top = (window.innerHeight / 2) - 380;
+    // TODO domain from Context
+    window.open(`http://127.0.0.1:3001/connect/settings?client_id=${clientId}`, "mozillaWindow", `left=${left},top=${top},width=800,height=760`)
   };
-  const favicons = getFavicons();
-  const favicon = getAppIcon() ?? favicons.svg ?? favicons.default;
 
   return (
     <PageContent style={{ width: 290 }}>
       <ModalContent style={{ padding: 0, marginTop: 10 }}>
-        <StatusGraphic $connected={status == 'signedIn'} key="status">
+        <StatusGraphic $connected={isSignedIn} key="status">
           <div style={{ position: 'absolute', inset: 0 }}>
             <StatusGraphicBgSvg
               width="262"
@@ -161,7 +151,6 @@ const SignInWithOtherPage: React.FC = () => {
             }}
           >
             <StatusIcon>
-              {/* {status == 'signedIn' && <TickIcon style={{ color: '#22c55e', opacity: 1 }} />} */}
               <TickIcon />
             </StatusIcon>
           </motion.div>
@@ -196,6 +185,25 @@ const SignInWithOtherPage: React.FC = () => {
             </LogoContainer>
           </motion.div>
         </StatusGraphic>
+        <ModalBody
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
+            padding: '0px 16px',
+          }}
+        >
+          {isSignedIn && (
+            <Button
+              onClick={openAccount}
+            >
+              Account Settings
+            </Button>
+          )}
+          <SIWOPButton
+            showSignOutButton={status === 'signedIn'}
+          />
+        </ModalBody>
       </ModalContent>
     </PageContent>
   );

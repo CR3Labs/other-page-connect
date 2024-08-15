@@ -109,12 +109,12 @@ Now that you have your `Web3Provider` component, you can wrap your app with it:
 
 ```javascript
 import { Web3Provider } from './Web3Provider';
-import { OPConnectButton } from 'opconnect';
+import { ConnectButton } from 'opconnect';
 
 const App = () => {
   return (
     <Web3Provider>
-      <OPConnectButton />
+      <ConnectButton />
     </Web3Provider>
   );
 };

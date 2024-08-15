@@ -1,5 +1,5 @@
 import { useAppContext } from '@/contexts/app-provider';
-import { OPConnectButton, useSIWE } from 'opconnect';
+import { ConnectButton, useSIWE } from 'opconnect';
 
 export default function Home({ address }: { address?: string }) {
   const { toggleMode, handleSetPrimaryColor, mode, primaryColor } =
@@ -9,7 +9,7 @@ export default function Home({ address }: { address?: string }) {
     handleSetPrimaryColor(e.target.value as `#${string}`);
   };
   const { data, isSignedIn, signOut, signIn } = useSIWE();
-  console.log({ data, isSignedIn, signOut, signIn });
+
   return (
     <main className="flex min-h-screen w-screen justify-center items-center relative">
       <div className="flex flex-col gap-2 absolute items-start left-10 top-10">
@@ -30,7 +30,7 @@ export default function Home({ address }: { address?: string }) {
           />
         </div>
       </div>
-      <OPConnectButton />
+      <ConnectButton />
     </main>
   );
 }

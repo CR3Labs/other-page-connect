@@ -65,7 +65,6 @@ type NextSIWOPSession<TSessionData extends Object = {}> = IronSession &
     address?: string;
     chainId?: number;
     uid?: string;
-    wallet?: string;
   };
 
 type NextSIWOPProviderProps = Omit<
@@ -156,7 +155,7 @@ const nonceRoute = async (
 
 const sessionRoute = async (
   req: NextApiRequest,
-  res: NextApiResponse<{ address?: string; chainId?: number }>,
+  res: NextApiResponse<{ address?: string; uid?: string, chainId?: number }>,
   sessionConfig: IronSessionOptions,
   afterCallback?: RouteHandlerOptions['afterSession']
 ) => {
@@ -166,10 +165,7 @@ const sessionRoute = async (
       if (afterCallback) {
         await afterCallback(req, res, session);
       }
-      // retrieve user account?
-      // TODO
-      const { address, chainId } = session;
-      res.send({ address, chainId });
+      res.send(session);
       break;
     default:
       res.setHeader('Allow', ['GET']);
@@ -195,6 +191,7 @@ const verifyCodeRoute = async (
           },
           body: JSON.stringify({
             grant_type: 'authorization_code',
+            aud: 'http://127.0.0.1:3004', // TODO from config
             code: req.body.code,
             code_verifier: 'n5qH3d6tJ7lGi1BEB1tb9BAqkgRm9nRpUTkcODDajpUXD8Se', // TODO where to store this?
             client_id: config?.clientId,
@@ -216,9 +213,9 @@ const verifyCodeRoute = async (
         const decoded = jwtDecode(data.access_token);
         const session = await getSession(req, res, sessionConfig);
         session.address = decoded.wallet;
-        session.uid = decoded.uid;
-        
+        session.uid = decoded.sub;
         await session.save();
+        
         if (afterCallback) {
           await afterCallback(req, res, session, {
             ...data,
@@ -308,6 +305,7 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
           const nonce = await res.text();
           return nonce;
         }}
+        // TODO app URL from config
         createAuthorizationUrl={({ nonce, address, code_challenge }) =>
           `http://127.0.0.1:3001/connect?client_id=${clientId}&scope=${scope}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&state=${nonce}&address=${address}&code_challenge=${code_challenge}&code_challenge_method=S256`
         }
@@ -325,8 +323,8 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
           if (!res.ok) {
             throw new Error('Failed to fetch SIWOP session');
           }
-          const { address } = await res.json();
-          return address ? { address } : null;
+          const { address, nonce, uid, chainId } = await res.json();
+          return address ? { address, nonce, uid, chainId } : null;
         }}
         signOut={() => fetch(`${apiRoutePrefix}/logout`).then((res) => res.ok)}
         {...props}

@@ -40,7 +40,7 @@ export const SIWOPProvider = ({
     );
   }
   // SIWOPProvider must be wrapped outside of OPConnectProvider so that the
-  // OPConnectButton and other UI can use SIWOP context values.
+  // ConnectButton and other UI can use SIWOP context values.
   if (useContext(OPConnectContext)) {
     throw new Error('OPConnectProvider must be mounted inside SIWOPProvider.');
   }
@@ -121,7 +121,7 @@ export const SIWOPProvider = ({
         return data as SIWOPSession;
       }
 
-      // TODO generate and store these
+      // TODO generate and store code challenge
       // const { codeChallenge } = await siwopConfig.generatePKCE();
 
       const url = siwopConfig.createAuthorizationUrl({
@@ -148,17 +148,25 @@ export const SIWOPProvider = ({
       // Check state cookie or set error
       // StatusState.ERROR
       if (nonce.data !== state) { 
-        console.error('State mismatch');
+        // console.error('State mismatch');
         setStatus(StatusState.ERROR);
         return;
       }
 
       // Verify code
-      siwopConfig.verifyCode({ code }).then((res) => {
-        console.log(res);
+      siwopConfig.verifyCode({ code }).then(() => {
+        // set auth session
         setStatus(StatusState.SUCCESS);
+
+        session.refetch().then((r) => {
+          onSignIn?.(r?.data ?? undefined);
+          return r?.data;
+        });
+
         // remove code from url
         window.history.replaceState({}, document.title, window.location.pathname);
+      }).catch(() => {
+        setStatus(StatusState.ERROR);
       });
     }
   
@@ -173,19 +181,18 @@ export const SIWOPProvider = ({
       getAddress(sessionData.address) !== getAddress(connectedAddress)
     ) {
       console.warn('Wallet account changed, signing out of SIWOP session');
-      signOutAndRefetch();
+      console.log(sessionData.address, connectedAddress);
+      // signOutAndRefetch();
     }
-    // The SIWOP spec includes a chainId parameter for contract-based accounts,
-    // so we're being extra cautious about keeping the SIWOP session and the
-    // connected account in sync. But this can be disabled when
-    // configuring the SIWOPProvider.
-    else if (signOutOnNetworkChange && sessionData.address !== connectedAddress) {
-      console.warn('Wallet changed, signing out of SIWOP session');
-      signOutAndRefetch();
-    }
+    // // The SIWE spec includes a chainId parameter for contract-based accounts,
+    // // so we're being extra cautious about keeping the SIWOP session and the
+    // // connected account in sync. But this can be disabled when
+    // // configuring the SIWOPProvider.
+    // else if (signOutOnNetworkChange && sessionData.address !== connectedAddress) {
+    //   console.warn('Wallet changed, signing out of SIWOP session');
+    //   // signOutAndRefetch();
+    // }
   }, [sessionData, connectedAddress]);
-
-  // TODO fix types here
 
   return (
     <SIWOPContext.Provider

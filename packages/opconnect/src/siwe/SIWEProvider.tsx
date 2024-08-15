@@ -40,7 +40,7 @@ export const SIWEProvider = ({
     );
   }
   // SIWEProvider must be wrapped outside of OPConnectProvider so that the
-  // OPConnectButton and other UI can use SIWE context values.
+  // ConnectButton and other UI can use SIWE context values.
   if (useContext(OPConnectContext)) {
     throw new Error('OPConnectProvider must be mounted inside SIWEProvider.');
   }
@@ -118,7 +118,6 @@ export const SIWEProvider = ({
         chainId,
         nonce: nonce?.data,
       });
-      console.log('message', message);
 
       // Ask user to sign message with their wallet
       const signature = await signMessageAsync({

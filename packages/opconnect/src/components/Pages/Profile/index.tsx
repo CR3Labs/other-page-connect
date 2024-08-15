@@ -41,6 +41,7 @@ import useLocales from '../../../hooks/useLocales';
 import { useEnsFallbackConfig } from '../../../hooks/useEnsFallbackConfig';
 import { useSIWE } from '../../../siwe';
 import { useSIWOP } from '../../../siwop';
+import Logos from '../../../assets/logos';
 
 const ForwardIcon = ({ ...props }) => (
   <svg
@@ -157,11 +158,9 @@ const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
       </ModalContent>
       {context.signInWithOtherPage && !isSIWOPSignedIn && (
         <Button
-          variant="primary"
-          iconPosition="right"
           onClick={signIn}
-          icon={<ForwardIcon />}
         >
+          <div style={{ width: '24px', marginRight: '10px' }}><Logos.OtherPage /></div>
           {locales.signInWithOtherPageScreen_signedOut_heading}
         </Button>
       )}
@@ -175,7 +174,7 @@ const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
           }}
           icon={<ForwardIcon />}
         >
-          {locales.signInWithOtherPageScreen_signedOut_heading}
+          {locales.signInWithEthereumScreen_signedOut_heading}
         </Button>
       )}
       {!isSafeConnector(connector?.id) && (

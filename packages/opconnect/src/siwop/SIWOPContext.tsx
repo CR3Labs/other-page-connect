@@ -11,6 +11,9 @@ export enum StatusState {
 
 export type SIWOPSession = {
   address: string;
+  chainId: number;
+  uid: string;
+  nonce: string;
 };
 
 export type SIWOPConfig = {

@@ -269,7 +269,7 @@ This update does not yet include support for WalletConnect 2.0 (wagmi `0.12.x`)
 ## Improved
 
 - Update testbench for better developer experience.
-- Improve logic for `isConnecting` within the Custom `OPConnectButton`.
+- Improve logic for `isConnecting` within the Custom `ConnectButton`.
 - Replace `getGlobalChains` with `useChains` Hook
 - Tidy up some internal component structure and include a few useful dev updates (thanks [pugson](https://github.com/pugson)).
 - Export `useIsMounted` and `Context` (thanks [shahruz](https://github.com/shahruz)).
@@ -296,7 +296,7 @@ This update adds some minor quality of life features to OPConnect.
 - Included `shimChainChangedDisconnect` option to `MetaMaskConnector` to automatically disconnect the wallet when the chain changes in particular version of MetaMask (thanks [Songkeys](https://github.com/Songkeys)).
 - Added `size` prop to `ChainIcon` component to allow for custom sizing (thanks [JamieLottering](https://github.com/JamieLottering)).
 - Exported type `OPConnectOptions` for better TypeScript support when creating a wagmi client (thanks [ryanberckmans](https://github.com/ryanberckmans)).
-- Included `chain` to `OPConnectButton.custom` to allow for chains to be passed to custom buttons.
+- Included `chain` to `ConnectButton.custom` to allow for chains to be passed to custom buttons.
 
 # 1.1.3
 
@@ -416,9 +416,9 @@ This update introduces Sign In With Ethereum and other helpful changes and addit
 - Improvements and update to the default themes
 - Wallet Connection now requests the first `chain` in the chains array given when creating your client configuration
 
-## OPConnectButton
+## ConnectButton
 
-- Add props to `<OPConnectButton />` for additional button configuration
+- Add props to `<ConnectButton />` for additional button configuration
   - `label` to customize the connect button text/label
   - `showBalance` to show wallet balance when connected (false default)
   - `showAvatar` to show ENS/wallet avatar when connected (true default)

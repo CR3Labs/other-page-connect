@@ -46,7 +46,7 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
 
   const { clientId, session, nonce, status, signOut, signIn, resetStatus } =
     siweContextValue;
-  const { address } = session.data || {};
+  const { address, chainId, uid } = session.data || {};
 
   const currentStatus = address
     ? StatusState.SUCCESS
@@ -70,6 +70,8 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
     data: isSignedIn
       ? {
           address: address as string,
+          chainId: chainId as number,
+          uid: uid as string,
         }
       : undefined,
     status: currentStatus,

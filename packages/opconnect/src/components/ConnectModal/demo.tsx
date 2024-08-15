@@ -14,7 +14,7 @@ import SwitchNetworks from '../Pages/SwitchNetworks';
 import MobileConnectors from '../Pages/MobileConnectors';
 import SignInWithEthereum from '../Pages/SignInWithEthereum';
 
-import { OPConnectButton } from '../ConnectButton';
+import { ConnectButton } from '../ConnectButton';
 import { getAppName } from '../../defaultConfig';
 import { OPConnectThemeProvider } from '../OPConnectThemeProvider/OPConnectThemeProvider';
 
@@ -237,7 +237,7 @@ const ConnectModal: React.FC<{
             <>
               <Cursor ref={cursorRef} />
               <ButtonContainer>
-                <OPConnectButton
+                <ConnectButton
                   customTheme={customTheme}
                   theme={theme}
                   mode={mode}

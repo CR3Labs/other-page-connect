@@ -1,30 +1,22 @@
 import { useAppContext } from '@/contexts/app-provider';
-import { OPConnectButton, useSIWOP } from 'opconnect';
+import { ConnectButton, useSIWOP } from 'opconnect';
 import { useEffect, useState } from 'react';
 // import { Unity, useUnityContext } from "react-unity-webgl";
 
 export default function Home({ address }: { address?: string }) {
-  const [connected, setConnected] = useState(false);
   const { toggleMode, handleSetPrimaryColor, mode, primaryColor } =
     useAppContext();
 
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleSetPrimaryColor(e.target.value as `#${string}`);
   };
-  const { clientId, data, isSignedIn, signOut, signIn } = useSIWOP();
-  console.log({ clientId, data, isSignedIn, signOut, signIn });
+  const { clientId, isSignedIn } = useSIWOP();
 
   const openAccount = () => {
     const left = (window.innerWidth / 2) - 400;
     const top = (window.innerHeight / 2) - 380;
     window.open(`http://127.0.0.1:3001/connect/settings?client_id=${clientId}`, "mozillaWindow", `left=${left},top=${top},width=800,height=760`)
   };
-
-  useEffect(() => {
-    if (window) {
-      setConnected(window?.location?.search?.includes('code'));
-    }
-  }, []);
 
   // const { unityProvider } = useUnityContext({
   //   loaderUrl: "build/myunityapp.loader.js",
@@ -38,8 +30,8 @@ export default function Home({ address }: { address?: string }) {
       <div className="flex justify-between bg-black p-4">
         <img className="w-10" src="https://cdn-icons-png.freepik.com/512/16440/16440737.png" />
         <div className="flex items-center">
-        <OPConnectButton />
-        {connected && <button className="bg-neutral-900 text-white rounded-md p-3 ml-1 text-sm" onClick={openAccount}>
+        <ConnectButton />
+        {isSignedIn && <button className="bg-neutral-900 text-white rounded-md p-3 ml-1 text-sm" onClick={openAccount}>
           Account
           </button>}
         </div>
