@@ -29,7 +29,6 @@ export const SIWOPProvider = ({
   onSignOut,
   ...siwopConfig
 }: Props) => {
-  const [code, setCode] = useState<string | null>(null);
   const [status, setStatus] = useState<StatusState>(StatusState.READY);
   const resetStatus = () => setStatus(StatusState.READY);
 
@@ -112,8 +111,6 @@ export const SIWOPProvider = ({
 
       setStatus(StatusState.LOADING);
       
-      // TODO refetch session after 
-      // redirect if code exists in url
       const data = await session.refetch().then((res) => {
         onSignIn?.(res?.data ?? undefined);
         return res?.data;
@@ -124,12 +121,17 @@ export const SIWOPProvider = ({
         return data as SIWOPSession;
       }
 
+      // TODO generate and store these
+      // const { codeChallenge } = await siwopConfig.generatePKCE();
+
       const url = siwopConfig.createAuthorizationUrl({
         nonce: nonce.data,
         address,
-        code_challenge: 'ok_XaQvFqt2mVvGtiZOv2bwDU3tZg09_ebzmtG_77FI',
+        code_challenge: 'ok_XaQvFqt2mVvGtiZOv2bwDU3tZg09_ebzmtG_77FI', 
       });
+
       window.location.href = url;
+      
       return false;
     } catch (error) {
       onError(error);
@@ -141,11 +143,22 @@ export const SIWOPProvider = ({
     // retrieve code from url
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
-    if (code) {
-      setCode(code);
+    const state = urlParams.get('state');
+    if (code && state) {
+      // Check state cookie or set error
+      // StatusState.ERROR
+      if (nonce.data !== state) { 
+        console.error('State mismatch');
+        setStatus(StatusState.ERROR);
+        return;
+      }
+
+      // Verify code
       siwopConfig.verifyCode({ code }).then((res) => {
         console.log(res);
-        setStatus(StatusState.READY);
+        setStatus(StatusState.SUCCESS);
+        // remove code from url
+        window.history.replaceState({}, document.title, window.location.pathname);
       });
     }
   

@@ -40,6 +40,7 @@ import { useThemeContext } from '../../OPConnectThemeProvider/OPConnectThemeProv
 import useLocales from '../../../hooks/useLocales';
 import { useEnsFallbackConfig } from '../../../hooks/useEnsFallbackConfig';
 import { useSIWE } from '../../../siwe';
+import { useSIWOP } from '../../../siwop';
 
 const ForwardIcon = ({ ...props }) => (
   <svg
@@ -59,7 +60,8 @@ const ForwardIcon = ({ ...props }) => (
 
 const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
   const context = useContext();
-  const { reset: resetSIWE, isSignedIn } = useSIWE();
+  const { reset: resetSIWE, isSignedIn: isSIWESignedIn } = useSIWE();
+  const { signIn, isSignedIn: isSIWOPSignedIn } = useSIWOP();
   const themeContext = useThemeContext();
 
   const locales = useLocales();
@@ -153,13 +155,23 @@ const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
           </InfoBox>
         </AvatarContainer>
       </ModalContent>
-      {context.signInWithOtherPage && !isSignedIn && !window.location.search?.includes('code') && (
+      {context.signInWithOtherPage && !isSIWOPSignedIn && (
+        <Button
+          variant="primary"
+          iconPosition="right"
+          onClick={signIn}
+          icon={<ForwardIcon />}
+        >
+          {locales.signInWithOtherPageScreen_signedOut_heading}
+        </Button>
+      )}
+      {context.signInWithEthereum && !isSIWESignedIn && (
         <Button
           variant="primary"
           iconPosition="right"
           onClick={() => {
-            // resetSIWOP();
-            context.setRoute(routes.SIGNINWITHOTHERPAGE);
+            resetSIWE();
+            context.setRoute(routes.SIGNINWITHETHEREUM);
           }}
           icon={<ForwardIcon />}
         >
