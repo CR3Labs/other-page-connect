@@ -23,6 +23,7 @@ import useLocales from '../../hooks/useLocales';
 import { Chain } from 'viem';
 import { useChainIsSupported } from '../../hooks/useChainIsSupported';
 import { useEnsFallbackConfig } from '../../hooks/useEnsFallbackConfig';
+import { useSIWOP } from '../../siwop';
 
 const contentVariants: Variants = {
   initial: {
@@ -163,9 +164,9 @@ const ConnectButtonRenderer: React.FC<ConnectButtonRendererProps> = ({
   );
 };
 
-ConnectButtonRenderer.displayName = 'OPConnectButton.Custom';
+ConnectButtonRenderer.displayName = 'ConnectButton.Custom';
 
-function OPConnectButtonInner({
+function ConnectButtonInner({
   label,
   showAvatar,
   separator,
@@ -176,7 +177,9 @@ function OPConnectButtonInner({
 }) {
   const locales = useLocales({});
   const context = useContext();
-  const { isSignedIn } = useSIWE();
+  const { isSignedIn: isSignedInEth } = useSIWE();
+  const { isSignedIn: isSignedInOP } = useSIWOP();
+  const isSignedIn = isSignedInEth || isSignedInOP;
 
   const { address, chain } = useAccount();
   const isChainSupported = useChainIsSupported(chain?.id);
@@ -304,7 +307,7 @@ function OPConnectButtonInner({
   );
 }
 
-type OPConnectButtonProps = {
+type ConnectButtonProps = {
   // Options
   label?: string;
   showBalance?: boolean;
@@ -319,7 +322,7 @@ type OPConnectButtonProps = {
   onClick?: (open: () => void) => void;
 };
 
-export function OPConnectButton({
+export function ConnectButton({
   // Options
   label,
   showBalance = false,
@@ -332,7 +335,7 @@ export function OPConnectButton({
 
   // Events
   onClick,
-}: OPConnectButtonProps) {
+}: ConnectButtonProps) {
   const isMounted = useIsMounted();
 
   const context = useContext();
@@ -441,7 +444,7 @@ export function OPConnectButton({
                 }
           }
         >
-          <OPConnectButtonInner
+          <ConnectButtonInner
             separator={separator}
             showAvatar={showAvatar}
             label={label}
@@ -452,4 +455,4 @@ export function OPConnectButton({
   );
 }
 
-OPConnectButton.Custom = ConnectButtonRenderer;
+ConnectButton.Custom = ConnectButtonRenderer;

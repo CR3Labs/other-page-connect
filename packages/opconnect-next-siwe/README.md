@@ -103,9 +103,9 @@ import { siweClient } from "@/utils/siweClient";
   onSignIn={(session?: SIWESession) => void}
   onSignOut={() => void}
   >
-  <ConnectKitProvider>
+  <OPConnectProvider>
     /* Your App */
-  </ConnectKitProvider>
+  </OPConnectProvider>
 </siweClient.Provider>
 ```
 

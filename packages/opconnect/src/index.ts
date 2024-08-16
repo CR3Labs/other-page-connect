@@ -9,8 +9,11 @@ export { useModal } from './hooks/useModal';
 export { SIWEProvider, useSIWE } from './siwe';
 export type { SIWESession, SIWEConfig } from './siwe';
 
+export { SIWOPProvider, useSIWOP} from './siwop';
+export type { SIWOPSession, SIWOPConfig } from './siwop';
+
 export { OPConnectProvider, Context } from './components/OPConnect';
-export { OPConnectButton } from './components/ConnectButton';
+export { ConnectButton } from './components/ConnectButton';
 export { default as SIWEButton } from './components/Standard/SIWE';
 
 //export { default as NetworkButton } from './components/NetworkButton';

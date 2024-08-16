@@ -5,6 +5,7 @@ import {
   useConnectCallback,
   useConnectCallbackProps,
 } from './useConnectCallback';
+import { useSIWOP } from '../siwop';
 
 type ModalRoutes = (typeof routes)[keyof typeof routes];
 
@@ -19,7 +20,7 @@ const safeRoutes: {
     routes.MOBILECONNECTORS,
     routes.ONBOARDING,
   ],
-  connected: [routes.PROFILE, routes.SWITCHNETWORKS, routes.SIGNINWITHETHEREUM],
+  connected: [routes.PROFILE, routes.SWITCHNETWORKS, routes.SIGNINWITHETHEREUM, routes.SIGNINWITHOTHERPAGE],
 };
 const allRoutes: ModalRoutes[] = [
   ...safeRoutes.connected,
@@ -39,7 +40,8 @@ export const useModal = ({ onConnect, onDisconnect }: UseModalProps = {}) => {
   });
 
   const { isConnected } = useAccount();
-  const { signIn } = useSIWE();
+  const { signIn: signInWithEtherum } = useSIWE();
+  const { signIn: signInWithOtherPage } = useSIWOP();
 
   const close = () => {
     context.setOpen(false);
@@ -95,7 +97,11 @@ export const useModal = ({ onConnect, onDisconnect }: UseModalProps = {}) => {
     openSwitchNetworks: () => gotoAndOpen(routes.SWITCHNETWORKS),
     openSIWE: (triggerSIWE?: boolean) => {
       gotoAndOpen(routes.SIGNINWITHETHEREUM);
-      if (triggerSIWE) signIn();
+      if (triggerSIWE) signInWithEtherum();
+    },
+    openSIWOP: (triggerSIWOP?: boolean) => {
+      gotoAndOpen(routes.SIGNINWITHOTHERPAGE);
+      if (triggerSIWOP) signInWithOtherPage();
     },
   };
 };

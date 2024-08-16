@@ -1,0 +1,52 @@
+{
+  "name": "opconnect-next-siwop",
+  "version": "0.0.1",
+  "license": "BSD-2-Clause license",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cr3labs/other-page-connect.git",
+    "directory": "packages/opconnect-next-siwop"
+  },
+  "type": "module",
+  "exports": "./build/index.es.js",
+  "types": "./build/index.d.ts",
+  "engines": {
+    "node": ">=12.4"
+  },
+  "files": [
+    "build",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "rollup --config rollup.config.dev.js -w",
+    "dev": "rollup --config rollup.config.dev.js -w",
+    "build": "rollup --config rollup.config.prod.js",
+    "lint": "eslint src --ext .ts"
+  },
+  "keywords": [
+    "ens",
+    "react-hook",
+    "blockchain",
+    "hooks",
+    "ethereum",
+    "react",
+    "cr3labs"
+  ],
+  "dependencies": {
+    "iron-session": "^6.2.1",
+    "viem": "^2.13.0"
+  },
+  "peerDependencies": {
+    "next": ">=12.x",
+    "opconnect": ">=0.0.1",
+    "react": "17.x || 18.x",
+    "react-dom": "17.x || 18.x",
+    "viem": ">=2.13.3"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.27",
+    "@types/react": "^18.0.6",
+    "@types/react-dom": "^18.0.2",
+    "typescript": "^4.9.5"
+  }
+}

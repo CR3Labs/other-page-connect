@@ -51,6 +51,7 @@ import FitText from '../FitText';
 import { useWallet } from '../../../wallets/useWallets';
 import { useMobileView } from '../../../hooks/useMobileView';
 import { PoweredByOtherPage } from '../../../assets/logos';
+import { useSIWOP } from '../../../siwop';
 
 const ProfileIcon = ({ isSignedIn }: { isSignedIn?: boolean }) => (
   <div style={{ position: 'relative' }}>
@@ -196,7 +197,9 @@ const Modal: React.FC<ModalProps> = ({
   const context = useContext();
   const themeContext = useThemeContext();
   const mobile = isMobile();
-  const { isSignedIn, reset } = useSIWE();
+  const { isSignedIn: isSignedInEth, reset } = useSIWE();
+  const { isSignedIn: isSignedInOp } = useSIWOP();
+  const isSignedIn = isSignedInEth || isSignedInOp;
 
   const wallet = useWallet(context.connector?.id);
 
@@ -358,6 +361,10 @@ const Modal: React.FC<ModalProps> = ({
         return isSignedIn
           ? locales.signInWithEthereumScreen_signedIn_heading
           : locales.signInWithEthereumScreen_signedOut_heading;
+      case routes.SIGNINWITHOTHERPAGE:
+        return isSignedIn
+          ? locales.signInWithOtherPageScreen_signedIn_heading
+          : locales.signInWithOtherPageScreen_signedOut_heading;
       case routes.OAUTHWALLET:
         return locales.signInWithEthereumScreen_signedOut_button;
       default:
@@ -511,7 +518,29 @@ const Modal: React.FC<ModalProps> = ({
                     >
                       <ProfileIcon isSignedIn={isSignedIn} />
                     </SiweButton>
-                  ) : (
+                  ) : context.route === routes.PROFILE &&
+                  context.signInWithOtherPage ? (
+                  <SiweButton
+                    disabled={inTransition}
+                    aria-label={
+                      locales.signInWithOtherPageScreen_signedOut_heading
+                    }
+                    key="siwopButton"
+                    onClick={() => {
+                      reset();
+                      context.setRoute(routes.SIGNINWITHOTHERPAGE);
+                    }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{
+                      duration: mobile ? 0 : 0.1,
+                      delay: mobile ? 0.01 : 0,
+                    }}
+                  >
+                    <ProfileIcon isSignedIn={isSignedIn} />
+                  </SiweButton>
+                ) : (
                     onInfo &&
                     !context.options?.hideQuestionMarkCTA && (
                       <InfoButton

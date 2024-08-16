@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { useEffect, useState } from 'react';
 
-import { OPConnectButton, ChainIcon, useChains } from 'opconnect';
+import { ConnectButton, ChainIcon, useChains } from 'opconnect';
 
 import * as wagmiChains from 'wagmi/chains';
 import { useAccount } from 'wagmi';
@@ -106,7 +106,7 @@ const Home: NextPage = () => {
       </main>
       <aside>
         <Link href="/">&larr; Testbench</Link>
-        <OPConnectButton />
+        <ConnectButton />
       </aside>
     </>
   );

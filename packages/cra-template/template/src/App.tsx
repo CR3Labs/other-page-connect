@@ -1,4 +1,4 @@
-import { OPConnectButton } from 'opconnect';
+import { ConnectButton } from 'opconnect';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         height: '100vh',
       }}
     >
-      <OPConnectButton />
+      <ConnectButton />
     </div>
   );
 }

@@ -30,6 +30,7 @@ import { useConnector } from '../hooks/useConnectors';
 import { WagmiContext, useAccount } from 'wagmi';
 import { Web3ContextProvider } from './contexts/web3';
 import { useChainIsSupported } from '../hooks/useChainIsSupported';
+import { SIWOPContext } from '../siwop';
 
 export const routes = {
   ONBOARDING: 'onboarding',
@@ -41,6 +42,7 @@ export const routes = {
   PROFILE: 'profile',
   SWITCHNETWORKS: 'switchNetworks',
   SIGNINWITHETHEREUM: 'signInWithEthereum',
+  SIGNINWITHOTHERPAGE: 'signInWithOtherPage',
   OAUTHWALLET: 'oauthWallet',
 };
 
@@ -70,6 +72,7 @@ type ContextValue = {
   errorMessage: Error;
   options?: OPConnectOptions;
   signInWithEthereum: boolean;
+  signInWithOtherPage: boolean;
   debugMode?: boolean;
   log: (...props: any) => void;
   displayError: (message: string | React.ReactNode | null, code?: any) => void;
@@ -255,6 +258,7 @@ export const OPConnectProvider = ({
     selectedConnector,
     setSelectedConnector,
     signInWithEthereum: React.useContext(SIWEContext)?.enabled ?? false,
+    signInWithOtherPage: React.useContext(SIWOPContext)?.enabled ?? false,
     onConnect,
     // Other configuration
     options: opts,
@@ -263,10 +267,10 @@ export const OPConnectProvider = ({
     log,
     displayError: (message: string | React.ReactNode | null, code?: any) => {
       setErrorMessage(message);
-      console.log('---------CONNECTKIT DEBUG---------');
+      console.log('---------OPConnect DEBUG---------');
       console.log(message);
       if (code) console.table(code);
-      console.log('---------/CONNECTKIT DEBUG---------');
+      console.log('---------/OPConnect DEBUG---------');
     },
     resize,
     triggerResize: () => onResize((prev) => prev + 1),

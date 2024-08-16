@@ -4,7 +4,7 @@
   "license": "BSD-2-Clause license",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/solidity-io/canopy-wallet-connect.git",
+    "url": "git+https://github.com/cr3labs/other-page-connect.git",
     "directory": "packages/opconnect-next-siwe"
   },
   "type": "module",
@@ -30,7 +30,7 @@
     "hooks",
     "ethereum",
     "react",
-    "solidityio"
+    "cr3labs"
   ],
   "dependencies": {
     "iron-session": "^6.2.1",

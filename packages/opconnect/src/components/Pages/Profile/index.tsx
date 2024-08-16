@@ -40,6 +40,8 @@ import { useThemeContext } from '../../OPConnectThemeProvider/OPConnectThemeProv
 import useLocales from '../../../hooks/useLocales';
 import { useEnsFallbackConfig } from '../../../hooks/useEnsFallbackConfig';
 import { useSIWE } from '../../../siwe';
+import { useSIWOP } from '../../../siwop';
+import Logos from '../../../assets/logos';
 
 const ForwardIcon = ({ ...props }) => (
   <svg
@@ -59,7 +61,8 @@ const ForwardIcon = ({ ...props }) => (
 
 const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
   const context = useContext();
-  const { reset: resetSIWE, isSignedIn } = useSIWE();
+  const { reset: resetSIWE, isSignedIn: isSIWESignedIn } = useSIWE();
+  const { reset: resetSIWOP, isSignedIn: isSIWOPSignedIn } = useSIWOP();
   const themeContext = useThemeContext();
 
   const locales = useLocales();
@@ -109,7 +112,7 @@ const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
     <PageContent>
       <ModalContent style={{ paddingBottom: 0 }}>
         <AvatarContainer>
-          <Avatar address={address} width="100%" height={149} radius={0} />
+          <Avatar address={address} width="100%" radius={0} />
           <ChainSelectorContainer>
             <ChainSelector />
           </ChainSelectorContainer>
@@ -153,7 +156,18 @@ const Profile: React.FC<{ closeModal?: () => void }> = ({ closeModal }) => {
           </InfoBox>
         </AvatarContainer>
       </ModalContent>
-      {context.signInWithEthereum && !isSignedIn && (
+      {context.signInWithOtherPage && !isSIWOPSignedIn && (
+        <Button
+        onClick={() => {
+          resetSIWOP();
+          context.setRoute(routes.SIGNINWITHOTHERPAGE);
+        }}
+        >
+          {/* <div style={{ width: '24px', marginRight: '10px' }}><Logos.OtherPage /></div> */}
+          {locales.signInWithOtherPageScreen_signedOut_heading}
+        </Button>
+      )}
+      {context.signInWithEthereum && !isSIWESignedIn && (
         <Button
           variant="primary"
           iconPosition="right"

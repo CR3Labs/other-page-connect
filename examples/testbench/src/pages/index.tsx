@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import {
   Types,
-  OPConnectButton,
+  ConnectButton,
   Avatar,
   SIWEButton,
   ChainIcon,
@@ -278,7 +278,7 @@ const Home: NextPage = () => {
       <main>
         <div className="panel">
           <h2>Connect Button</h2>
-          <OPConnectButton label={label} />
+          <ConnectButton label={label} />
           {isConnected && (
             <button onClick={handleDisconnect}>Disconnect</button>
           )}
@@ -341,7 +341,7 @@ const Home: NextPage = () => {
         </div>
       </main>
       <aside>
-        <OPConnectButton.Custom>
+        <ConnectButton.Custom>
           {({ isConnected, isConnecting, show, address, ensName, chain }) => {
             return (
               <button onClick={show}>
@@ -366,14 +366,14 @@ const Home: NextPage = () => {
               </button>
             );
           }}
-        </OPConnectButton.Custom>
+        </ConnectButton.Custom>
 
         <p>isConnecting: {isConnecting.toString()}</p>
 
         <Actions />
-        <h2>OPConnectButton props</h2>
+        <h2>ConnectButton props</h2>
         <Textbox
-          label="OPConnectButton Label"
+          label="ConnectButton Label"
           value={label}
           onChange={(e: any) => {
             setLabel(e.target.value);
