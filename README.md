@@ -49,7 +49,7 @@ OPConnect is the simplest way to integrate a connect wallet experience into your
 Install OPConnect and its peer dependencies:
 
 ```bash
-npm install opconnect wagmi viem@2.x @tanstack/react-query
+npm install @otherpage/connect wagmi viem@2.x @tanstack/react-query
 ```
 
 - [Wagmi](https://wagmi.sh/) is a React Hooks library for Ethereum, this is the library you will use to interact with the connected wallet.

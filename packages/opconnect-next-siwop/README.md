@@ -18,7 +18,7 @@ Sign in With Other Page acts as a drop in replacement of other forms of authenti
 **1. Install the required dependencies**
 
 ```bash
-$ npm install opconnect-next-siwop
+$ npm install @otherpage/connect-next-siwop
 ```
 
 

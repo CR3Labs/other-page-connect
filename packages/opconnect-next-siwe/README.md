@@ -11,7 +11,7 @@ OPConnect provides a simple way to add [Sign In With Ethereum](https://login.xy
 Once you've set up OPConnect, install the official [Sign In With Ethereum package](https://www.npmjs.com/package/siwe) and our [SIWE helper package](https://www.npmjs.com/package/connectkit-next-siwe) to your Next.js project.
 
 ```bash
-npm install connectkit-next-siwe viem@">=2.13.3"
+npm install @otherpage/connect-next-siwe viem@">=2.13.3"
 ```
 
 ## 2\. Configure
