@@ -4,12 +4,19 @@ OPConnect is a powerful [React](https://reactjs.org/) component library for conn
 
 ## Features
 
+- 🔐 Simple Auth - Batteries included wallet connect and authentication.
 - 💡 TypeScript Ready — Get types straight out of the box.
 - 🌱 Ecosystem Standards — Uses top libraries such as [wagmi](https://github.com/wagmi-dev/wagmi).
 - 🖥️ Simple UX — Give users a simple, attractive experience.
 - 🌞🌚 Light/Dark/Auto Modes — Predesigned color themes.
 
 and much more...
+
+## Packages
+
+- [`opconnect`](packages/opconnect) - Wallet connect modal and button components.
+- [`opconnect-next-siwop`](packages/opconnect-next-siwop) - Authenticate your users using their [Other Page](https://other.page) accounts.
+- [`opconnect-next-siwe`](packages/opconnect-next-siwe) - Authenticate your users using an Ethereum Signature.
 
 ## Quick Start
 
@@ -55,7 +62,13 @@ npm install opconnect wagmi viem@2.x @tanstack/react-query
 
 ## 2\. API Keys
 
-OPConnect utilises WalletConnect's SDK to help with connecting wallets. WalletConnect 2.0 requires a `walletConnectProjectId` which you can create quickly and easily for free over at [WalletConnect Cloud](https://cloud.walletconnect.com/sign-in).
+**Sign In With Other Page (SIWOP)**
+
+If you intend to use Sign in With Other Page (SIWOP) to log users into your app, you will need to create a connect app in the [Other Page Community Dashboard](https://alpha-admin.other.page) and set the require configuration. See: [examples/nextjs-siwop/README.md](examples/nextjs-siwop/README.md) for a list.
+
+**WalletConnect 2.0**
+
+OPConnect utilises WalletConnect's SDK to help with connecting wallets. If you wish to use WalletConnect 2.0, it requires a `walletConnectProjectId` which you can create quickly and easily for free over at [WalletConnect Cloud](https://cloud.walletconnect.com/sign-in).
 
 ## 3\. Implementation
 
@@ -140,6 +153,11 @@ const MyComponent = () => {
 };
 ```
 
+## 5\. Sign In With Other Page (SIWOP)
+
+[Sign in With Other Page](packages/opconnect-next-siwop/README.md) acts as a drop in replacement of other forms of authentication for your app. Using SIWOP enables your users to login once across all of your apps and bring their avatars and profile data with them.
+
+
 ## Additional Build Tooling Setup
 
 Some build tools require additional setup to work with ConnectKit.
@@ -179,11 +197,12 @@ export const Web3Provider = ({ children }) => {
 
 ## Examples
 
-There are various runnable examples included in this repository in the [examples folder](https://github.com/solidity-io/canopy-wallet-connect/tree/main/examples):
+There are various runnable examples included in this repository in the [examples folder](https://github.com/cr3labs/opconnect/tree/main/examples):
 
-- [Create React App Example (TypeScript)](https://github.com/solidity-io/canopy-wallet-connect/main/examples/cra)
-- [Next.js Example (TypeScript)](https://github.com/solidity-io/canopy-wallet-connect/main/examples/nextjs)
-- [Vite Example (TypeScript)](https://github.com/solidity-io/canopy-wallet-connect/main/examples/vite)
+
+- [Create React App Example (TypeScript)](https://github.com/cr3labs/opconnect/main/examples/cra)
+- [Next.js Example (TypeScript)](https://github.com/cr3labs/opconnect/main/examples/nextjs)
+- [Vite Example (TypeScript)](https://github.com/cr3labs/opconnect/main/examples/vite)
 
 ### Try in CodeSandbox
 
@@ -198,7 +217,7 @@ You can try out some OPConnect examples directly in your browser through CodeSan
 Clone the OPConnect project and install the necessary dependencies:
 
 ```sh
-$ git clone git@github.com:solidity-io/canopy-wallet-connect.git
+$ git clone git@github.com:cr3labs/opconnect.git
 $ cd opconnect
 $ yarn install
 ```
@@ -215,6 +234,7 @@ and then simply select the example you'd like to run:
 ```sh
 $ yarn dev:vite # Vite
 $ yarn dev:nextjs # Next.js
+$ yarn dev:nextjs-siwop # Next.js with SIWOP
 $ yarn dev:nextjs-siwe # Next.js with SIWE
 $ yarn dev:cra # Create React App
 $ yarn dev:testbench # Testbench app
