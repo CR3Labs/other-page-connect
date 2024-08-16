@@ -32,6 +32,7 @@ export type SIWOPConfig = {
   verifyCode: (args: {
     code: string;
   }) => Promise<boolean>;
+  generatePKCE: () => Promise<{ codeChallenge: string; codeVerifier: string }>;
   getSession: () => Promise<SIWOPSession | null>;
   signOut: () => Promise<boolean>;
 

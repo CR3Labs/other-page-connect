@@ -121,13 +121,16 @@ export const SIWOPProvider = ({
         return data as SIWOPSession;
       }
 
-      // TODO generate and store code challenge
-      // const { codeChallenge } = await siwopConfig.generatePKCE();
+      // generate and store PKCE
+      // NOTE: code verifier being stored in cookie is a security risk
+      // if the user does not properly configure httpOnly, secure, same-site cookies
+      const { codeChallenge } = await siwopConfig.generatePKCE();
 
+      // create url
       const url = siwopConfig.createAuthorizationUrl({
         nonce: nonce.data,
         address,
-        code_challenge: 'ok_XaQvFqt2mVvGtiZOv2bwDU3tZg09_ebzmtG_77FI', 
+        code_challenge: codeChallenge, 
       });
 
       window.location.href = url;
@@ -146,18 +149,22 @@ export const SIWOPProvider = ({
     const state = urlParams.get('state');
     if (code && state) {
       // Check state cookie or set error
-      // StatusState.ERROR
       if (nonce.data !== state) { 
-        // console.error('State mismatch');
+        console.error('Invalid nonce');
         setStatus(StatusState.ERROR);
         return;
       }
 
       // Verify code
-      siwopConfig.verifyCode({ code }).then(() => {
+      siwopConfig.verifyCode({ code }).then((verified) => {
+        if (!verified) {
+          console.error('Code verification failed');
+          setStatus(StatusState.ERROR);
+          return;
+        }
+
         // set auth session
         setStatus(StatusState.SUCCESS);
-
         session.refetch().then((r) => {
           onSignIn?.(r?.data ?? undefined);
           return r?.data;
@@ -177,22 +184,23 @@ export const SIWOPProvider = ({
     if (!connectedAddress || !chain) return;
 
     // If SIWOP session no longer matches connected account, sign out
-    // TODO would have to validate against linked wallets
+    // TODO this would have to validate against linked wallets
+    // so it needs to be handled outside of the SIWOP flow for now
+    // because we can't require the wallets.read scope
+
     // if (
     //   signOutOnAccountChange &&
     //   getAddress(sessionData.address) !== getAddress(connectedAddress)
     // ) {
-    //   console.warn('Wallet account changed, signing out of SIWOP session');
-    //   console.log(sessionData.address, connectedAddress);
+    //   console.warn('Wallet changed, signing out of SIWOP session');
     //   setStatus(StatusState.ERROR);
     //   signOutAndRefetch();
     // }
     // // The SIWE spec includes a chainId parameter for contract-based accounts,
-    // // so we're being extra cautious about keeping the SIWOP session and the
-    // // connected account in sync. But this can be disabled when
-    // // configuring the SIWOPProvider.
-    // else if (signOutOnNetworkChange && sessionData.address !== connectedAddress) {
-    //   console.warn('Wallet changed, signing out of SIWOP session');
+    // // so we may want to follow this and keep the SIWOP session and the
+    // // connected account in sync on the same chain and address
+    // else if (signOutOnNetworkChange && sessionData.chainId !== chain?.id) {
+    //   console.warn('Network changed, signing out of SIWOP session');
     //   // signOutAndRefetch();
     // }
   }, [sessionData, connectedAddress]);

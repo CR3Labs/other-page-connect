@@ -1,3 +1,5 @@
+import { randomBytes, createHash } from "crypto";
+
 export interface JwtDecodeOptions {
   header?: boolean;
 }
@@ -27,7 +29,12 @@ export class InvalidTokenError extends Error {}
 
 InvalidTokenError.prototype.name = "InvalidTokenError";
 
-function b64DecodeUnicode(str: string) {
+/**
+ * Base64 decode unicode
+ * @param str 
+ * @returns 
+ */
+export function base64DecodeUnicode(str: string) {
   return decodeURIComponent(
     atob(str).replace(/(.)/g, (m, p) => {
       let code = (p as string).charCodeAt(0).toString(16).toUpperCase();
@@ -39,7 +46,12 @@ function b64DecodeUnicode(str: string) {
   );
 }
 
-function base64UrlDecode(str: string) {
+/**
+ * Base64 URL decode
+ * @param str 
+ * @returns 
+ */
+export function base64UrlDecode(str: string) {
   let output = str.replace(/-/g, "+").replace(/_/g, "/");
   switch (output.length % 4) {
     case 0:
@@ -55,12 +67,17 @@ function base64UrlDecode(str: string) {
   }
 
   try {
-    return b64DecodeUnicode(output);
+    return base64DecodeUnicode(output);
   } catch (err) {
     return atob(output);
   }
 }
 
+/**
+ * Decode a JWT token
+ * @param token 
+ * @param options 
+ */
 export function jwtDecode<T = JwtHeader>(
   token: string,
   options: JwtDecodeOptions & { header: true },
@@ -99,4 +116,30 @@ export function jwtDecode<T = JwtHeader | JwtPayload>(
       `Invalid token specified: invalid json for part #${pos + 1} (${(e as Error).message})`,
     );
   }
+}
+
+
+/**
+ * create a 
+ * @returns 
+ */
+export function generateCodeVerifier() {
+  return randomBytes(32).toString('base64url');
+};
+
+/**
+ * Generate a code challenge from the code verifier
+ * @param codeVerifier 
+ * @returns 
+ */
+export function generateCodeChallenge(codeVerifier){
+  return createHash('sha256')
+          .update(codeVerifier)
+          .digest('base64url');
+};
+
+export function generatePKCE() {
+  const codeVerifier = generateCodeVerifier();
+  const codeChallenge = generateCodeChallenge(codeVerifier);
+  return { codeVerifier, codeChallenge };
 }

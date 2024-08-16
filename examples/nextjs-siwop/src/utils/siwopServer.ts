@@ -16,6 +16,7 @@ export const siwopServer = configureServerSideSIWOP({
     password: process.env.SESSION_SECRET,
     cookieOptions: {
       secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
     },
   },
   options: {

@@ -7,12 +7,18 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import {
   generateSiweNonce,
 } from 'viem/siwe';
-import { jwtDecode, JwtPayload } from './util';
+import { generatePKCE, jwtDecode, JwtPayload } from './util';
 
+const APP_URL = 'https://alpha.other.page';
 const API_URL = 'https://alpha-api.other.page/v1';
 
 type RouteHandlerOptions = {
   afterNonce?: (
+    req: NextApiRequest,
+    res: NextApiResponse,
+    session: NextSIWOPSession<{}>
+  ) => Promise<void>;
+  afterPKCE?: (
     req: NextApiRequest,
     res: NextApiResponse,
     session: NextSIWOPSession<{}>
@@ -63,6 +69,8 @@ type NextClientSIWOPConfig = {
 
 type NextSIWOPSession<TSessionData extends Object = {}> = IronSession &
   TSessionData & {
+    codeVerifier?: string;
+    codeChallenge?: string;
     nonce?: string;
     address?: string;
     chainId?: number;
@@ -76,6 +84,7 @@ type NextSIWOPProviderProps = Omit<
   | 'redirectUri'
   | 'scope'
   | 'getNonce'
+  | 'generatePKCE'
   | 'createAuthorizationUrl'
   | 'verifyCode'
   | 'getSession'
@@ -156,6 +165,32 @@ const nonceRoute = async (
   }
 };
 
+const pkceRoute = async (
+  req: NextApiRequest,
+  res: NextApiResponse<{ codeChallenge?: string }>,
+  sessionConfig: IronSessionOptions,
+  afterCallback?: RouteHandlerOptions['afterPKCE']
+) => {
+  switch (req.method) {
+    case 'GET':
+      const session = await getSession(req, res, sessionConfig);
+      if (!session.codeVerifier) {
+        const { codeChallenge, codeVerifier } = await generatePKCE();
+        session.codeVerifier = codeVerifier;
+        session.codeChallenge = codeChallenge;
+        await session.save();
+      }
+      if (afterCallback) {
+        await afterCallback(req, res, session);
+      }
+      res.send({ codeChallenge: session.codeChallenge });
+      break;
+    default:
+      res.setHeader('Allow', ['GET']);
+      res.status(405).end(`Method ${req.method} Not Allowed`);
+  }
+};
+
 const sessionRoute = async (
   req: NextApiRequest,
   res: NextApiResponse<{ address?: string; uid?: string, chainId?: number }>,
@@ -186,6 +221,9 @@ const verifyCodeRoute = async (
   switch (req.method) {
     case 'POST':
       try {
+        // fetch current session
+        const session = await getSession(req, res, sessionConfig);
+
         // fetch access token
         const response = await fetch(`${config?.authApiUrl}/connect/oauth2-token`, {
           method: 'POST',
@@ -195,7 +233,7 @@ const verifyCodeRoute = async (
           body: JSON.stringify({
             grant_type: 'authorization_code',
             code: req.body.code,
-            code_verifier: 'n5qH3d6tJ7lGi1BEB1tb9BAqkgRm9nRpUTkcODDajpUXD8Se', // TODO where to store this?
+            code_verifier: session.codeVerifier,
             aud: config?.audience,
             client_id: config?.clientId,
             client_secret: config?.clientSecret,
@@ -214,7 +252,6 @@ const verifyCodeRoute = async (
 
         // persist session data
         const decoded = jwtDecode(data.access_token);
-        const session = await getSession(req, res, sessionConfig);
         session.address = decoded.wallet;
         session.uid = decoded.sub;
         await session.save();
@@ -273,6 +310,8 @@ export const configureServerSideSIWOP = <TSessionData extends Object = {}>({
     switch (route) {
       case 'nonce':
         return await nonceRoute(req, res, sessionConfig, afterNonce);
+      case 'pkce':
+        return await pkceRoute(req, res, sessionConfig, afterNonce);
       case 'verify':
         return await verifyCodeRoute(req, res, sessionConfig, config, afterToken);
       case 'session':
@@ -299,7 +338,7 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
   scope,
 }: NextClientSIWOPConfig): ConfigureClientSIWOPResult<TSessionData> => {
   const NextSIWOPProvider = (props: NextSIWOPProviderProps) => {
-    const APP_URL = appUrl || 'https://alpha.other.page';
+    const URL = appUrl || APP_URL;
     return (
       <SIWOPProvider
         clientId={clientId}
@@ -313,9 +352,20 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
           const nonce = await res.text();
           return nonce;
         }}
-        // TODO: config to require wallet sync between OP and App
+        generatePKCE={async () => {
+          const res = await fetch(`${apiRoutePrefix}/pkce`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          if (!res.ok) {
+            throw new Error('Failed to generate PKCE');
+          }
+          return res.json();
+        }}
         createAuthorizationUrl={({ nonce, address, code_challenge }) =>
-          `${APP_URL}/connect?client_id=${clientId}&scope=${scope.replace(' ', '+')}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&state=${nonce}&address=${address}&code_challenge=${code_challenge}&code_challenge_method=S256`
+          `${URL}/connect?client_id=${clientId}&scope=${scope.replace(' ', '+')}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&state=${nonce}&wallet=${address}&code_challenge=${code_challenge}&code_challenge_method=S256`
         }
         verifyCode={({ code }) =>
           fetch(`${apiRoutePrefix}/verify`, {
