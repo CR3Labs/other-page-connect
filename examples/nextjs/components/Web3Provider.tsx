@@ -2,7 +2,7 @@ import React from 'react';
 
 import { WagmiProvider, createConfig } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { OPConnectProvider, getDefaultConfig } from 'opconnect';
+import { OPConnectProvider, getDefaultConfig } from '@otherpage/connect';
 
 const config = createConfig(
   getDefaultConfig({

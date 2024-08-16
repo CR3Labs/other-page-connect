@@ -1,6 +1,6 @@
 import '@/styles/globals.css';
 import { siwopClient } from '@/utils/siwopClient';
-import { OPConnectProvider, getDefaultConfig } from 'opconnect';
+import { OPConnectProvider, getDefaultConfig } from '@otherpage/connect';
 import type { AppProps } from 'next/app';
 import { WagmiProvider, createConfig } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

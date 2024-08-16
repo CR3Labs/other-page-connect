@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { useEffect, useState } from 'react';
 
-import { ConnectButton, ChainIcon, useChains } from 'opconnect';
+import { ConnectButton, ChainIcon, useChains } from '@otherpage/connect';
 
 import * as wagmiChains from 'wagmi/chains';
 import { useAccount } from 'wagmi';

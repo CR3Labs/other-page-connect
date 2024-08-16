@@ -1,5 +1,5 @@
 import { useAppContext } from '@/contexts/app-provider';
-import { ConnectButton, useSIWE } from 'opconnect';
+import { ConnectButton, useSIWE } from '@otherpage/connect';
 
 export default function Home({ address }: { address?: string }) {
   const { toggleMode, handleSetPrimaryColor, mode, primaryColor } =

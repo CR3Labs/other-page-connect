@@ -1,4 +1,4 @@
-import { getDefaultConfig } from 'opconnect';
+import { getDefaultConfig } from '@otherpage/connect';
 import { createConfig } from 'wagmi';
 import { mainnet, polygon, optimism, arbitrum } from 'wagmi/chains';
 

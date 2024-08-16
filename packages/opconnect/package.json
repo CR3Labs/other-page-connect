@@ -1,6 +1,6 @@
 {
-  "name": "opconnect",
-  "version": "0.0.1",
+  "name": "@otherpage/connect",
+  "version": "0.1.0",
   "license": "BSD-2-Clause license",
   "repository": {
     "type": "git",

@@ -5,7 +5,7 @@ import { type ReactNode } from 'react';
 import { WagmiProvider } from 'wagmi';
 
 import { config } from '../config';
-import { OPConnectProvider } from 'opconnect';
+import { OPConnectProvider } from '@otherpage/connect';
 
 const queryClient = new QueryClient();
 export function Providers(props: { children: ReactNode }) {

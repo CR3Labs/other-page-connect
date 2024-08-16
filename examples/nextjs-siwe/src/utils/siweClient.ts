@@ -1,4 +1,4 @@
-import { configureClientSIWE } from 'opconnect-next-siwe';
+import { configureClientSIWE } from '@otherpage/connect-next-siwe';
 
 export const siweClient = configureClientSIWE({
   apiRoutePrefix: '/api/siwe', // Your API route directory

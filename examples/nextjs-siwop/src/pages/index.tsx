@@ -1,5 +1,5 @@
 import { useAppContext } from '@/contexts/app-provider';
-import { ConnectButton, useSIWOP } from 'opconnect';
+import { ConnectButton, useSIWOP } from '@otherpage/connect';
 import { useEffect, useState } from 'react';
 // import { Unity, useUnityContext } from "react-unity-webgl";
 

@@ -1,5 +1,5 @@
 import { FunctionComponent, ComponentProps } from 'react';
-import { SIWOPProvider } from 'opconnect';
+import { SIWOPProvider } from '@otherpage/connect';
 import type { IncomingMessage, ServerResponse } from 'http';
 import { getIronSession, IronSession, IronSessionOptions } from 'iron-session';
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';

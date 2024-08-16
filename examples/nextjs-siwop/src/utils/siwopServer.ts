@@ -1,6 +1,7 @@
-import { configureServerSideSIWOP } from 'opconnect-next-siwop';
+import { configureServerSideSIWOP } from '@otherpage/connect-next-siwop';
 
-const API_URL = 'http://127.0.0.1:3003/v1';
+// const API_URL = 'http://127.0.0.1:3003/v1';
+const API_URL = 'https://alpha-api.other.page/v1';
 
 export const siwopServer = configureServerSideSIWOP({
   config: {
@@ -15,6 +16,7 @@ export const siwopServer = configureServerSideSIWOP({
     cookieName: 'opconnect-next-siwop',
     password: process.env.SESSION_SECRET,
     cookieOptions: {
+      httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
     },

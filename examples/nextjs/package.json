@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@otherpage/connect": "workspace:packages/opconnect",
     "@tanstack/react-query": "^5.17.15",
     "next": "14.0.4",
-    "opconnect": "workspace:packages/opconnect",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "viem": "^2.0.6",

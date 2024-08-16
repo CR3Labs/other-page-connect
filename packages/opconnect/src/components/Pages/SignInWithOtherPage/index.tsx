@@ -67,7 +67,7 @@ const SignInWithOtherPage: React.FC = () => {
     const left = (window.innerWidth / 2) - 400;
     const top = (window.innerHeight / 2) - 380;
     // TODO domain from Context
-    window.open(`http://127.0.0.1:3001/connect/settings?client_id=${clientId}`, "mozillaWindow", `left=${left},top=${top},width=800,height=760`)
+    window.open(`https://alpha.other.page/connect/settings?client_id=${clientId}`, "mozillaWindow", `left=${left},top=${top},width=800,height=760`)
   };
 
   return (

@@ -84,7 +84,7 @@ _When using a framework that supports [React Server Components](https://react.d
 import { WagmiProvider, createConfig, http } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { OPConnectProvider, getDefaultConfig } from 'opconnect';
+import { OPConnectProvider, getDefaultConfig } from '@otherpage/connect';
 
 const config = createConfig(
   getDefaultConfig({
@@ -122,7 +122,7 @@ Now that you have your `Web3Provider` component, you can wrap your app with it:
 
 ```javascript
 import { Web3Provider } from './Web3Provider';
-import { ConnectButton } from 'opconnect';
+import { ConnectButton } from '@otherpage/connect';
 
 const App = () => {
   return (

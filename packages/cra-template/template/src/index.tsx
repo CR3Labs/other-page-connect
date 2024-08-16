@@ -4,7 +4,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import { WagmiProvider, createConfig } from 'wagmi';
-import { OPConnectProvider, getDefaultConfig } from 'opconnect';
+import { OPConnectProvider, getDefaultConfig } from '@otherpage/connect';
 
 const config = createConfig(
   getDefaultConfig({

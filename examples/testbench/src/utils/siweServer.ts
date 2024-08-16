@@ -1,4 +1,4 @@
-import { configureServerSideSIWE } from 'opconnect-next-siwe';
+import { configureServerSideSIWE } from '@otherpage/connect-next-siwe';
 import { ckConfig } from '../components/Web3Provider';
 
 export const siweServer = configureServerSideSIWE({

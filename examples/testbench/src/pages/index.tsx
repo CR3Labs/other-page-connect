@@ -12,7 +12,7 @@ import {
   useChains,
   useModal,
   useSIWE,
-} from 'opconnect';
+} from '@otherpage/connect';
 
 import {
   useAccount,

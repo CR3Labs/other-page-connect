@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { Types } from 'opconnect';
+import { Types } from '@otherpage/connect';
 
 type ContextValue = {
   theme: Types.Theme;

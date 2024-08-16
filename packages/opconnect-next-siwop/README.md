@@ -27,7 +27,7 @@ $ npm install opconnect-next-siwop
 
 ```tsx
 // utils/siwopClient.ts
-import { configureClientSIWOP } from 'opconnect-next-siwop';
+import { configureClientSIWOP } from '@otherpage/connect-next-siwop';
 
 const siwopClient = configureClientSIWOP({
   appUrl: 'http://127.0.0.1:3001', // For non-production enviroments only
@@ -52,7 +52,7 @@ Create a file inside your Next API folder `api/siwop/[...route].ts`.
 
 ```typescript
 // api/siwop/[...route].ts
-import { configureServerSideSIWOP } from 'opconnect-next-siwop';
+import { configureServerSideSIWOP } from '@otherpage/connect-next-siwop';
 
 const siwopServer = configureServerSideSIWOP({
   config: {

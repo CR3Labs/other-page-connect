@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 
-import { OPConnectModalDemo } from 'opconnect';
+import { OPConnectModalDemo } from '@otherpage/connect';
 
 const Demo: NextPage = () => {
   return <OPConnectModalDemo open />;

@@ -531,7 +531,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-syntax-class-properties@npm:^7.12.13, @babel/plugin-syntax-class-properties@npm:^7.8.3":
+"@babel/plugin-syntax-class-properties@npm:^7.12.13":
   version: 7.12.13
   resolution: "@babel/plugin-syntax-class-properties@npm:7.12.13"
   dependencies:
@@ -619,7 +619,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-syntax-import-meta@npm:^7.10.4, @babel/plugin-syntax-import-meta@npm:^7.8.3":
+"@babel/plugin-syntax-import-meta@npm:^7.10.4":
   version: 7.10.4
   resolution: "@babel/plugin-syntax-import-meta@npm:7.10.4"
   dependencies:
@@ -652,7 +652,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-syntax-logical-assignment-operators@npm:^7.10.4, @babel/plugin-syntax-logical-assignment-operators@npm:^7.8.3":
+"@babel/plugin-syntax-logical-assignment-operators@npm:^7.10.4":
   version: 7.10.4
   resolution: "@babel/plugin-syntax-logical-assignment-operators@npm:7.10.4"
   dependencies:
@@ -674,7 +674,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-syntax-numeric-separator@npm:^7.10.4, @babel/plugin-syntax-numeric-separator@npm:^7.8.3":
+"@babel/plugin-syntax-numeric-separator@npm:^7.10.4":
   version: 7.10.4
   resolution: "@babel/plugin-syntax-numeric-separator@npm:7.10.4"
   dependencies:
@@ -729,7 +729,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-syntax-top-level-await@npm:^7.14.5, @babel/plugin-syntax-top-level-await@npm:^7.8.3":
+"@babel/plugin-syntax-top-level-await@npm:^7.14.5":
   version: 7.14.5
   resolution: "@babel/plugin-syntax-top-level-await@npm:7.14.5"
   dependencies:
@@ -3851,6 +3851,72 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@otherpage/connect-next-siwe@workspace:packages/opconnect-next-siwe":
+  version: 0.0.0-use.local
+  resolution: "@otherpage/connect-next-siwe@workspace:packages/opconnect-next-siwe"
+  dependencies:
+    "@types/node": ^16.11.27
+    "@types/react": ^18.0.6
+    "@types/react-dom": ^18.0.2
+    iron-session: ^6.2.1
+    typescript: ^4.9.5
+    viem: ^2.13.0
+  peerDependencies:
+    next: ">=12.x"
+    opconnect: ">=0.0.1"
+    react: 17.x || 18.x
+    react-dom: 17.x || 18.x
+    viem: ">=2.13.3"
+  languageName: unknown
+  linkType: soft
+
+"@otherpage/connect-next-siwop@workspace:packages/opconnect-next-siwop":
+  version: 0.0.0-use.local
+  resolution: "@otherpage/connect-next-siwop@workspace:packages/opconnect-next-siwop"
+  dependencies:
+    "@types/node": ^16.11.27
+    "@types/react": ^18.0.6
+    "@types/react-dom": ^18.0.2
+    iron-session: ^6.2.1
+    typescript: ^4.9.5
+    viem: ^2.13.0
+  peerDependencies:
+    next: ">=12.x"
+    opconnect: ">=0.0.1"
+    react: 17.x || 18.x
+    react-dom: 17.x || 18.x
+    viem: ">=2.13.3"
+  languageName: unknown
+  linkType: soft
+
+"@otherpage/connect@workspace:packages/opconnect":
+  version: 0.0.0-use.local
+  resolution: "@otherpage/connect@workspace:packages/opconnect"
+  dependencies:
+    "@rollup/plugin-image": ^3.0.3
+    "@types/node": 18.7.18
+    "@types/qrcode": ^1.4.2
+    "@types/react": ^18.0.6
+    "@types/react-dom": ^18.0.2
+    "@types/styled-components": ^5.1.25
+    buffer: ^6.0.3
+    detect-browser: ^5.3.0
+    framer-motion: ^6.3.11
+    qrcode: ^1.5.0
+    react-transition-state: ^1.1.4
+    react-use-measure: ^2.1.1
+    resize-observer-polyfill: ^1.5.1
+    styled-components: ^5.3.5
+    typescript: ^5.0.4
+  peerDependencies:
+    "@tanstack/react-query": ">=5.0.0"
+    react: 17.x || 18.x
+    react-dom: 17.x || 18.x
+    viem: 2.x
+    wagmi: 2.x
+  languageName: unknown
+  linkType: soft
+
 "@parcel/watcher-android-arm64@npm:2.4.1":
   version: 2.4.1
   resolution: "@parcel/watcher-android-arm64@npm:2.4.1"
@@ -5096,11 +5162,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 22.2.0
-  resolution: "@types/node@npm:22.2.0"
+  version: 22.3.0
+  resolution: "@types/node@npm:22.3.0"
   dependencies:
-    undici-types: ~6.13.0
-  checksum: 63724799337bfb57719a1992690e738341d824e1744a2ac52c5278a008fbfadf99765519c19858feb80418cc7da0d5c8bdf7ea4d82973869b3882bd602c48ade
+    undici-types: ~6.18.2
+  checksum: a86a552e9d3e135da4c975aa73bb1a655ae94f4d8de1547f6f95ad6b244ae2156347548fd35b6a5dd2c65688694198ae8b0923d9c32264dbc3dbfb2f688bd147
   languageName: node
   linkType: hard
 
@@ -6903,24 +6969,27 @@ __metadata:
   linkType: hard
 
 "babel-preset-current-node-syntax@npm:^1.0.0":
-  version: 1.0.1
-  resolution: "babel-preset-current-node-syntax@npm:1.0.1"
+  version: 1.1.0
+  resolution: "babel-preset-current-node-syntax@npm:1.1.0"
   dependencies:
     "@babel/plugin-syntax-async-generators": ^7.8.4
     "@babel/plugin-syntax-bigint": ^7.8.3
-    "@babel/plugin-syntax-class-properties": ^7.8.3
-    "@babel/plugin-syntax-import-meta": ^7.8.3
+    "@babel/plugin-syntax-class-properties": ^7.12.13
+    "@babel/plugin-syntax-class-static-block": ^7.14.5
+    "@babel/plugin-syntax-import-attributes": ^7.24.7
+    "@babel/plugin-syntax-import-meta": ^7.10.4
     "@babel/plugin-syntax-json-strings": ^7.8.3
-    "@babel/plugin-syntax-logical-assignment-operators": ^7.8.3
+    "@babel/plugin-syntax-logical-assignment-operators": ^7.10.4
     "@babel/plugin-syntax-nullish-coalescing-operator": ^7.8.3
-    "@babel/plugin-syntax-numeric-separator": ^7.8.3
+    "@babel/plugin-syntax-numeric-separator": ^7.10.4
     "@babel/plugin-syntax-object-rest-spread": ^7.8.3
     "@babel/plugin-syntax-optional-catch-binding": ^7.8.3
     "@babel/plugin-syntax-optional-chaining": ^7.8.3
-    "@babel/plugin-syntax-top-level-await": ^7.8.3
+    "@babel/plugin-syntax-private-property-in-object": ^7.14.5
+    "@babel/plugin-syntax-top-level-await": ^7.14.5
   peerDependencies:
     "@babel/core": ^7.0.0
-  checksum: d118c2742498c5492c095bc8541f4076b253e705b5f1ad9a2e7d302d81a84866f0070346662355c8e25fc02caa28dc2da8d69bcd67794a0d60c4d6fab6913cc8
+  checksum: 9f93fac975eaba296c436feeca1031ca0539143c4066eaf5d1ba23525a31850f03b651a1049caea7287df837a409588c8252c15627ad3903f17864c8e25ed64b
   languageName: node
   linkType: hard
 
@@ -7850,6 +7919,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "cra@workspace:examples/cra"
   dependencies:
+    "@otherpage/connect": "workspace:packages/opconnect"
     "@tanstack/react-query": ^5.17.15
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^13.4.0
@@ -7860,7 +7930,6 @@ __metadata:
     "@types/react-dom": ^18.0.2
     eslint: 8.56.0
     eslint-config-next: 14.0.4
-    opconnect: "workspace:packages/opconnect"
     react: ^18.0.0
     react-dom: ^18.0.0
     react-scripts: 5.0.1
@@ -8784,9 +8853,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.4":
-  version: 1.5.6
-  resolution: "electron-to-chromium@npm:1.5.6"
-  checksum: 09ca45c781e3e3ef87de87fb74019228f41e1a4abd2e703319aa7d942866815f3df89cc4bf61af81a4cac81271992d4f59a5eca7a093c07322ae0608bf98a427
+  version: 1.5.8
+  resolution: "electron-to-chromium@npm:1.5.8"
+  checksum: b9200c76fdeb4fc47deb3ea08e2eee65fa86dcc69ce4c78b0ff944b78ecca5635e39e68a2c0bbea40c2fac2893dd73e06ff9fb8df07fd33ea16432cd2dc5d05b
   languageName: node
   linkType: hard
 
@@ -8806,8 +8875,8 @@ __metadata:
   linkType: hard
 
 "elliptic@npm:^6.5.4":
-  version: 6.5.6
-  resolution: "elliptic@npm:6.5.6"
+  version: 6.5.7
+  resolution: "elliptic@npm:6.5.7"
   dependencies:
     bn.js: ^4.11.9
     brorand: ^1.1.0
@@ -8816,7 +8885,7 @@ __metadata:
     inherits: ^2.0.4
     minimalistic-assert: ^1.0.1
     minimalistic-crypto-utils: ^1.0.1
-  checksum: 213d778ccfe99ec8f0f871b1cc96a10ac3763d9175215d0a9dc026f291e5f50fea6f635e4e47b4506f9ada25aeb703bd807d8737b880dbb24d092a3001c6d97d
+  checksum: af0ffddffdbc2fea4eeec74388cd73e62ed5a0eac6711568fb28071566319785df529c968b0bf1250ba4bc628e074b2d64c54a633e034aa6f0c6b152ceb49ab8
   languageName: node
   linkType: hard
 
@@ -14210,13 +14279,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nextjs-app@workspace:examples/nextjs-app"
   dependencies:
+    "@otherpage/connect": "workspace:packages/opconnect"
+    "@otherpage/connect-next-siwe": "workspace:packages/opconnect-next-siwe"
     "@types/node": ^18.19.3
     "@types/react": ^18.2.43
     eslint: ^8.15.0
     eslint-config-next: ^14.0.4
     next: ^14.0.4
-    opconnect: "workspace:packages/opconnect"
-    opconnect-next-siwe: "workspace:packages/opconnect-next-siwe"
     react: ^18.2.0
     react-dom: ^18.2.0
     typescript: ^5.0.4
@@ -14231,6 +14300,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nextjs-siwe@workspace:examples/nextjs-siwe"
   dependencies:
+    "@otherpage/connect": "workspace:packages/opconnect"
+    "@otherpage/connect-next-siwe": "workspace:packages/opconnect-next-siwe"
     "@types/node": 18.7.18
     "@types/react": ^18.0.6
     "@types/react-dom": ^18.0.2
@@ -14238,8 +14309,6 @@ __metadata:
     eslint-config-next: 12.3.0
     ethers: ^5
     next: 12.3.0
-    opconnect: "workspace:packages/opconnect"
-    opconnect-next-siwe: "workspace:packages/opconnect-next-siwe"
     react: ^18.0.0
     react-dom: ^18.0.0
     typescript: ^5.0.4
@@ -14255,6 +14324,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nextjs-siwop@workspace:examples/nextjs-siwop"
   dependencies:
+    "@otherpage/connect": "workspace:packages/opconnect"
+    "@otherpage/connect-next-siwop": "workspace:packages/opconnect-next-siwop"
     "@types/node": 18.7.18
     "@types/react": ^18.0.6
     "@types/react-dom": ^18.0.2
@@ -14262,8 +14333,6 @@ __metadata:
     eslint-config-next: 12.3.0
     ethers: ^5
     next: 12.3.0
-    opconnect: "workspace:packages/opconnect"
-    opconnect-next-siwop: "workspace:packages/opconnect-next-siwop"
     react: ^18.0.0
     react-dom: ^18.0.0
     react-unity-webgl: ^9.5.2
@@ -14280,13 +14349,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nextjs@workspace:examples/nextjs"
   dependencies:
+    "@otherpage/connect": "workspace:packages/opconnect"
     "@tanstack/react-query": ^5.17.15
     "@types/node": ^18.19.3
     "@types/react": ^18.2.43
     eslint: ^8.15.0
     eslint-config-next: ^14.0.4
     next: ^14.0.4
-    opconnect: "workspace:packages/opconnect"
     react: ^18.2.0
     react-dom: ^18.2.0
     typescript: ^5.0.4
@@ -14686,44 +14755,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"opconnect-next-siwe@workspace:packages/opconnect-next-siwe":
-  version: 0.0.0-use.local
-  resolution: "opconnect-next-siwe@workspace:packages/opconnect-next-siwe"
-  dependencies:
-    "@types/node": ^16.11.27
-    "@types/react": ^18.0.6
-    "@types/react-dom": ^18.0.2
-    iron-session: ^6.2.1
-    typescript: ^4.9.5
-    viem: ^2.13.0
-  peerDependencies:
-    next: ">=12.x"
-    opconnect: ">=0.0.1"
-    react: 17.x || 18.x
-    react-dom: 17.x || 18.x
-    viem: ">=2.13.3"
-  languageName: unknown
-  linkType: soft
-
-"opconnect-next-siwop@workspace:packages/opconnect-next-siwop":
-  version: 0.0.0-use.local
-  resolution: "opconnect-next-siwop@workspace:packages/opconnect-next-siwop"
-  dependencies:
-    "@types/node": ^16.11.27
-    "@types/react": ^18.0.6
-    "@types/react-dom": ^18.0.2
-    iron-session: ^6.2.1
-    typescript: ^4.9.5
-    viem: ^2.13.0
-  peerDependencies:
-    next: ">=12.x"
-    opconnect: ">=0.0.1"
-    react: 17.x || 18.x
-    react-dom: 17.x || 18.x
-    viem: ">=2.13.3"
-  languageName: unknown
-  linkType: soft
-
 "opconnect-packages@workspace:.":
   version: 0.0.0-use.local
   resolution: "opconnect-packages@workspace:."
@@ -14741,34 +14772,6 @@ __metadata:
     typescript-plugin-styled-components: ^2.0.0
     viem: ^2.0.6
     wagmi: ^2.2.1
-  languageName: unknown
-  linkType: soft
-
-"opconnect@workspace:packages/opconnect":
-  version: 0.0.0-use.local
-  resolution: "opconnect@workspace:packages/opconnect"
-  dependencies:
-    "@rollup/plugin-image": ^3.0.3
-    "@types/node": 18.7.18
-    "@types/qrcode": ^1.4.2
-    "@types/react": ^18.0.6
-    "@types/react-dom": ^18.0.2
-    "@types/styled-components": ^5.1.25
-    buffer: ^6.0.3
-    detect-browser: ^5.3.0
-    framer-motion: ^6.3.11
-    qrcode: ^1.5.0
-    react-transition-state: ^1.1.4
-    react-use-measure: ^2.1.1
-    resize-observer-polyfill: ^1.5.1
-    styled-components: ^5.3.5
-    typescript: ^5.0.4
-  peerDependencies:
-    "@tanstack/react-query": ">=5.0.0"
-    react: 17.x || 18.x
-    react-dom: 17.x || 18.x
-    viem: 2.x
-    wagmi: 2.x
   languageName: unknown
   linkType: soft
 
@@ -18320,8 +18323,8 @@ __metadata:
   linkType: hard
 
 "tailwindcss@npm:^3.0.2":
-  version: 3.4.9
-  resolution: "tailwindcss@npm:3.4.9"
+  version: 3.4.10
+  resolution: "tailwindcss@npm:3.4.10"
   dependencies:
     "@alloc/quick-lru": ^5.2.0
     arg: ^5.0.2
@@ -18348,7 +18351,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: 2479a9fb30b058a30c4e6dc897afc46359fd04e83fc8816421d52aec231b1b99d38ae381730e13d377d7cf459c1bbe157b82055ce20baceeba7f1ec4ce710e7b
+  checksum: aa8db3514ec5110b2dee0bf5b35b84ebedf0c23a0dcafc870a5176bc2bad7d581956e0692ed6d888d602c114d2c54d7aa8fdb7028456880bd28b326078c8ba6e
   languageName: node
   linkType: hard
 
@@ -18439,8 +18442,8 @@ __metadata:
   linkType: hard
 
 "terser@npm:^5.0.0, terser@npm:^5.10.0, terser@npm:^5.26.0":
-  version: 5.31.5
-  resolution: "terser@npm:5.31.5"
+  version: 5.31.6
+  resolution: "terser@npm:5.31.6"
   dependencies:
     "@jridgewell/source-map": ^0.3.3
     acorn: ^8.8.2
@@ -18448,7 +18451,7 @@ __metadata:
     source-map-support: ~0.5.20
   bin:
     terser: bin/terser
-  checksum: edd2de6569116f637bb2e154c913e6ea434cadd6bcf5df41cf62000e3c69ec41f95be66fe639b57b95564545c9f7c0fcb28ca63351424a08e244a8b49ed12ac3
+  checksum: 60d3faf39c9ad7acc891e17888bbd206e0b777f442649cf49873a5fa317b8b8a17179a46970d884d5f93e8addde0206193ed1e2e4f1ccb1cafb167f7d1ddee96
   languageName: node
   linkType: hard
 
@@ -18467,6 +18470,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "testbench@workspace:examples/testbench"
   dependencies:
+    "@otherpage/connect": "workspace:packages/opconnect"
+    "@otherpage/connect-next-siwe": "workspace:packages/opconnect-next-siwe"
     "@tanstack/react-query": ^5.17.10
     "@types/node": 18.7.18
     "@types/react": ^18.0.6
@@ -18476,8 +18481,6 @@ __metadata:
     ethers: ^5
     local-ssl-proxy: ^1.3.0
     next: 14.1.0
-    opconnect: "workspace:packages/opconnect"
-    opconnect-next-siwe: "workspace:packages/opconnect-next-siwe"
     react: ^18.0.0
     react-dom: ^18.0.0
     typescript: ^5.0.4
@@ -18901,10 +18904,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.13.0":
-  version: 6.13.0
-  resolution: "undici-types@npm:6.13.0"
-  checksum: 9d0ef6bf58994bebbea6a4ab75f381c69a89a7ed151bfbae0d4ef95450d56502c9eccb323abf17b7d099c1d9c1cbae62e909e4dfeb8d204612d2f1fdada24707
+"undici-types@npm:~6.18.2":
+  version: 6.18.2
+  resolution: "undici-types@npm:6.18.2"
+  checksum: 5cd9b1c0fc612603c7ba0f0c6a19d04f00d21b98c5a9da06dc3bf92f1f9d3ec3946322e9806ec0f2fbfbad3f248cde1988410fc30ffacee39693ac24078992ca
   languageName: node
   linkType: hard
 
@@ -19260,8 +19263,8 @@ __metadata:
   linkType: hard
 
 "viem@npm:^2.0.6, viem@npm:^2.1.1, viem@npm:^2.13.0, viem@npm:^2.13.6":
-  version: 2.19.4
-  resolution: "viem@npm:2.19.4"
+  version: 2.19.6
+  resolution: "viem@npm:2.19.6"
   dependencies:
     "@adraffy/ens-normalize": 1.10.0
     "@noble/curves": 1.4.0
@@ -19277,7 +19280,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: f34537a33d58ee50486d98367067a9c3dab45ec3fcc8883ba85265c413969e2962738db32b9688679221cc88ffbe8daca37b89702d5e0cff9a5da44d7b6e28bd
+  checksum: 8eabc081c18f307dfeb71c297c1fd2fc1bf58bea6eb63cec941783047e432af88998a3d6e30d4b182d296d0d9a996a92aabee2caa1a49bfc2bcc6f13c1e6e375
   languageName: node
   linkType: hard
 
@@ -19323,11 +19326,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "vite@workspace:examples/vite"
   dependencies:
+    "@otherpage/connect": "workspace:packages/opconnect"
     "@tanstack/react-query": ^5.17.10
     "@types/react": ^18.0.17
     "@types/react-dom": ^18.0.6
     "@vitejs/plugin-react": ^2.1.0
-    opconnect: "workspace:packages/opconnect"
     react: ^18.2.0
     react-dom: ^18.2.0
     typescript: ^5.0.4
@@ -19384,12 +19387,12 @@ __metadata:
   linkType: hard
 
 "watchpack@npm:^2.4.1":
-  version: 2.4.1
-  resolution: "watchpack@npm:2.4.1"
+  version: 2.4.2
+  resolution: "watchpack@npm:2.4.2"
   dependencies:
     glob-to-regexp: ^0.4.1
     graceful-fs: ^4.1.2
-  checksum: 5b0179348655dcdf19cac7cb4ff923fdc024d630650c0bf6bec8899cf47c60e19d4f810a88dba692ed0e7f684cf0fcffea86efdbf6c35d81f031e328043b7fab
+  checksum: 92d9d52ce3d16fd83ed6994d1dd66a4d146998882f4c362d37adfea9ab77748a5b4d1e0c65fa104797928b2d40f635efa8f9b925a6265428a69f1e1852ca3441
   languageName: node
   linkType: hard
 

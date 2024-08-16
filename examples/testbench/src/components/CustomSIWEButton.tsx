@@ -1,5 +1,5 @@
-import { useSIWE, useModal } from 'opconnect';
-import { SIWESession } from 'opconnect';
+import { useSIWE, useModal } from '@otherpage/connect';
+import { SIWESession } from '@otherpage/connect';
 import { useAccount } from 'wagmi';
 
 const CustomSIWEButton = () => {

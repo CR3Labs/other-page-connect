@@ -1,4 +1,4 @@
-import { ConnectButton } from 'opconnect';
+import { ConnectButton } from '@otherpage/connect';
 
 function App() {
   return (

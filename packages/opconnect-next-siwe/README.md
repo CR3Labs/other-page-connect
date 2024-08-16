@@ -22,7 +22,7 @@ The `apiRoutePrefix` refers to a new directory you'll create inside your `pag
 
 ```javascript
 // @/utils/siweClient.ts
-import { configureClientSIWE } from 'opconnect-next-siwe';
+import { configureClientSIWE } from '@otherpage/connect-next-siwe';
 
 export const siweClient = configureClientSIWE({
   apiRoutePrefix: '/api/siwe', // Your API route directory
@@ -43,7 +43,7 @@ export const config = getDefaultConfig({ ... });
 
 ```javascript
 // @/utils/siweServer.ts
-import { configureServerSideSIWE } from 'opconnect-next-siwe';
+import { configureServerSideSIWE } from '@otherpage/connect-next-siwe';
 import { config } from '@/components/Web3Provider';
 
 export const siweServer = configureServerSideSIWE({

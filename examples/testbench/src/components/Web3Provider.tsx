@@ -1,7 +1,7 @@
 import { createElement, createContext, useContext, useState } from 'react';
 import { TestBenchProvider } from '../TestbenchProvider';
 
-import { getDefaultConfig, wallets } from 'opconnect';
+import { getDefaultConfig, wallets } from '@otherpage/connect';
 
 import { WagmiProvider, createConfig } from 'wagmi';
 import { defineChain, type Chain, http } from 'viem';

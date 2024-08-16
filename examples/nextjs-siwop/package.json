@@ -9,10 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@otherpage/connect": "workspace:packages/opconnect",
+    "@otherpage/connect-next-siwop": "workspace:packages/opconnect-next-siwop",
     "ethers": "^5",
     "next": "12.3.0",
-    "opconnect": "workspace:packages/opconnect",
-    "opconnect-next-siwop": "workspace:packages/opconnect-next-siwop",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-unity-webgl": "^9.5.2"

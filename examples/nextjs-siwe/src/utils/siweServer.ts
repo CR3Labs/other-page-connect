@@ -1,4 +1,4 @@
-import { configureServerSideSIWE } from 'opconnect-next-siwe';
+import { configureServerSideSIWE } from '@otherpage/connect-next-siwe';
 
 export const siweServer = configureServerSideSIWE({
   session: {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { ConnectButton } from 'opconnect';
+import { ConnectButton } from '@otherpage/connect';
 
 function App() {
   const account = useAccount();

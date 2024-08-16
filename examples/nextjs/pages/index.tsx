@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { ConnectButton } from 'opconnect';
+import { ConnectButton } from '@otherpage/connect';
 
 const Home: NextPage = () => {
   return (

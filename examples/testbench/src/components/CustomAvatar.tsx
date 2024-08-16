@@ -1,4 +1,4 @@
-import { Types } from 'opconnect';
+import { Types } from '@otherpage/connect';
 
 import { motion } from 'framer-motion';
 

@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@otherpage/connect": "workspace:packages/opconnect",
+    "@otherpage/connect-next-siwe": "workspace:packages/opconnect-next-siwe",
     "next": "14.0.4",
-    "opconnect": "workspace:packages/opconnect",
-    "opconnect-next-siwe": "workspace:packages/opconnect-next-siwe",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
