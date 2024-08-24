@@ -73,6 +73,7 @@ type NextSIWOPSession<TSessionData extends Object = {}> = IronSession &
     codeChallenge?: string;
     nonce?: string;
     address?: string;
+    avatar?: string;
     chainId?: number;
     uid?: string;
   };
@@ -200,6 +201,9 @@ const sessionRoute = async (
   switch (req.method) {
     case 'GET':
       const session = await getSession(req, res, sessionConfig);
+
+      // TODO fetch avatar image/name
+      
       if (afterCallback) {
         await afterCallback(req, res, session);
       }
@@ -252,8 +256,12 @@ const verifyCodeRoute = async (
 
         // persist session data
         const decoded = jwtDecode(data.access_token);
-        session.address = decoded.wallet;
+        session.address = decoded.addr;
+        session.avatar = decoded.avatar;
         session.uid = decoded.sub;
+
+        // TODO fetch avatar image/name
+
         await session.save();
         
         if (afterCallback) {

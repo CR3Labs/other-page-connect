@@ -1,7 +1,7 @@
 import { configureServerSideSIWOP } from '@otherpage/connect-next-siwop';
 
-// const API_URL = 'http://127.0.0.1:3003/v1';
-const API_URL = 'https://alpha-api.other.page/v1';
+const API_URL = 'http://127.0.0.1:3003/v1'; // DEV: for non-production enviroments only
+// const API_URL = 'https://alpha-api.other.page/v1';
 
 export const siwopServer = configureServerSideSIWOP({
   config: {
