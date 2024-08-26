@@ -33,7 +33,7 @@ const transition = { duration: 0.2, ease: [0.26, 0.08, 0.25, 1] };
 const copyTransition = { duration: 0.16, ease: [0.26, 0.08, 0.25, 1] };
 
 const SignInWithOtherPage: React.FC = () => {
-  const { clientId, isSignedIn, error } = useSIWOP();
+  const { clientId, appUrl, isSignedIn, error } = useSIWOP();
   const mobile = isMobile();
 
   const [status, setStatus] = useState<'signedOut' | 'signedIn'>(
@@ -66,8 +66,7 @@ const SignInWithOtherPage: React.FC = () => {
   const openAccount = () => {
     const left = (window.innerWidth / 2) - 400;
     const top = (window.innerHeight / 2) - 380;
-    // TODO domain from Context
-    window.open(`https://alpha.other.page/connect/settings?client_id=${clientId}`, "mozillaWindow", `left=${left},top=${top},width=800,height=760`)
+    window.open(`${appUrl}/connect/settings?client_id=${clientId}`, "mozillaWindow", `left=${left},top=${top},width=800,height=760`)
   };
 
   return (

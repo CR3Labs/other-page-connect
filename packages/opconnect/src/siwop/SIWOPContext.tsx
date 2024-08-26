@@ -37,6 +37,7 @@ export type SIWOPConfig = {
   signOut: () => Promise<boolean>;
 
   // Optional, we have default values but they can be overridden
+  appUrl?: string;
   enabled?: boolean;
   nonceRefetchInterval?: number;
   sessionRefetchInterval?: number;

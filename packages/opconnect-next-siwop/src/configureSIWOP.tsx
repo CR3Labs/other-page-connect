@@ -9,7 +9,7 @@ import {
 } from 'viem/siwe';
 import { generatePKCE, jwtDecode, JwtPayload } from './util';
 
-const APP_URL = 'https://alpha.other.page';
+
 const API_URL = 'https://alpha-api.other.page/v1';
 
 type RouteHandlerOptions = {
@@ -339,14 +339,12 @@ export const configureServerSideSIWOP = <TSessionData extends Object = {}>({
 };
 
 export const configureClientSIWOP = <TSessionData extends Object = {}>({
-  appUrl,
   apiRoutePrefix,
   clientId,
   redirectUri,
   scope,
 }: NextClientSIWOPConfig): ConfigureClientSIWOPResult<TSessionData> => {
   const NextSIWOPProvider = (props: NextSIWOPProviderProps) => {
-    const URL = appUrl || APP_URL;
     return (
       <SIWOPProvider
         clientId={clientId}

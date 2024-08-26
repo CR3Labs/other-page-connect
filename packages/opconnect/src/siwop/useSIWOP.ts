@@ -65,6 +65,8 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
   const isSignedIn = !!address;
 
   return {
+    appUrl: siweContextValue.appUrl,
+    redirectUri: siweContextValue.redirectUri,
     clientId,
     isSignedIn,
     data: isSignedIn

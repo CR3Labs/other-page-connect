@@ -1,6 +1,5 @@
 import { ReactNode, useContext, useEffect, useState } from 'react';
 import { useAccount, useAccountEffect, useSignMessage } from 'wagmi';
-import { getAddress } from 'viem';
 import { useQuery } from '@tanstack/react-query';
 
 import { Context as OPConnectContext } from '../components/OPConnect';
@@ -17,8 +16,11 @@ type Props = SIWOPConfig & {
   onSignOut?: () => void;
 };
 
+const APP_URL = 'https://alpha.other.page';
+
 export const SIWOPProvider = ({
   children,
+  appUrl = APP_URL,
   enabled = true,
   nonceRefetchInterval = 1000 * 60 * 5,
   sessionRefetchInterval = 1000 * 60 * 5,
@@ -186,7 +188,7 @@ export const SIWOPProvider = ({
     // If SIWOP session no longer matches connected account, sign out
     // TODO this would have to validate against linked wallets
     // so it needs to be handled outside of the SIWOP flow for now
-    // because we can't require the wallets.read scope
+    // because we can't require the `wallets.read` scope
 
     // if (
     //   signOutOnAccountChange &&
@@ -208,6 +210,7 @@ export const SIWOPProvider = ({
   return (
     <SIWOPContext.Provider
       value={{
+        appUrl,
         enabled,
         nonceRefetchInterval,
         sessionRefetchInterval,
