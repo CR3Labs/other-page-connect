@@ -16,11 +16,9 @@ type Props = SIWOPConfig & {
   onSignOut?: () => void;
 };
 
-const APP_URL = 'https://alpha.other.page';
-
 export const SIWOPProvider = ({
   children,
-  appUrl = APP_URL,
+  appUrl = 'https://alpha.other.page',
   enabled = true,
   nonceRefetchInterval = 1000 * 60 * 5,
   sessionRefetchInterval = 1000 * 60 * 5,
@@ -133,6 +131,7 @@ export const SIWOPProvider = ({
         nonce: nonce.data,
         address,
         code_challenge: codeChallenge, 
+        appUrl,
       });
 
       window.location.href = url;

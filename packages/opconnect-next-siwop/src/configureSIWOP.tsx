@@ -76,6 +76,11 @@ type NextSIWOPSession<TSessionData extends Object = {}> = IronSession &
     avatar?: string;
     chainId?: number;
     uid?: string;
+    avatarName?: string;
+    avatarImage?: string;
+    avatarTokenId?: string;
+    avatarContract?: string;
+    avatarChainId?: string;
   };
 
 type NextSIWOPProviderProps = Omit<
@@ -107,6 +112,26 @@ type ConfigureServerSIWOPResult<TSessionData extends Object = {}> = {
 type ConfigureClientSIWOPResult<TSessionData extends Object = {}> = {
   Provider: FunctionComponent<NextSIWOPProviderProps>;
 };
+
+const getAccount = async (
+  accessToken: string,
+  config: NextServerSIWOPConfig['config']
+) => {
+  // Perform the POST request to the external API
+  const response = await fetch(`${config.authApiUrl}/account`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch account data');
+  }
+
+  return response.json();
+}
 
 const getSession = async <TSessionData extends Object = {}>(
   req: IncomingMessage,
@@ -201,8 +226,6 @@ const sessionRoute = async (
   switch (req.method) {
     case 'GET':
       const session = await getSession(req, res, sessionConfig);
-
-      // TODO fetch avatar image/name
       
       if (afterCallback) {
         await afterCallback(req, res, session);
@@ -260,7 +283,19 @@ const verifyCodeRoute = async (
         session.avatar = decoded.avatar;
         session.uid = decoded.sub;
 
-        // TODO fetch avatar image/name
+        // fetch avatar image/name
+        const account = await getAccount(data.access_token, config);
+        if (account) {
+          // TODO once account level usernames are available
+          // session.username = account.username;
+          if (account.connectedAvatar) {
+            session.avatarName = account.connectedAvatar.name;
+            session.avatarImage = account.connectedAvatar.token.image;
+            session.avatarTokenId = account.connectedAvatar.token.tokenId;
+            session.avatarContract = account.connectedAvatar.token.contract;
+            session.avatarChainId = account.connectedAvatar.token.chainId;
+          }
+        }
 
         await session.save();
         
@@ -370,8 +405,8 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
           }
           return res.json();
         }}
-        createAuthorizationUrl={({ nonce, address, code_challenge }) =>
-          `${URL}/connect?client_id=${clientId}&scope=${scope.replace(' ', '+')}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&state=${nonce}&wallet=${address}&code_challenge=${code_challenge}&code_challenge_method=S256`
+        createAuthorizationUrl={({ appUrl, nonce, address, code_challenge }) =>
+          `${appUrl}/connect?client_id=${clientId}&scope=${scope.replace(' ', '+')}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&state=${nonce}&wallet=${address}&code_challenge=${code_challenge}&code_challenge_method=S256`
         }
         verifyCode={({ code }) =>
           fetch(`${apiRoutePrefix}/verify`, {
@@ -387,8 +422,30 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
           if (!res.ok) {
             throw new Error('Failed to fetch SIWOP session');
           }
-          const { address, nonce, uid, chainId } = await res.json();
-          return address ? { address, nonce, uid, chainId } : null;
+          const {
+            nonce,
+            address,
+            chainId,
+            uid,
+            avatar,
+            avatarChainId,
+            avatarContract,
+            avatarImage,
+            avatarName,
+            avatarTokenId,
+          } = await res.json();
+          return address ? { 
+            nonce,
+            address,
+            chainId,
+            uid,
+            avatar,
+            avatarChainId,
+            avatarContract,
+            avatarImage,
+            avatarName,
+            avatarTokenId, 
+          } : null;
         }}
         signOut={() => fetch(`${apiRoutePrefix}/logout`).then((res) => res.ok)}
         {...props}
