@@ -23,6 +23,7 @@ function App({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <siwopClient.Provider>
           <OPConnectProvider mode={mode} primaryColor={primaryColor} options={{
+            // NOTE: enter your own terms and privacy policy URLs here
             disclaimer: (
               <div>
                 By connecting your wallet you agree to the{' '}

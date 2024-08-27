@@ -10,10 +10,16 @@ export enum StatusState {
 }
 
 export type SIWOPSession = {
-  address: string;
-  chainId: number;
-  uid: string;
   nonce: string;
+  uid?: string;
+  address?: string;
+  avatar?: string;
+  chainId?: number;
+  avatarName?: string;
+  avatarImage?: string;
+  avatarTokenId?: string;
+  avatarContract?: string;
+  avatarChainId?: string;
 };
 
 export type SIWOPConfig = {
@@ -28,6 +34,7 @@ export type SIWOPConfig = {
     nonce: string;
     address: string;
     code_challenge: string;
+    appUrl: string;
   }) => string;
   verifyCode: (args: {
     code: string;
@@ -37,6 +44,7 @@ export type SIWOPConfig = {
   signOut: () => Promise<boolean>;
 
   // Optional, we have default values but they can be overridden
+  appUrl?: string;
   enabled?: boolean;
   nonceRefetchInterval?: number;
   sessionRefetchInterval?: number;

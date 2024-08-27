@@ -1,11 +1,7 @@
 import { configureServerSideSIWOP } from '@otherpage/connect-next-siwop';
 
-// const API_URL = 'http://127.0.0.1:3003/v1';
-const API_URL = 'https://alpha-api.other.page/v1';
-
 export const siwopServer = configureServerSideSIWOP({
   config: {
-    authApiUrl: API_URL,
     audience: '127.0.0.1:3004',
     clientId: process.env.NEXT_PUBLIC_SIWOP_CLIENT_ID,
     redirectUri: process.env.NEXT_PUBLIC_SIWOP_REDIRECT_URI,
@@ -33,6 +29,8 @@ export const siwopServer = configureServerSideSIWOP({
 });
 
 // --- example --- //
+
+const API_URL = 'https://alpha-api.other.page/v1';
 
 async function getAccount(
   accessToken: string  

@@ -9,7 +9,7 @@ import {
 } from 'viem/siwe';
 import { generatePKCE, jwtDecode, JwtPayload } from './util';
 
-const APP_URL = 'https://alpha.other.page';
+
 const API_URL = 'https://alpha-api.other.page/v1';
 
 type RouteHandlerOptions = {
@@ -73,8 +73,14 @@ type NextSIWOPSession<TSessionData extends Object = {}> = IronSession &
     codeChallenge?: string;
     nonce?: string;
     address?: string;
+    avatar?: string;
     chainId?: number;
     uid?: string;
+    avatarName?: string;
+    avatarImage?: string;
+    avatarTokenId?: string;
+    avatarContract?: string;
+    avatarChainId?: string;
   };
 
 type NextSIWOPProviderProps = Omit<
@@ -106,6 +112,26 @@ type ConfigureServerSIWOPResult<TSessionData extends Object = {}> = {
 type ConfigureClientSIWOPResult<TSessionData extends Object = {}> = {
   Provider: FunctionComponent<NextSIWOPProviderProps>;
 };
+
+const getAccount = async (
+  accessToken: string,
+  config: NextServerSIWOPConfig['config']
+) => {
+  // Perform the POST request to the external API
+  const response = await fetch(`${config.authApiUrl}/account`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch account data');
+  }
+
+  return response.json();
+}
 
 const getSession = async <TSessionData extends Object = {}>(
   req: IncomingMessage,
@@ -200,6 +226,7 @@ const sessionRoute = async (
   switch (req.method) {
     case 'GET':
       const session = await getSession(req, res, sessionConfig);
+      
       if (afterCallback) {
         await afterCallback(req, res, session);
       }
@@ -252,8 +279,24 @@ const verifyCodeRoute = async (
 
         // persist session data
         const decoded = jwtDecode(data.access_token);
-        session.address = decoded.wallet;
+        session.address = decoded.addr;
+        session.avatar = decoded.avatar;
         session.uid = decoded.sub;
+
+        // fetch avatar image/name
+        const account = await getAccount(data.access_token, config);
+        if (account) {
+          // TODO once account level usernames are available
+          // session.username = account.username;
+          if (account.connectedAvatar) {
+            session.avatarName = account.connectedAvatar.name;
+            session.avatarImage = account.connectedAvatar.token.image;
+            session.avatarTokenId = account.connectedAvatar.token.tokenId;
+            session.avatarContract = account.connectedAvatar.token.contract;
+            session.avatarChainId = account.connectedAvatar.token.chainId;
+          }
+        }
+
         await session.save();
         
         if (afterCallback) {
@@ -331,14 +374,12 @@ export const configureServerSideSIWOP = <TSessionData extends Object = {}>({
 };
 
 export const configureClientSIWOP = <TSessionData extends Object = {}>({
-  appUrl,
   apiRoutePrefix,
   clientId,
   redirectUri,
   scope,
 }: NextClientSIWOPConfig): ConfigureClientSIWOPResult<TSessionData> => {
   const NextSIWOPProvider = (props: NextSIWOPProviderProps) => {
-    const URL = appUrl || APP_URL;
     return (
       <SIWOPProvider
         clientId={clientId}
@@ -364,8 +405,8 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
           }
           return res.json();
         }}
-        createAuthorizationUrl={({ nonce, address, code_challenge }) =>
-          `${URL}/connect?client_id=${clientId}&scope=${scope.replace(' ', '+')}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&state=${nonce}&wallet=${address}&code_challenge=${code_challenge}&code_challenge_method=S256`
+        createAuthorizationUrl={({ appUrl, nonce, address, code_challenge }) =>
+          `${appUrl}/connect?client_id=${clientId}&scope=${scope.replace(' ', '+')}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&state=${nonce}&wallet=${address}&code_challenge=${code_challenge}&code_challenge_method=S256`
         }
         verifyCode={({ code }) =>
           fetch(`${apiRoutePrefix}/verify`, {
@@ -381,8 +422,30 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
           if (!res.ok) {
             throw new Error('Failed to fetch SIWOP session');
           }
-          const { address, nonce, uid, chainId } = await res.json();
-          return address ? { address, nonce, uid, chainId } : null;
+          const {
+            nonce,
+            address,
+            chainId,
+            uid,
+            avatar,
+            avatarChainId,
+            avatarContract,
+            avatarImage,
+            avatarName,
+            avatarTokenId,
+          } = await res.json();
+          return address ? { 
+            nonce,
+            address,
+            chainId,
+            uid,
+            avatar,
+            avatarChainId,
+            avatarContract,
+            avatarImage,
+            avatarName,
+            avatarTokenId, 
+          } : null;
         }}
         signOut={() => fetch(`${apiRoutePrefix}/logout`).then((res) => res.ok)}
         {...props}
