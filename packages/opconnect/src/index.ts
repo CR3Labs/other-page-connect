@@ -1,4 +1,4 @@
-export const OPCONNECT_VERSION = '0.1.0';
+export const OPCONNECT_VERSION = '0.3.0';
 
 export * as Types from './types';
 export { default as getDefaultConfig } from './defaultConfig';

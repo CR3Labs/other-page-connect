@@ -10,12 +10,12 @@ export default function Home({ address }: { address?: string }) {
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleSetPrimaryColor(e.target.value as `#${string}`);
   };
-  const { clientId, isSignedIn } = useSIWOP();
+  const { appUrl, clientId, isSignedIn } = useSIWOP();
 
   const openAccount = () => {
     const left = (window.innerWidth / 2) - 400;
     const top = (window.innerHeight / 2) - 380;
-    window.open(`http://127.0.0.1:3001/connect/settings?client_id=${clientId}`, "mozillaWindow", `left=${left},top=${top},width=800,height=760`)
+    window.open(`${appUrl}/connect/settings?client_id=${clientId}`, "mozillaWindow", `left=${left},top=${top},width=800,height=760`)
   };
 
   return (

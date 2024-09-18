@@ -1,6 +1,6 @@
 {
   "name": "@otherpage/connect-next-siwop",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "BSD-2-Clause license",
   "repository": {
     "type": "git",
@@ -37,7 +37,7 @@
     "viem": "^2.13.0"
   },
   "peerDependencies": {
-    "@otherpage/connect": ">=0.2.0",
+    "@otherpage/connect": ">=0.3.0",
     "next": ">=12.x",
     "react": "17.x || 18.x",
     "react-dom": "17.x || 18.x",
