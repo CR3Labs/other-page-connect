@@ -11,15 +11,7 @@ export enum StatusState {
 
 export type SIWOPSession = {
   nonce: string;
-  uid?: string;
-  address?: string;
-  avatar?: string;
-  chainId?: number;
-  avatarName?: string;
-  avatarImage?: string;
-  avatarTokenId?: string;
-  avatarContract?: string;
-  avatarChainId?: string;
+  account?: any; // TODO type this
 };
 
 export type SIWOPConfig = {

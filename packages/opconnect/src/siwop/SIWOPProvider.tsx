@@ -46,13 +46,13 @@ export const SIWOPProvider = ({
   }
 
   const nonce = useQuery({
-    queryKey: ['ckSiwopNonce'],
+    queryKey: ['siwopNonce'],
     queryFn: () => siwopConfig.getNonce(),
     refetchInterval: nonceRefetchInterval,
   });
 
   const session = useQuery({
-    queryKey: ['ckSiwopSession'],
+    queryKey: ['siwopSession'],
     queryFn: () => siwopConfig.getSession(),
     refetchInterval: sessionRefetchInterval,
   });
@@ -180,7 +180,7 @@ export const SIWOPProvider = ({
     }
   
     // Skip if we're still fetching session state from backend
-    if (!sessionData || !sessionData.address) return;
+    if (!sessionData || !sessionData.account) return;
     // Skip if wallet isn't connected (i.e. initial page load)
     if (!connectedAddress || !chain) return;
 

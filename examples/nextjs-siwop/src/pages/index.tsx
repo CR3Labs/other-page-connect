@@ -18,13 +18,6 @@ export default function Home({ address }: { address?: string }) {
     window.open(`http://127.0.0.1:3001/connect/settings?client_id=${clientId}`, "mozillaWindow", `left=${left},top=${top},width=800,height=760`)
   };
 
-  // const { unityProvider } = useUnityContext({
-  //   loaderUrl: "build/myunityapp.loader.js",
-  //   dataUrl: "build/myunityapp.data",
-  //   frameworkUrl: "build/myunityapp.framework.js",
-  //   codeUrl: "build/myunityapp.wasm",
-  // });
-
   return (
     <main className="flex min-h-[calc(100vh-100px)] w-screen relative flex-col">
       <div className="flex justify-between bg-black p-4">
@@ -56,7 +49,6 @@ export default function Home({ address }: { address?: string }) {
       </div>
       <div className="flex items-center justify-center min-h-screen w-screen">
         <div className="h-[400px] w-full rounded-lg flex justify-center items-center flex-col">
-            {/* <Unity unityProvider={unityProvider} /> */}
             <div className="text-lg mb-6 font-medium">Game</div>
         </div>
       </div>

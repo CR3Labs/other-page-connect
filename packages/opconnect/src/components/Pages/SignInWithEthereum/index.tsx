@@ -128,7 +128,7 @@ const SignInWithEthereum: React.FC = () => {
           </div>
 
           <motion.div
-            key="avatarImage"
+            key="image"
             initial={
               mobile
                 ? false

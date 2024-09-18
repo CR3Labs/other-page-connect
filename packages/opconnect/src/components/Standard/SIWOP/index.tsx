@@ -41,8 +41,8 @@ export const SIWOPButton: React.FC<ButtonProps> = ({
 
   function getButtonLabel() {
     if (isSuccess) return locales.signedIn;
-    if (isRejected) return locales.tryAgain;
     if (isLoading) return locales.redirecting;
+    if (isRejected) return locales.tryAgain;
     if (isError) return error ?? 'Unknown Error';
     if (isReady) return locales.signIn;
     return locales.signIn;

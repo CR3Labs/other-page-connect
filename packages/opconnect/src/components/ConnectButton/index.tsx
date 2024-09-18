@@ -126,6 +126,7 @@ const ConnectButtonRenderer: React.FC<ConnectButtonRendererProps> = ({
   const { open, setOpen } = useModal();
 
   const { address, isConnected, chain } = useAccount();
+  const { isSignedIn } = useSIWOP();
   const isChainSupported = useChainIsSupported(chain?.id);
 
   const ensFallbackConfig = useEnsFallbackConfig();
@@ -141,7 +142,11 @@ const ConnectButtonRenderer: React.FC<ConnectButtonRendererProps> = ({
 
   function show() {
     setOpen(true);
-    context.setRoute(isConnected ? routes.PROFILE : routes.CONNECTORS);
+    if (isConnected) {
+      context.setRoute((isSignedIn && context.signInWithOtherPage) ? routes.SIGNINWITHOTHERPAGE : routes.PROFILE);
+    } else {
+      context.setRoute(routes.CONNECTORS);
+    }
   }
 
   if (!children) return null;
@@ -339,13 +344,18 @@ export function ConnectButton({
   const isMounted = useIsMounted();
 
   const context = useContext();
-
+  
   const { isConnected, address, chain } = useAccount();
+  const { isSignedIn } = useSIWOP();
   const chainIsSupported = useChainIsSupported(chain?.id);
 
   function show() {
     context.setOpen(true);
-    context.setRoute(isConnected ? routes.PROFILE : routes.CONNECTORS);
+    if (isConnected) {
+      context.setRoute((isSignedIn && context.signInWithOtherPage) ? routes.SIGNINWITHOTHERPAGE : routes.PROFILE);
+    } else {
+      context.setRoute(routes.CONNECTORS);
+    }
   }
 
   const separator = ['web95', 'rounded', 'minimal'].includes(

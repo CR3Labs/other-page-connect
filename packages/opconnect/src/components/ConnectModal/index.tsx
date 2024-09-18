@@ -38,7 +38,6 @@ const ConnectModal: React.FC<{
 }) => {
   const context = useContext();
   const { isConnected, chain } = useAccount();
-  const { isSignedIn } = useSIWOP();
   const chainIsSupported = useChainIsSupported(chain?.id);
 
   //if chain is unsupported we enforce a "switch chain" prompt

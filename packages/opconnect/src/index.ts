@@ -15,6 +15,7 @@ export type { SIWOPSession, SIWOPConfig } from './siwop';
 export { OPConnectProvider, Context } from './components/OPConnect';
 export { ConnectButton } from './components/ConnectButton';
 export { default as SIWEButton } from './components/Standard/SIWE';
+export { default as SIWOPButton } from './components/Standard/SIWOP';
 
 //export { default as NetworkButton } from './components/NetworkButton';
 //export { default as BalanceButton, Balance } from './components/BalanceButton';
