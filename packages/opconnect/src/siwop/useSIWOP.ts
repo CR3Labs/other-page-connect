@@ -46,19 +46,9 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
 
   const { clientId, session, nonce, status, signOut, signIn, resetStatus } =
     siweContextValue;
-  const { 
-    address,
-    chainId,
-    uid,
-    avatar,
-    avatarChainId,
-    avatarContract,
-    avatarImage,
-    avatarName,
-    avatarTokenId
-  } = session.data || {};
+  const { account } = session.data || {};
 
-  const currentStatus = address
+  const currentStatus = account
     ? StatusState.SUCCESS
     : session.isLoading || nonce.isLoading
     ? StatusState.LOADING
@@ -68,11 +58,11 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
   const isSuccess = currentStatus === StatusState.SUCCESS;
   const isRejected = currentStatus === StatusState.REJECTED;
   const isError = currentStatus === StatusState.ERROR;
-  const isReady = !address || nonce.isFetching || isLoading || isSuccess;
+  const isReady = !account || nonce.isFetching || isLoading || isSuccess;
 
   const reset = () => resetStatus();
 
-  const isSignedIn = !!address;
+  const isSignedIn = !!account;
 
   return {
     appUrl: siweContextValue.appUrl,
@@ -80,17 +70,7 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
     clientId,
     isSignedIn,
     data: isSignedIn
-      ? {
-          address,
-          chainId,
-          uid,
-          avatar,
-          avatarName,
-          avatarImage,
-          avatarTokenId,
-          avatarContract,
-          avatarChainId,
-        }
+      ? account
       : undefined,
     status: currentStatus,
     error: session.error || nonce.error,

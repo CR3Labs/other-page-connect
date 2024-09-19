@@ -71,16 +71,10 @@ type NextSIWOPSession<TSessionData extends Object = {}> = IronSession &
   TSessionData & {
     codeVerifier?: string;
     codeChallenge?: string;
+    accessToken?: string;
+    refreshToken?: string;
     nonce?: string;
-    address?: string;
-    avatar?: string;
-    chainId?: number;
-    uid?: string;
-    avatarName?: string;
-    avatarImage?: string;
-    avatarTokenId?: string;
-    avatarContract?: string;
-    avatarChainId?: string;
+    account?: any; // TODO type this?
   };
 
 type NextSIWOPProviderProps = Omit<
@@ -115,7 +109,7 @@ type ConfigureClientSIWOPResult<TSessionData extends Object = {}> = {
 
 const getAccount = async (
   accessToken: string,
-  config: NextServerSIWOPConfig['config']
+  config: NextServerSIWOPConfig['config'],
 ) => {
   // Perform the POST request to the external API
   const response = await fetch(`${config.authApiUrl}/account`, {
@@ -128,6 +122,31 @@ const getAccount = async (
 
   if (!response.ok) {
     throw new Error('Failed to fetch account data');
+  }
+
+  return response.json(); 
+}
+
+const refreshToken = async (
+  refreshToken: string,
+  config: NextServerSIWOPConfig['config']
+) => {
+  const response = await fetch(`${API_URL}/connect/oauth2-token`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      grant_type: 'refresh_token',
+      client_id: process.env.NEXT_PUBLIC_SIWOP_CLIENT_ID,
+      client_secret: process.env.SIWOP_CLIENT_SECRET,
+      refresh_token: refreshToken,
+      scope: config.scope,
+    }),
+  });
+
+  if (!response.ok) {
+    return null;
   }
 
   return response.json();
@@ -145,6 +164,8 @@ const getSession = async <TSessionData extends Object = {}>(
   )) as NextSIWOPSession<TSessionData>;
   return session;
 };
+
+// ---- routes ---- //
 
 const logoutRoute = async (
   req: NextApiRequest,
@@ -219,23 +240,61 @@ const pkceRoute = async (
 
 const sessionRoute = async (
   req: NextApiRequest,
-  res: NextApiResponse<{ address?: string; uid?: string, chainId?: number }>,
+  res: NextApiResponse<Partial<NextSIWOPSession>>,
   sessionConfig: IronSessionOptions,
+  config: NextServerSIWOPConfig['config'],
   afterCallback?: RouteHandlerOptions['afterSession']
 ) => {
-  switch (req.method) {
-    case 'GET':
-      const session = await getSession(req, res, sessionConfig);
-      
+  if (req.method !== 'GET') {
+    res.setHeader('Allow', ['GET']);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
+    return res.end();
+  }
+
+    const session = await getSession(req, res, sessionConfig);
+
+    if (!session.accessToken) {
+      return res.send(session);
+    }
+
+    // retrieve account to ensure session is still vaild
+    try {
+      const account = await getAccount(session.accessToken, config);
+      if (account) {
+        session.account = {
+          id: account.id,
+          wallet: account.wallet,
+          name: account.connectedAvatar ? account.connectedAvatar.name : null,
+          // TODO thumbnail
+          image: account.connectedAvatar ? account.connectedAvatar.token.image : null,
+        };
+        await session.save();
+      }
+
       if (afterCallback) {
         await afterCallback(req, res, session);
       }
-      res.send(session);
-      break;
-    default:
-      res.setHeader('Allow', ['GET']);
-      res.status(405).end(`Method ${req.method} Not Allowed`);
-  }
+      
+      res.send({
+        nonce: session.nonce,
+        account: session.account,
+      });
+    } catch (error) {
+      // attempt to refresh the token
+      if (!req.query.retry && session.refreshToken) {
+        req.query.retry = '1';
+        const token = await refreshToken(session.refreshToken, config);
+        if (token) {
+          session.accessToken = token.access_token;
+          session.refreshToken = token.refresh_token;
+          await session.save();
+          return sessionRoute(req, res, sessionConfig, config, afterCallback);
+        }
+        session.destroy();
+      }
+      console.error(error);
+      res.status(401).end();
+    }
 };
 
 const verifyCodeRoute = async (
@@ -245,74 +304,70 @@ const verifyCodeRoute = async (
   config: NextServerSIWOPConfig['config'],
   afterCallback?: RouteHandlerOptions['afterToken']
 ) => {
-  switch (req.method) {
-    case 'POST':
-      try {
-        // fetch current session
-        const session = await getSession(req, res, sessionConfig);
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', ['POST']);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
+    return res.end();
+  }
 
-        // fetch access token
-        const response = await fetch(`${config?.authApiUrl}/connect/oauth2-token`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            grant_type: 'authorization_code',
-            code: req.body.code,
-            code_verifier: session.codeVerifier,
-            aud: config?.audience,
-            client_id: config?.clientId,
-            client_secret: config?.clientSecret,
-            redirect_uri: config?.redirectUri,
-          }),
-        });
+  try {
+    // fetch current session
+    const session = await getSession(req, res, sessionConfig);
 
-        if (!response.ok) {
-          throw new Error('Failed to retrieve access token');
-        }
+    // fetch access token
+    const response = await fetch(`${config?.authApiUrl}/connect/oauth2-token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        grant_type: 'authorization_code',
+        code: req.body.code,
+        code_verifier: session.codeVerifier,
+        aud: config?.audience,
+        client_id: config?.clientId,
+        client_secret: config?.clientSecret,
+        redirect_uri: config?.redirectUri,
+      }),
+    });
 
-        const data = await response.json();
-        if (!data.access_token) {
-          return res.status(422).end('Unable to fetch access token.');
-        }
+    if (!response.ok) {
+      throw new Error('Failed to retrieve access token');
+    }
 
-        // persist session data
-        const decoded = jwtDecode(data.access_token);
-        session.address = decoded.addr;
-        session.avatar = decoded.avatar;
-        session.uid = decoded.sub;
+    const data = await response.json();
+    if (!data.access_token) {
+      return res.status(422).end('Unable to fetch access token.');
+    }
 
-        // fetch avatar image/name
-        const account = await getAccount(data.access_token, config);
-        if (account) {
-          // TODO once account level usernames are available
-          // session.username = account.username;
-          if (account.connectedAvatar) {
-            session.avatarName = account.connectedAvatar.name;
-            session.avatarImage = account.connectedAvatar.token.image;
-            session.avatarTokenId = account.connectedAvatar.token.tokenId;
-            session.avatarContract = account.connectedAvatar.token.contract;
-            session.avatarChainId = account.connectedAvatar.token.chainId;
-          }
-        }
+    // persist session data
+    session.accessToken = data.access_token;
+    session.refreshToken = data.refresh_token;
 
-        await session.save();
-        
-        if (afterCallback) {
-          await afterCallback(req, res, session, {
-            ...data,
-            decoded_access_token: decoded,
-          });
-        }
-        res.status(200).end();
-      } catch (error) {
-        res.status(400).end(String(error));
-      }
-      break;
-    default:
-      res.setHeader('Allow', ['POST']);
-      res.status(405).end(`Method ${req.method} Not Allowed`);
+    // fetch account data
+    const account = await getAccount(data.access_token, config);
+    if (account) {
+      session.account = {
+        id: account.id,
+        wallet: account.wallet,
+        name: account.connectedAvatar ? account.connectedAvatar.name : null,
+        // TODO thumbnail
+        image: account.connectedAvatar ? account.connectedAvatar.token.image : null,
+      };
+    }
+
+    await session.save();
+    
+    if (afterCallback) {
+      await afterCallback(req, res, session, {
+        ...data,
+        decoded_access_token: jwtDecode(data.access_token),
+      });
+    }
+    res.status(200).end();
+  } catch (error) {
+    console.error(error);
+    res.status(400).end(String(error));
   }
 };
 
@@ -358,7 +413,7 @@ export const configureServerSideSIWOP = <TSessionData extends Object = {}>({
       case 'verify':
         return await verifyCodeRoute(req, res, sessionConfig, config, afterToken);
       case 'session':
-        return await sessionRoute(req, res, sessionConfig, afterSession);
+        return await sessionRoute(req, res, sessionConfig, config, afterSession);
       case 'logout':
         return await logoutRoute(req, res, sessionConfig, afterLogout);
       default:
@@ -424,27 +479,11 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
           }
           const {
             nonce,
-            address,
-            chainId,
-            uid,
-            avatar,
-            avatarChainId,
-            avatarContract,
-            avatarImage,
-            avatarName,
-            avatarTokenId,
+            account
           } = await res.json();
-          return address ? { 
+          return account ? { 
             nonce,
-            address,
-            chainId,
-            uid,
-            avatar,
-            avatarChainId,
-            avatarContract,
-            avatarImage,
-            avatarName,
-            avatarTokenId, 
+            account,
           } : null;
         }}
         signOut={() => fetch(`${apiRoutePrefix}/logout`).then((res) => res.ok)}

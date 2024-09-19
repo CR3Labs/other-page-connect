@@ -29,20 +29,16 @@ import Button from '../../Common/Button';
 import { SIWOPButton } from '../../Standard/SIWOP';
 import FitText from '../../Common/FitText';
 import { ImageContainer } from '../../Common/Avatar/styles';
+import { useQueryClient } from '@tanstack/react-query';
 
 const transition = { duration: 0.2, ease: [0.26, 0.08, 0.25, 1] };
 const copyTransition = { duration: 0.16, ease: [0.26, 0.08, 0.25, 1] };
 
 const SignInWithOtherPage: React.FC = () => {
+  const queryClient = useQueryClient();
   const { clientId, appUrl, isSignedIn, error, data } = useSIWOP();
   const mobile = isMobile();
-
-  const [status, setStatus] = useState<'signedOut' | 'signedIn'>(
-    isSignedIn ? 'signedIn' : 'signedOut'
-  );
-
-  console.log(data);
-
+  
   const locales = useLocales({});
   const copy = {
     heading: locales.signInWithOtherPageScreen_signedOut_heading,
@@ -51,25 +47,23 @@ const SignInWithOtherPage: React.FC = () => {
     button: locales.signInWithOtherPageScreen_signedOut_button,
   };
 
-  useEffect(() => {
-    if (isSignedIn) {
-      setStatus('signedIn');
-    } else {
-      setStatus('signedOut');
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isSignedIn) setStatus('signedOut');
-  }, []);
-
   const { address } = useAccount();
 
   // TODO custom button component?
   const openAccount = () => {
     const left = (window.innerWidth / 2) - 400;
     const top = (window.innerHeight / 2) - 380;
-    window.open(`${appUrl}/connect/settings?client_id=${clientId}`, "mozillaWindow", `left=${left},top=${top},width=800,height=760`)
+    const win = window.open(`${appUrl}/connect/settings?client_id=${clientId}`, "mozillaWindow", `left=${left},top=${top},width=800,height=760`)
+    var timer = setInterval(function() { 
+      if(win?.closed) {
+        clearInterval(timer);
+        queryClient.refetchQueries({
+          queryKey: ['siwopSession'],
+          type: 'active',
+          exact: true,
+        })
+      }
+    }, 500);
   };
 
   return (
@@ -104,7 +98,7 @@ const SignInWithOtherPage: React.FC = () => {
           </div>
 
           <motion.div
-            key="avatarImage"
+            key="image"
             initial={
               mobile
                 ? false
@@ -122,11 +116,10 @@ const SignInWithOtherPage: React.FC = () => {
             transition={transition}
           >
             <LogoContainer>
-              {/* TODO Connected OP Avatar? */}
-              {data?.avatarImage ? (
-                <ImageContainer src={data.avatarImage} alt="avatar" $loaded={true} />
+              {data?.image ? (
+                <ImageContainer src={data?.image} alt="avatar" $loaded={true} />
               ) : (
-                <Avatar address={address} width={64} height={64} />
+                <Avatar address={data?.wallet || address} width={64} height={64} />
               )}
             </LogoContainer>
           </motion.div>
