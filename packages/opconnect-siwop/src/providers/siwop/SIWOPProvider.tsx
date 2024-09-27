@@ -1,5 +1,4 @@
 import { ReactNode, useContext, useEffect, useState } from 'react';
-import { useAccount } from 'wagmi';
 import { useQuery } from '@tanstack/react-query';
 
 import {
@@ -38,11 +37,6 @@ export const SIWOPProvider = ({
       'Multiple, nested usages of SIWOPProvider detected. Please use only one.'
     );
   }
-  // // SIWOPProvider must be wrapped outside of OPConnectProvider so that the
-  // // ConnectButton and other UI can use SIWOP context values.
-  // if (useContext(OPConnectContext)) {
-  //   throw new Error('OPConnectProvider must be mounted inside SIWOPProvider.');
-  // }
 
   const nonce = useQuery({
     queryKey: ['siwopNonce'],
@@ -69,8 +63,6 @@ export const SIWOPProvider = ({
     onSignOut?.();
     return true;
   };
-
-  const { address, chain } = useAccount();
 
   const onError = (error: any) => {
     console.error('signIn error', error.code, error.message);

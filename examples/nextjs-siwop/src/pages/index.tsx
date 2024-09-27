@@ -54,7 +54,7 @@ export default function Home({ address }: { address?: string }) {
               <ConnectButton />
             </div>
             <div className="text-lg mb-6 font-medium">
-              <SiwopButton />
+              <SiwopButton showSignOutButton={isSignedIn} />
             </div>
         </div>
       </div>

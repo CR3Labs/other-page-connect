@@ -21,7 +21,7 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <siwopClient.Provider>
+        <siwopClient.Provider appUrl="http://127.0.0.1:3001">
           <OPConnectProvider mode={mode} primaryColor={primaryColor} options={{
             // NOTE: enter your own terms and privacy policy URLs here
             disclaimer: (

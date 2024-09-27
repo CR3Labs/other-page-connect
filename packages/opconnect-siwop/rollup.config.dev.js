@@ -11,7 +11,7 @@ const styledComponentsTransformer = createStyledComponentsTransformer({
 export default [
   {
     input: ['./src/index.ts'],
-    external: ['react', 'react-dom', 'framer-motion', 'wagmi'],
+    external: ['react', 'react-dom', 'framer-motion'],
     output: [
       {
         file: packageJson.exports.import,

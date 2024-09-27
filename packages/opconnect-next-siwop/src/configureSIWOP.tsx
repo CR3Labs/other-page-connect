@@ -461,7 +461,7 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
           return res.json();
         }}
         createAuthorizationUrl={({ appUrl, nonce, address, code_challenge }) =>
-          `${appUrl}/connect?client_id=${clientId}&scope=${scope.replace(' ', '+')}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&state=${nonce}&wallet=${address}&code_challenge=${code_challenge}&code_challenge_method=S256`
+          `${appUrl}/connect?client_id=${clientId}&scope=${scope.replace(' ', '+')}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&state=${nonce}&code_challenge=${code_challenge}&code_challenge_method=S256${address ? `&address=${address}` : ''}`
         }
         verifyCode={({ code }) =>
           fetch(`${apiRoutePrefix}/verify`, {
