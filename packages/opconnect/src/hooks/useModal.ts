@@ -5,7 +5,7 @@ import {
   useConnectCallback,
   useConnectCallbackProps,
 } from './useConnectCallback';
-import { useSIWOP } from '../siwop';
+import { useSIWOP } from '@otherpage/connect-siwop';
 
 type ModalRoutes = (typeof routes)[keyof typeof routes];
 

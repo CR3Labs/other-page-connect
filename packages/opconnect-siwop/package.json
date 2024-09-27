@@ -1,5 +1,5 @@
 {
-  "name": "@otherpage/connect-button",
+  "name": "@otherpage/connect-siwop",
   "version": "0.3.0",
   "license": "BSD-2-Clause license",
   "repository": {
@@ -48,9 +48,7 @@
   "peerDependencies": {
     "@tanstack/react-query": ">=5.0.0",
     "react": "17.x || 18.x",
-    "react-dom": "17.x || 18.x",
-    "viem": "2.x",
-    "wagmi": "2.x"
+    "react-dom": "17.x || 18.x"
   },
   "devDependencies": {
     "@rollup/plugin-image": "^3.0.3",
@@ -63,8 +61,6 @@
   },
   "resolutions": {
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "viem": "^2.13.0",
-    "wagmi": "^2.12.2"
+    "react-dom": "^18.0.0"
   }
 }

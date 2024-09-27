@@ -1,12 +1,10 @@
-import Button from '../../Common/Button';
-import { DisconnectIcon, RetryIcon } from '../../../assets/icons';
-import { ResetContainer } from '../../../styles';
+import Button from '../Button';
+import { DisconnectIcon, RetryIcon } from '../../icons'
+import { ResetContainer } from '../../styles';
 import { motion } from 'framer-motion';
-import useIsMounted from '../../../hooks/useIsMounted';
-import useLocales from '../../../hooks/useLocales';
-import { SIWOPSession, useSIWOP } from '../../../siwop';
-import { useAccount } from 'wagmi';
-import { useModal } from '../../../hooks/useModal';
+import useIsMounted from '../../hooks/useIsMounted';
+import useLocales from '../../hooks/useLocales';
+import { SIWOPSession, useSIWOP } from '../../providers/siwop';
 
 type ButtonProps = {
   showSignOutButton?: boolean;
@@ -14,14 +12,14 @@ type ButtonProps = {
   onSignOut?: () => void;
 };
 
-export const SIWOPButton: React.FC<ButtonProps> = ({
+export const SiwopButtonRender: React.FC<ButtonProps> = ({
   showSignOutButton,
   onSignIn,
   onSignOut,
 }) => {
   const isMounted = useIsMounted();
-  const locales = useLocales();
-  const { setOpen } = useModal();
+  // TODO configurable locale?
+  const locales = useLocales('en-US');
 
   const {
     isSignedIn,
@@ -37,7 +35,6 @@ export const SIWOPButton: React.FC<ButtonProps> = ({
     onSignIn: (data) => onSignIn?.(data),
     onSignOut: () => onSignOut?.(),
   });
-  const { address: connectedAddress } = useAccount();
 
   function getButtonLabel() {
     if (isSuccess) return locales.signedIn;
@@ -61,20 +58,6 @@ export const SIWOPButton: React.FC<ButtonProps> = ({
         icon={<DisconnectIcon />}
       >
         {locales.signOut}
-      </Button>
-    );
-  }
-
-  if (!connectedAddress) {
-    // TODO: discuss non-connected wallet developer expectations
-    return (
-      <Button
-        key="button"
-        style={{ margin: 0 }}
-        onClick={() => setOpen(true)}
-        arrow
-      >
-        {locales.walletNotConnected}
       </Button>
     );
   }
@@ -111,9 +94,9 @@ export const SIWOPButton: React.FC<ButtonProps> = ({
   );
 };
 
-export const SIWOPButtonComponent: React.FC<ButtonProps> = ({ ...props }) => (
+export const SiwopButtonComponent: React.FC<ButtonProps> = ({ ...props }) => (
   <ResetContainer>
-    <SIWOPButton {...props} />
+    <SiwopButtonRender {...props} />
   </ResetContainer>
 );
-export default SIWOPButtonComponent;
+export default SiwopButtonComponent;

@@ -19,7 +19,7 @@ import { OPConnectThemeProvider } from '../OPConnectThemeProvider/OPConnectTheme
 import { useChainIsSupported } from '../../hooks/useChainIsSupported';
 import OAuthWallet from '../Pages/OAuthWallet';
 import SignInWithOtherPage from '../Pages/SignInWithOtherPage';
-import { useSIWOP } from '../../siwop';
+import { useSIWOP } from '@otherpage/connect-siwop';
 
 const customThemeDefault: object = {};
 

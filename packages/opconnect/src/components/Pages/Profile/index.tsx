@@ -40,8 +40,8 @@ import { useThemeContext } from '../../OPConnectThemeProvider/OPConnectThemeProv
 import useLocales from '../../../hooks/useLocales';
 import { useEnsFallbackConfig } from '../../../hooks/useEnsFallbackConfig';
 import { useSIWE } from '../../../siwe';
-import { useSIWOP } from '../../../siwop';
-import Logos from '../../../assets/logos';
+import { useSIWOP } from '@otherpage/connect-siwop';
+// import Logos from '../../../assets/logos';
 
 const ForwardIcon = ({ ...props }) => (
   <svg

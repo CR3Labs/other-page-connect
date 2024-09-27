@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-
-import { useContext } from '../../OPConnect';
+import React from 'react';
 
 import {
   PageContent,
@@ -16,7 +14,7 @@ import {
 } from './styles';
 
 import { useAccount } from 'wagmi';
-import { useSIWOP } from '../../../siwop';
+import { useSIWOP } from '@otherpage/connect-siwop';
 
 import { TickIcon } from '../../../assets/icons';
 import Avatar from '../../Common/Avatar';
@@ -26,7 +24,7 @@ import { flattenChildren, isMobile } from '../../../utils';
 import useLocales from '../../../hooks/useLocales';
 import Logos from '../../../assets/logos';
 import Button from '../../Common/Button';
-import { SIWOPButton } from '../../Standard/SIWOP';
+import { SiwopButton } from '@otherpage/connect-siwop';
 import FitText from '../../Common/FitText';
 import { ImageContainer } from '../../Common/Avatar/styles';
 import { useQueryClient } from '@tanstack/react-query';
@@ -212,7 +210,7 @@ const SignInWithOtherPage: React.FC = () => {
               Account Settings
             </Button>
           )}
-          <SIWOPButton
+          <SiwopButton
             showSignOutButton={isSignedIn}
           />
         </ModalBody>
