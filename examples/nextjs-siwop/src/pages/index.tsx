@@ -1,5 +1,6 @@
 import { useAppContext } from '@/contexts/app-provider';
 import { ConnectButton, useSIWOP } from '@otherpage/connect';
+import { SIWOPButton } from '@otherpage/connect';
 import { useEffect, useState } from 'react';
 // import { Unity, useUnityContext } from "react-unity-webgl";
 
@@ -49,7 +50,9 @@ export default function Home({ address }: { address?: string }) {
       </div>
       <div className="flex items-center justify-center min-h-screen w-screen">
         <div className="h-[400px] w-full rounded-lg flex justify-center items-center flex-col">
-            <div className="text-lg mb-6 font-medium">Game</div>
+            <div className="text-lg mb-6 font-medium">
+              <SIWOPButton />
+            </div>
         </div>
       </div>
     </main>

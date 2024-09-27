@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@otherpage/connect": "workspace:packages/opconnect",
+    "@otherpage/connect-button": "workspace:packages/opconnect-button",
     "@otherpage/connect-next-siwop": "workspace:packages/opconnect-next-siwop",
     "ethers": "^5",
     "next": "12.3.0",
