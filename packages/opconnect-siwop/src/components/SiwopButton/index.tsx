@@ -1,13 +1,14 @@
 import Button from '../Button';
 import { DisconnectIcon, RetryIcon } from '../../icons'
 import { ResetContainer } from '../../styles';
-import { motion } from 'framer-motion';
 import useIsMounted from '../../hooks/useIsMounted';
 import useLocales from '../../hooks/useLocales';
 import { SIWOPSession, useSIWOP } from '../../providers/siwop';
+import Logos from '../../assets/logos';
 
 type ButtonProps = {
   showSignOutButton?: boolean;
+  darkMode?: boolean;
   onSignIn?: (data?: SIWOPSession) => void;
   onSignOut?: () => void;
 };
@@ -55,7 +56,8 @@ export const SiwopButtonRender: React.FC<ButtonProps> = ({
         key="button"
         style={{ margin: 0 }}
         onClick={signOut}
-        icon={<DisconnectIcon />}
+        // icon={<DisconnectIcon />}
+        icon={<Logos.OtherPage />}
       >
         {locales.signOut}
       </Button>
@@ -66,28 +68,29 @@ export const SiwopButtonRender: React.FC<ButtonProps> = ({
     <Button
       key="button"
       style={{ margin: 0 }}
-      arrow={!isSignedIn ? !isLoading && !isRejected : false}
+      // arrow={!isSignedIn ? !isLoading && !isRejected : false}
       onClick={!isLoading && !isSuccess ? signIn : undefined}
       disabled={isLoading}
       waiting={isLoading}
-      icon={
-        isRejected && (
-          <motion.div
-            initial={{
-              rotate: -270,
-            }}
-            animate={{
-              rotate: 0,
-            }}
-            transition={{
-              duration: 1,
-              ease: [0.175, 0.885, 0.32, 0.98],
-            }}
-          >
-            <RetryIcon style={{ opacity: 0.4 }} />
-          </motion.div>
-        )
-      }
+      icon={<Logos.OtherPage />}
+      // icon={
+      //   isRejected && (
+      //     <motion.div
+      //       initial={{
+      //         rotate: -270,
+      //       }}
+      //       animate={{
+      //         rotate: 0,
+      //       }}
+      //       transition={{
+      //         duration: 1,
+      //         ease: [0.175, 0.885, 0.32, 0.98],
+      //       }}
+      //     >
+      //       <RetryIcon style={{ opacity: 0.4 }} />
+      //     </motion.div>
+      //   )
+      // }
     >
       {getButtonLabel()}
     </Button>
@@ -95,7 +98,7 @@ export const SiwopButtonRender: React.FC<ButtonProps> = ({
 };
 
 export const SiwopButtonComponent: React.FC<ButtonProps> = ({ ...props }) => (
-  <ResetContainer>
+  <ResetContainer $useMode={props.darkMode}>
     <SiwopButtonRender {...props} />
   </ResetContainer>
 );

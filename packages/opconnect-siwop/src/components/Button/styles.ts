@@ -73,7 +73,7 @@ export const ButtonContainer = styled.button<{
   ${({ $variant }) => {
     if ($variant === 'primary') {
       return css`
-        --color: var(--ck-primary-button-color, var(--ck-body-color));
+        --color, var(--ck-body-color));: var(--ck-primary-button-color, var(--ck-body-color));
         --background: var(
           --ck-primary-button-background,
           var(--ck-body-background-primary)
@@ -86,7 +86,7 @@ export const ButtonContainer = styled.button<{
         --font-size: var(--ck-primary-button-font-size);
         --line-height: var(--ck-primary-button-line-height);
 
-        --hover-color: var(--ck-button-primary-hover-color, var(--color));
+        --hover-color: var(--ck-button-primary-hover-color, var(--color, var(--ck-body-color));));
         --hover-background: var(
           --ck-primary-button-hover-background,
           var(--background)
@@ -106,7 +106,7 @@ export const ButtonContainer = styled.button<{
       `;
     } else if ($variant === 'secondary') {
       return css`
-        --color: var(--ck-secondary-button-color, var(--ck-body-color));
+        --color, var(--ck-body-color));: var(--ck-secondary-button-color, var(--ck-body-color));
         --background: var(
           --ck-secondary-button-background,
           var(--ck-body-background)
@@ -119,7 +119,7 @@ export const ButtonContainer = styled.button<{
         --font-size: var(--ck-secondary-button-font-size);
         --line-height: var(--ck-secondary-button-line-height);
 
-        --hover-color: var(--ck-secondary-button-hover-color, var(--color));
+        --hover-color: var(--ck-secondary-button-hover-color, var(--color, var(--ck-body-color));));
         --hover-background: var(
           --ck-secondary-button-hover-background,
           var(--background)
@@ -139,7 +139,7 @@ export const ButtonContainer = styled.button<{
       `;
     } else if ($variant === 'tertiary') {
       return css`
-        --color: var(
+        --color, var(--ck-body-color));: var(
           --ck-tertiary-button-color,
           var(--ck-secondary-button-color)
         );
@@ -210,15 +210,15 @@ export const ButtonContainer = styled.button<{
   height: 45px;
   margin: 10px 0 0;
   line-height: var(--line-height);
-  padding: 0 4px;
+  padding: 10px 20px;
   font-size: var(--font-size);
   font-weight: var(--font-weight, 500);
   text-decoration: none;
   white-space: nowrap;
   transition: 100ms ease;
   transition-property: box-shadow, background-color;
-  color: var(--color);
-  background: var(--background);
+  color: var(--color, var(--ck-connectbutton-color));
+  background: var(--background, var(--ck-connectbutton-background));
   border-width: var(--border-width);
   border-style: solid;
   border-color: var(--border-color);
@@ -241,7 +241,6 @@ export const ButtonContainer = styled.button<{
     &:hover,
     &:focus-visible {
       color: var(--ck-accent-text-color, var(--hover-color));
-      background: var(--ck-accent-color, var(--hover-background));
       border-radius: var(--hover-border-radius);
       box-shadow: var(--hover-box-shadow);
 
@@ -282,7 +281,7 @@ export const InnerContainer = styled.div`
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  max-width: calc(100% - 42px);
+  max-width: calc(100% - 22px);
   transition: opacity 300ms ease;
   /*
   overflow: hidden;
