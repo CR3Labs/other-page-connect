@@ -18,7 +18,7 @@ type HookProps = {
 };
 
 type UseSIWOPConfig = {
-  onSignIn?: (data?: SIWOPSession) => void;
+  onSignIn?: (data?: SIWOPSession) => any;
   onSignOut?: () => void;
 };
 

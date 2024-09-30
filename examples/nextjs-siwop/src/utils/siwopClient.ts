@@ -5,6 +5,9 @@ export const siwopClient = configureClientSIWOP({
   clientId: process.env.NEXT_PUBLIC_SIWOP_CLIENT_ID as string,
   redirectUri: process.env.NEXT_PUBLIC_SIWOP_REDIRECT_URI as string,
   scope: [
+    'openid',
+    'profile',
+    'email',
     'avatar.read',
     'wallets.read',
     'twitter.read',

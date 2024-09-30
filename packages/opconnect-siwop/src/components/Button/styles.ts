@@ -240,7 +240,7 @@ export const ButtonContainer = styled.button<{
   @media only screen and (min-width: ${defaultTheme.mobileWidth + 1}px) {
     &:hover,
     &:focus-visible {
-      color: var(--ck-accent-text-color, var(--hover-color));
+      // color: var(--ck-accent-text-color, var(--hover-color));
       border-radius: var(--hover-border-radius);
       box-shadow: var(--hover-box-shadow);
 
@@ -316,5 +316,9 @@ export const IconContainer = styled(motion.div)<{ $rounded?: boolean }>`
     position: relative;
     max-width: 100%;
     height: auto;
+
+    path {
+      fill: var(--ck-connectbutton-color);
+    }
   }
 `;

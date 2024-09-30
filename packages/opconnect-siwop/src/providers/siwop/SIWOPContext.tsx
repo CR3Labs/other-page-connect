@@ -12,6 +12,7 @@ export enum StatusState {
 export type SIWOPSession = {
   nonce: string;
   account?: any; // TODO type this
+  idToken?: string;
 };
 
 export type SIWOPConfig = {
@@ -30,7 +31,7 @@ export type SIWOPConfig = {
   }) => string;
   verifyCode: (args: {
     code: string;
-  }) => Promise<boolean>;
+  }) => Promise<SIWOPSession>;
   generatePKCE: () => Promise<{ codeChallenge: string; codeVerifier: string }>;
   getSession: () => Promise<SIWOPSession | null>;
   signOut: () => Promise<boolean>;

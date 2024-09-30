@@ -1,5 +1,4 @@
 import Button from '../Button';
-import { DisconnectIcon, RetryIcon } from '../../icons'
 import { ResetContainer } from '../../styles';
 import useIsMounted from '../../hooks/useIsMounted';
 import useLocales from '../../hooks/useLocales';
@@ -7,14 +6,17 @@ import { SIWOPSession, useSIWOP } from '../../providers/siwop';
 import Logos from '../../assets/logos';
 
 type ButtonProps = {
+  mode?: 'light' | 'dark' | 'auto';
+  showAvatar?: boolean;
   showSignOutButton?: boolean;
-  darkMode?: boolean;
-  onSignIn?: (data?: SIWOPSession) => void;
+  onSignIn?: (data?: SIWOPSession) => any; // TODO type the idToken
   onSignOut?: () => void;
 };
 
 export const SiwopButtonRender: React.FC<ButtonProps> = ({
+  mode,
   showSignOutButton,
+  showAvatar,
   onSignIn,
   onSignOut,
 }) => {
@@ -32,6 +34,7 @@ export const SiwopButtonRender: React.FC<ButtonProps> = ({
     signIn,
     signOut,
     error,
+    data,
   } = useSIWOP({
     onSignIn: (data) => onSignIn?.(data),
     onSignOut: () => onSignOut?.(),
@@ -57,7 +60,13 @@ export const SiwopButtonRender: React.FC<ButtonProps> = ({
         style={{ margin: 0 }}
         onClick={signOut}
         // icon={<DisconnectIcon />}
-        icon={<Logos.OtherPage />}
+        icon={
+          showAvatar && (
+          data?.picture ? 
+            <img src={data?.picture} style={{ borderRadius: '100%' }} /> :
+            <Logos.OtherPage />
+          )
+        }
       >
         {locales.signOut}
       </Button>
@@ -98,7 +107,9 @@ export const SiwopButtonRender: React.FC<ButtonProps> = ({
 };
 
 export const SiwopButtonComponent: React.FC<ButtonProps> = ({ ...props }) => (
-  <ResetContainer $useMode={props.darkMode}>
+  <ResetContainer
+    $useMode={props.mode}
+  >
     <SiwopButtonRender {...props} />
   </ResetContainer>
 );

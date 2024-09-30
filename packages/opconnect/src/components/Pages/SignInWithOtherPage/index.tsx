@@ -28,11 +28,13 @@ import { SiwopButton } from '@otherpage/connect-siwop';
 import FitText from '../../Common/FitText';
 import { ImageContainer } from '../../Common/Avatar/styles';
 import { useQueryClient } from '@tanstack/react-query';
+import { useContext } from '../../OPConnect';
 
 const transition = { duration: 0.2, ease: [0.26, 0.08, 0.25, 1] };
 const copyTransition = { duration: 0.16, ease: [0.26, 0.08, 0.25, 1] };
 
 const SignInWithOtherPage: React.FC = () => {
+  const context = useContext();
   const queryClient = useQueryClient();
   const { clientId, appUrl, isSignedIn, error, data } = useSIWOP();
   const mobile = isMobile();
@@ -212,6 +214,7 @@ const SignInWithOtherPage: React.FC = () => {
           )}
           <SiwopButton
             showSignOutButton={isSignedIn}
+            mode={context.mode}
           />
         </ModalBody>
       </ModalContent>

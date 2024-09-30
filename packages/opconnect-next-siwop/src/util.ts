@@ -20,8 +20,7 @@ export interface JwtPayload {
   jti?: string;
   // custom
   uid?: string;
-  addr?: string;
-  avatar?: string;
+  adr?: string;
   cid?: string;
   scope?: string;
 }

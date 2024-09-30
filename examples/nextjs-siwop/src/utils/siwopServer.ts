@@ -7,7 +7,17 @@ export const siwopServer = configureServerSideSIWOP({
     clientId: process.env.NEXT_PUBLIC_SIWOP_CLIENT_ID,
     redirectUri: process.env.NEXT_PUBLIC_SIWOP_REDIRECT_URI,
     clientSecret: process.env.SIWOP_CLIENT_SECRET,
-    scope: 'avatar.read wallets.read twitter.read discord.read tokens.read communities.read',
+    scope: [
+      'openid',
+      'profile',
+      'email',
+      'avatar.read',
+      'wallets.read',
+      'twitter.read',
+      'discord.read',
+      'tokens.read',
+      'communities.read',
+    ].join(''),
   },
   session: {
     cookieName: 'opconnect-next-siwop',

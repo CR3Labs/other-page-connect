@@ -124,7 +124,7 @@ export const SIWOPProvider = ({
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
     const state = urlParams.get('state');
-    if (code && state) {
+    if (nonce.data && code && state) {
       // Check state cookie or set error
       if (nonce.data !== state) { 
         console.error('Invalid nonce');
@@ -133,8 +133,8 @@ export const SIWOPProvider = ({
       }
 
       // Verify code
-      siwopConfig.verifyCode({ code }).then((verified) => {
-        if (!verified) {
+      siwopConfig.verifyCode({ code }).then((data) => {
+        if (!data) {
           console.error('Code verification failed');
           setStatus(StatusState.ERROR);
           return;
@@ -142,10 +142,7 @@ export const SIWOPProvider = ({
 
         // set auth session
         setStatus(StatusState.SUCCESS);
-        session.refetch().then((r) => {
-          onSignIn?.(r?.data ?? undefined);
-          return r?.data;
-        });
+        onSignIn?.(data);
 
         // remove code from url
         window.history.replaceState({}, document.title, window.location.pathname);

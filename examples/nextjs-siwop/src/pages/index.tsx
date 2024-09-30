@@ -1,7 +1,6 @@
 import { useAppContext } from '@/contexts/app-provider';
 import { SiwopButton, useSIWOP } from '@otherpage/connect-siwop';
 import { ConnectButton } from '@otherpage/connect';
-import { useEffect, useState } from 'react';
 // import { Unity, useUnityContext } from "react-unity-webgl";
 
 export default function Home({ address }: { address?: string }) {
@@ -17,6 +16,12 @@ export default function Home({ address }: { address?: string }) {
     const left = (window.innerWidth / 2) - 400;
     const top = (window.innerHeight / 2) - 380;
     window.open(`${appUrl}/connect/settings?client_id=${clientId}`, "mozillaWindow", `left=${left},top=${top},width=800,height=760`)
+  };
+
+  const openPay = () => {
+    const left = (window.innerWidth / 2) - 400;
+    const top = (window.innerHeight / 2) - 380;
+    window.open(`${appUrl}/connect/pay?client_id=${clientId}`, "mozillaWindow", `left=${left},top=${top},width=800,height=760`)
   };
 
   return (
@@ -50,11 +55,16 @@ export default function Home({ address }: { address?: string }) {
       </div>
       <div className="flex items-center justify-center min-h-screen w-screen">
         <div className="h-[400px] w-full rounded-lg flex justify-center items-center flex-col">
-            <div className="text-lg mb-6 font-medium">
-              <ConnectButton />
+            <div className="mb-6">
+              {/* <ConnectButton /> */}
             </div>
-            <div className="text-lg mb-6 font-medium">
-              <SiwopButton showSignOutButton={isSignedIn} />
+            <div className="mb-6">
+              <SiwopButton showSignOutButton={isSignedIn} showAvatar={true} />
+            </div>
+            <div className="mb-6">
+              {isSignedIn && <button className="bg-neutral-900 text-white font-light rounded-md p-3" onClick={openPay}>
+                Purchase Boosts
+              </button>}
             </div>
         </div>
       </div>
