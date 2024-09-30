@@ -1,9 +1,10 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { SIWOPContext, StatusState, SIWOPSession } from './SIWOPContext';
 
 type HookProps = {
   isSignedIn: boolean;
   data?: SIWOPSession;
+  idToken?: string;
   status: StatusState;
   error?: Error | any;
   isRejected: boolean;
@@ -31,6 +32,7 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
     return {
       isSignedIn: false,
       data: undefined,
+      idToken: undefined,
       status: StatusState.ERROR,
       error: new Error('useSIWOP hook must be inside a SIWOPProvider.'),
       isRejected: false,
@@ -44,7 +46,7 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
     };
   }
 
-  const { clientId, session, nonce, status, signOut, signIn, resetStatus } =
+  const { clientId, session, nonce, status, idToken, signOut, signIn, resetStatus } =
     siweContextValue;
   const { account } = session.data || {};
 
@@ -71,6 +73,9 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
     isSignedIn,
     data: isSignedIn
       ? account
+      : undefined,
+    idToken: isSignedIn
+      ? idToken
       : undefined,
     status: currentStatus,
     error: session.error || nonce.error,

@@ -4,6 +4,7 @@ import useIsMounted from '../../hooks/useIsMounted';
 import useLocales from '../../hooks/useLocales';
 import { SIWOPSession, useSIWOP } from '../../providers/siwop';
 import Logos from '../../assets/logos';
+import { useEffect, useState } from 'react';
 
 type ButtonProps = {
   mode?: 'light' | 'dark' | 'auto';
@@ -40,6 +41,8 @@ export const SiwopButtonRender: React.FC<ButtonProps> = ({
     onSignOut: () => onSignOut?.(),
   });
 
+  const [avatar, setAvatar] = useState<string | null>(null);
+
   function getButtonLabel() {
     if (isSuccess) return locales.signedIn;
     if (isLoading) return locales.redirecting;
@@ -49,11 +52,17 @@ export const SiwopButtonRender: React.FC<ButtonProps> = ({
     return locales.signIn;
   }
 
+  useEffect(() => {
+    if (data && data.picture) {
+      setAvatar(data.picture);
+    }
+  }, [data]);
+
   if (!isMounted) {
     return <Button key="loading" style={{ margin: 0 }} disabled />;
   }
 
-  if (showSignOutButton && isSignedIn) {
+  if (showSignOutButton && isSignedIn && data) {
     return (
       <Button
         key="button"
@@ -62,8 +71,8 @@ export const SiwopButtonRender: React.FC<ButtonProps> = ({
         // icon={<DisconnectIcon />}
         icon={
           showAvatar && (
-          data?.picture ? 
-            <img src={data?.picture} style={{ borderRadius: '100%' }} /> :
+          avatar ? 
+            <img src={avatar} style={{ borderRadius: '100%' }} /> :
             <Logos.OtherPage />
           )
         }

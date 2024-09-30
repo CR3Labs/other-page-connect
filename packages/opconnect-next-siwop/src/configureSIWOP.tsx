@@ -269,7 +269,8 @@ const sessionRoute = async (
       if (scope?.includes('openid')) {
         account = await getAccount(session.accessToken, config);
       } else {
-        // TODO: use introspection endpoint if not openid scope
+        // TODO: use introspection endpoint if not openid 
+        // scope to make sure the token is still valid
       }
 
       if (afterCallback) {
@@ -354,8 +355,8 @@ const verifyCodeRoute = async (
       });
     }
     const { sub, adr } = jwtDecode(data.id_token);
-    const acc = { sub, wallet: adr, exp: 0, iat: 0, iss: '', aud: '' };
-    const { exp, iat, iss, aud, ...account } = data.id_token ? jwtDecode(data.id_token) : acc;
+    const acc = { sub, wallet: adr, exp: 0, iat: 0, iss: '', aud: '', nonce: '' };
+    const { exp, iat, iss, aud, nonce, ...account } = data.id_token ? jwtDecode(data.id_token) : acc;
   
     res.send({ account, idToken: data.id_token });
   } catch (error) {

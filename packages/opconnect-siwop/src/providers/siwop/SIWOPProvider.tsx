@@ -29,6 +29,7 @@ export const SIWOPProvider = ({
 }: Props) => {
   const [status, setStatus] = useState<StatusState>(StatusState.READY);
   const resetStatus = () => setStatus(StatusState.READY);
+  const [idToken, setIdToken] = useState<string>();
 
   // Only allow for mounting SIWOPProvider once, so we avoid weird global state
   // collisions.
@@ -60,6 +61,7 @@ export const SIWOPProvider = ({
     }
     await Promise.all([session.refetch(), nonce.refetch()]);
     setStatus(StatusState.READY);
+    setIdToken(undefined);
     onSignOut?.();
     return true;
   };
@@ -140,9 +142,17 @@ export const SIWOPProvider = ({
           return;
         }
 
+        if (data.idToken) {
+          setIdToken(data.idToken);
+        }
+
         // set auth session
-        setStatus(StatusState.SUCCESS);
-        onSignIn?.(data);
+        session.refetch().then(() => {
+          setStatus(StatusState.SUCCESS);
+          console.log(data.idToken);
+          setIdToken(data.idToken);
+          onSignIn?.(data);
+        });
 
         // remove code from url
         window.history.replaceState({}, document.title, window.location.pathname);
@@ -190,6 +200,7 @@ export const SIWOPProvider = ({
         ...siwopConfig,
         nonce,
         session,
+        idToken,
         signIn,
         signOut: signOutAndRefetch,
         status,

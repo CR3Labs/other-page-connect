@@ -50,6 +50,7 @@ export type SIWOPContextValue = Required<SIWOPConfig> & {
   nonce: ReturnType<typeof useQuery<string | null>>;
   session: ReturnType<typeof useQuery<SIWOPSession | null>>;
   status: StatusState;
+  idToken: string | undefined;
   signIn: () => Promise<SIWOPSession | false >;
   resetStatus: () => void;
 };

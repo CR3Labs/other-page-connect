@@ -1,6 +1,7 @@
 import { useAppContext } from '@/contexts/app-provider';
 import { SiwopButton, useSIWOP } from '@otherpage/connect-siwop';
 import { ConnectButton } from '@otherpage/connect';
+import { use, useEffect } from 'react';
 // import { Unity, useUnityContext } from "react-unity-webgl";
 
 export default function Home({ address }: { address?: string }) {
@@ -10,7 +11,7 @@ export default function Home({ address }: { address?: string }) {
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleSetPrimaryColor(e.target.value as `#${string}`);
   };
-  const { appUrl, clientId, isSignedIn } = useSIWOP();
+  const { appUrl, clientId, isSignedIn, idToken } = useSIWOP();
 
   const openAccount = () => {
     const left = (window.innerWidth / 2) - 400;
@@ -23,6 +24,12 @@ export default function Home({ address }: { address?: string }) {
     const top = (window.innerHeight / 2) - 380;
     window.open(`${appUrl}/connect/pay?client_id=${clientId}`, "mozillaWindow", `left=${left},top=${top},width=800,height=760`)
   };
+
+  useEffect(() => {
+    if (idToken) {
+      console.log("OpenID:", idToken);
+    }
+  }, [idToken]);
 
   return (
     <main className="flex min-h-[calc(100vh-100px)] w-screen relative flex-col">
