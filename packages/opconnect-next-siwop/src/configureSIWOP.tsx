@@ -9,7 +9,6 @@ import {
 } from 'viem/siwe';
 import { generatePKCE, jwtDecode } from './util';
 
-
 const API_URL = 'https://alpha-api.other.page/v1';
 
 type RouteHandlerOptions = {
@@ -357,7 +356,18 @@ const verifyCodeRoute = async (
     const { sub, adr } = jwtDecode(data.id_token);
     const acc = { sub, wallet: adr, exp: 0, iat: 0, iss: '', aud: '', nonce: '' };
     const { exp, iat, iss, aud, nonce, ...account } = data.id_token ? jwtDecode(data.id_token) : acc;
-  
+    
+    if (data.id_token) {
+      // TODO because we are using an authorization code flow
+      // its relatively safe to reuse the nonce here for the id_token, if  
+      // future support for an implicit flow is added we will want to generate 
+      // a separate nonce for the id_token and never expose it to the client
+      const n = 'oidc'+session?.nonce?.substring(2,30)
+      if (n !== nonce) {
+        return res.status(400).end('Invalid id_token nonce');
+      }
+    }
+
     res.send({ account, idToken: data.id_token });
   } catch (error) {
     console.error(error);
@@ -455,7 +465,7 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
           return res.json();
         }}
         createAuthorizationUrl={({ appUrl, nonce, address, code_challenge }) =>
-          `${appUrl}/connect?client_id=${clientId}&scope=${scope.replace(' ', '+')}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&state=${nonce}&nonce=test&code_challenge=${code_challenge}&code_challenge_method=S256${address ? `&address=${address}` : ''}`
+          `${appUrl}/connect?client_id=${clientId}&scope=${scope.replace(' ', '+')}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&state=${nonce}&nonce=${'oidc'+nonce.substring(2,30)}&code_challenge=${code_challenge}&code_challenge_method=S256${address ? `&address=${address}` : ''}`
         }
         verifyCode={({ code }) =>
           fetch(`${apiRoutePrefix}/verify`, {

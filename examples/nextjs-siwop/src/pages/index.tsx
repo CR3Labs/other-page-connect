@@ -1,7 +1,7 @@
 import { useAppContext } from '@/contexts/app-provider';
 import { SiwopButton, useSIWOP } from '@otherpage/connect-siwop';
 import { ConnectButton } from '@otherpage/connect';
-import { use, useEffect } from 'react';
+import { useEffect } from 'react';
 // import { Unity, useUnityContext } from "react-unity-webgl";
 
 export default function Home({ address }: { address?: string }) {
