@@ -38,7 +38,7 @@ const SignInWithOtherPage: React.FC = () => {
   const queryClient = useQueryClient();
   const { clientId, appUrl, isSignedIn, error, data } = useSIWOP();
   const mobile = isMobile();
-  
+  const { address } = useAccount();
   const locales = useLocales({});
   const copy = {
     heading: locales.signInWithOtherPageScreen_signedOut_heading,
@@ -46,8 +46,6 @@ const SignInWithOtherPage: React.FC = () => {
     p: locales.signInWithOtherPageScreen_signedOut_p,
     button: locales.signInWithOtherPageScreen_signedOut_button,
   };
-
-  const { address } = useAccount();
 
   // TODO custom button component?
   const openAccount = () => {
@@ -215,6 +213,7 @@ const SignInWithOtherPage: React.FC = () => {
           <SiwopButton
             showSignOutButton={isSignedIn}
             mode={context.mode}
+            address={address}
           />
         </ModalBody>
       </ModalContent>

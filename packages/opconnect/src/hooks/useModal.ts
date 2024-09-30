@@ -39,7 +39,7 @@ export const useModal = ({ onConnect, onDisconnect }: UseModalProps = {}) => {
     onDisconnect,
   });
 
-  const { isConnected } = useAccount();
+  const { address, isConnected } = useAccount();
   const { signIn: signInWithEtherum } = useSIWE();
   const { signIn: signInWithOtherPage } = useSIWOP();
 
@@ -101,7 +101,7 @@ export const useModal = ({ onConnect, onDisconnect }: UseModalProps = {}) => {
     },
     openSIWOP: (triggerSIWOP?: boolean) => {
       gotoAndOpen(routes.SIGNINWITHOTHERPAGE);
-      if (triggerSIWOP) signInWithOtherPage();
+      if (triggerSIWOP) signInWithOtherPage(address);
     },
   };
 };

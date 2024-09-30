@@ -7,6 +7,7 @@ import Logos from '../../assets/logos';
 import { useEffect, useState } from 'react';
 
 type ButtonProps = {
+  address?: string;
   mode?: 'light' | 'dark' | 'auto';
   showAvatar?: boolean;
   showSignOutButton?: boolean;
@@ -15,6 +16,7 @@ type ButtonProps = {
 };
 
 export const SiwopButtonRender: React.FC<ButtonProps> = ({
+  address,
   mode,
   showSignOutButton,
   showAvatar,
@@ -87,7 +89,7 @@ export const SiwopButtonRender: React.FC<ButtonProps> = ({
       key="button"
       style={{ margin: 0 }}
       // arrow={!isSignedIn ? !isLoading && !isRejected : false}
-      onClick={!isLoading && !isSuccess ? signIn : undefined}
+      onClick={!isLoading && !isSuccess ? () => signIn(address) : undefined}
       disabled={isLoading}
       waiting={isLoading}
       icon={<Logos.OtherPage />}
