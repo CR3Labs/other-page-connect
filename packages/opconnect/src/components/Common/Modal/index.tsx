@@ -51,7 +51,7 @@ import FitText from '../FitText';
 import { useWallet } from '../../../wallets/useWallets';
 import { useMobileView } from '../../../hooks/useMobileView';
 import { PoweredByOtherPage } from '../../../assets/logos';
-import { useSIWOP } from '../../../siwop';
+import { useSIWOP } from '@otherpage/connect-siwop';
 
 const ProfileIcon = ({ isSignedIn }: { isSignedIn?: boolean }) => (
   <div style={{ position: 'relative' }}>

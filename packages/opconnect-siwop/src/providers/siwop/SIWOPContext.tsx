@@ -12,6 +12,7 @@ export enum StatusState {
 export type SIWOPSession = {
   nonce: string;
   account?: any; // TODO type this
+  idToken?: string;
 };
 
 export type SIWOPConfig = {
@@ -24,13 +25,13 @@ export type SIWOPConfig = {
   getNonce: () => Promise<string>;
   createAuthorizationUrl: (args: {
     nonce: string;
-    address: string;
+    address?: string;
     code_challenge: string;
     appUrl: string;
   }) => string;
   verifyCode: (args: {
     code: string;
-  }) => Promise<boolean>;
+  }) => Promise<SIWOPSession>;
   generatePKCE: () => Promise<{ codeChallenge: string; codeVerifier: string }>;
   getSession: () => Promise<SIWOPSession | null>;
   signOut: () => Promise<boolean>;
@@ -49,7 +50,8 @@ export type SIWOPContextValue = Required<SIWOPConfig> & {
   nonce: ReturnType<typeof useQuery<string | null>>;
   session: ReturnType<typeof useQuery<SIWOPSession | null>>;
   status: StatusState;
-  signIn: () => Promise<SIWOPSession | false >;
+  idToken: string | undefined;
+  signIn: (address?: string) => Promise<SIWOPSession | false >;
   resetStatus: () => void;
 };
 

@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "dev:opconnect": "yarn workspace @otherpage/connect run dev",
+    "dev:opconnect-siwop": "yarn workspace @otherpage/connect-siwop run dev",
     "dev:opconnect-next-siwe": "yarn workspace @otherpage/connect-next-siwe run dev",
     "dev:opconnect-next-siwop": "yarn workspace @otherpage/connect-next-siwop run dev",
     "dev:cra": "yarn workspace cra run dev",

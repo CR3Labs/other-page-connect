@@ -19,9 +19,9 @@ export interface JwtPayload {
   iat?: number;
   jti?: string;
   // custom
+  nonce?: string;
   uid?: string;
-  addr?: string;
-  avatar?: string;
+  adr?: string;
   cid?: string;
   scope?: string;
 }

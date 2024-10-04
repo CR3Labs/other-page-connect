@@ -23,7 +23,7 @@ import useLocales from '../../hooks/useLocales';
 import { Chain } from 'viem';
 import { useChainIsSupported } from '../../hooks/useChainIsSupported';
 import { useEnsFallbackConfig } from '../../hooks/useEnsFallbackConfig';
-import { useSIWOP } from '../../siwop';
+import { useSIWOP } from '@otherpage/connect-siwop';
 
 const contentVariants: Variants = {
   initial: {

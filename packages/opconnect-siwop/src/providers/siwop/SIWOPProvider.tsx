@@ -1,8 +1,6 @@
 import { ReactNode, useContext, useEffect, useState } from 'react';
-import { useAccount, useAccountEffect, useSignMessage } from 'wagmi';
 import { useQuery } from '@tanstack/react-query';
 
-import { Context as OPConnectContext } from '../components/OPConnect';
 import {
   SIWOPContext,
   SIWOPConfig,
@@ -31,6 +29,7 @@ export const SIWOPProvider = ({
 }: Props) => {
   const [status, setStatus] = useState<StatusState>(StatusState.READY);
   const resetStatus = () => setStatus(StatusState.READY);
+  const [idToken, setIdToken] = useState<string>();
 
   // Only allow for mounting SIWOPProvider once, so we avoid weird global state
   // collisions.
@@ -38,11 +37,6 @@ export const SIWOPProvider = ({
     throw new Error(
       'Multiple, nested usages of SIWOPProvider detected. Please use only one.'
     );
-  }
-  // SIWOPProvider must be wrapped outside of OPConnectProvider so that the
-  // ConnectButton and other UI can use SIWOP context values.
-  if (useContext(OPConnectContext)) {
-    throw new Error('OPConnectProvider must be mounted inside SIWOPProvider.');
   }
 
   const nonce = useQuery({
@@ -67,21 +61,10 @@ export const SIWOPProvider = ({
     }
     await Promise.all([session.refetch(), nonce.refetch()]);
     setStatus(StatusState.READY);
+    setIdToken(undefined);
     onSignOut?.();
     return true;
   };
-
-  const { address: connectedAddress } = useAccount();
-  useAccountEffect({
-    onDisconnect: () => {
-      if (signOutOnDisconnect) {
-        // For security reasons we sign out the user when a wallet disconnects.
-        signOutAndRefetch();
-      }
-    },
-  });
-
-  const { address, chain } = useAccount();
 
   const onError = (error: any) => {
     console.error('signIn error', error.code, error.message);
@@ -95,15 +78,11 @@ export const SIWOPProvider = ({
     }
   };
 
-  const signIn = async () => {
+  const signIn = async (address?: string) => {
     try {
       if (!siwopConfig) {
         throw new Error('SIWOP not configured');
       }
-
-      const chainId = chain?.id;
-      if (!address) throw new Error('No address found');
-      if (!chainId) throw new Error('No chainId found');
 
       if (!nonce.data) {
         throw new Error('Could not fetch nonce');
@@ -128,8 +107,8 @@ export const SIWOPProvider = ({
 
       // create url
       const url = siwopConfig.createAuthorizationUrl({
-        nonce: nonce.data,
         address,
+        nonce: nonce.data,
         code_challenge: codeChallenge, 
         appUrl,
       });
@@ -148,7 +127,7 @@ export const SIWOPProvider = ({
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
     const state = urlParams.get('state');
-    if (code && state) {
+    if (nonce.data && code && state) {
       // Check state cookie or set error
       if (nonce.data !== state) { 
         console.error('Invalid nonce');
@@ -157,18 +136,23 @@ export const SIWOPProvider = ({
       }
 
       // Verify code
-      siwopConfig.verifyCode({ code }).then((verified) => {
-        if (!verified) {
+      siwopConfig.verifyCode({ code }).then((data) => {
+        if (!data) {
           console.error('Code verification failed');
           setStatus(StatusState.ERROR);
           return;
         }
 
+        if (data.idToken) {
+          setIdToken(data.idToken);
+        }
+
         // set auth session
-        setStatus(StatusState.SUCCESS);
-        session.refetch().then((r) => {
-          onSignIn?.(r?.data ?? undefined);
-          return r?.data;
+        session.refetch().then(() => {
+          setStatus(StatusState.SUCCESS);
+          console.log(data.idToken);
+          setIdToken(data.idToken);
+          onSignIn?.(data);
         });
 
         // remove code from url
@@ -181,8 +165,6 @@ export const SIWOPProvider = ({
   
     // Skip if we're still fetching session state from backend
     if (!sessionData || !sessionData.account) return;
-    // Skip if wallet isn't connected (i.e. initial page load)
-    if (!connectedAddress || !chain) return;
 
     // If SIWOP session no longer matches connected account, sign out
     // TODO this would have to validate against linked wallets
@@ -204,7 +186,7 @@ export const SIWOPProvider = ({
     //   console.warn('Network changed, signing out of SIWOP session');
     //   // signOutAndRefetch();
     // }
-  }, [sessionData, connectedAddress]);
+  }, [sessionData]);
 
   return (
     <SIWOPContext.Provider
@@ -219,6 +201,7 @@ export const SIWOPProvider = ({
         ...siwopConfig,
         nonce,
         session,
+        idToken,
         signIn,
         signOut: signOutAndRefetch,
         status,

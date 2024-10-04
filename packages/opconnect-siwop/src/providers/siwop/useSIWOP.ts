@@ -1,9 +1,10 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { SIWOPContext, StatusState, SIWOPSession } from './SIWOPContext';
 
 type HookProps = {
   isSignedIn: boolean;
   data?: SIWOPSession;
+  idToken?: string;
   status: StatusState;
   error?: Error | any;
   isRejected: boolean;
@@ -13,12 +14,12 @@ type HookProps = {
   isReady: boolean;
 
   reset: () => void;
-  signIn: () => Promise<boolean>;
+  signIn: (address?: string) => Promise<boolean>;
   signOut: () => Promise<boolean>;
 };
 
 type UseSIWOPConfig = {
-  onSignIn?: (data?: SIWOPSession) => void;
+  onSignIn?: (data?: SIWOPSession) => any;
   onSignOut?: () => void;
 };
 
@@ -31,6 +32,7 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
     return {
       isSignedIn: false,
       data: undefined,
+      idToken: undefined,
       status: StatusState.ERROR,
       error: new Error('useSIWOP hook must be inside a SIWOPProvider.'),
       isRejected: false,
@@ -44,7 +46,7 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
     };
   }
 
-  const { clientId, session, nonce, status, signOut, signIn, resetStatus } =
+  const { clientId, session, nonce, status, idToken, signOut, signIn, resetStatus } =
     siweContextValue;
   const { account } = session.data || {};
 
@@ -72,6 +74,9 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
     data: isSignedIn
       ? account
       : undefined,
+    idToken: isSignedIn
+      ? idToken
+      : undefined,
     status: currentStatus,
     error: session.error || nonce.error,
     isRejected,
@@ -79,9 +84,9 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
     isLoading,
     isSuccess,
     isReady,
-    signIn: async () => {
+    signIn: async (address?: string) => {
       if (!isSignedIn) {
-        const data = await signIn();
+        const data = await signIn(address);
         if (data) onSignIn?.(data);
       }
     },

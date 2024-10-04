@@ -1,5 +1,5 @@
 import { FunctionComponent, ComponentProps } from 'react';
-import { SIWOPProvider } from '@otherpage/connect';
+import { SIWOPProvider } from '@otherpage/connect-siwop';
 import type { IncomingMessage, ServerResponse } from 'http';
 import { getIronSession, IronSession, IronSessionOptions } from 'iron-session';
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
@@ -7,8 +7,7 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import {
   generateSiweNonce,
 } from 'viem/siwe';
-import { generatePKCE, jwtDecode, JwtPayload } from './util';
-
+import { generatePKCE, jwtDecode } from './util';
 
 const API_URL = 'https://alpha-api.other.page/v1';
 
@@ -38,11 +37,11 @@ type RouteHandlerOptions = {
 };
 
 type NextServerSIWOPToken = {
-  decoded_access_token: JwtPayload;
   access_token: string;
   token_type: string;
   expires_in: number;
   refresh_token: string;
+  id_token: string;
   scope: string;
 };
 
@@ -131,7 +130,7 @@ const refreshToken = async (
   refreshToken: string,
   config: NextServerSIWOPConfig['config']
 ) => {
-  const response = await fetch(`${API_URL}/connect/oauth2-token`, {
+  const response = await fetch(`${API_URL}/connect/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -175,6 +174,7 @@ const logoutRoute = async (
 ) => {
   switch (req.method) {
     case 'GET':
+      // TODO revoke token
       const session = await getSession(req, res, sessionConfig);
       session.destroy();
       if (afterCallback) {
@@ -253,22 +253,23 @@ const sessionRoute = async (
 
     const session = await getSession(req, res, sessionConfig);
 
+    if (!session) {
+      res.status(401).end();
+    }
+
     if (!session.accessToken) {
       return res.send(session);
     }
 
     // retrieve account to ensure session is still vaild
     try {
-      const account = await getAccount(session.accessToken, config);
-      if (account) {
-        session.account = {
-          id: account.id,
-          wallet: account.wallet,
-          name: account.connectedAvatar ? account.connectedAvatar.name : null,
-          // TODO thumbnail
-          image: account.connectedAvatar ? account.connectedAvatar.token.image : null,
-        };
-        await session.save();
+      const { sub, adr, scope } = jwtDecode(session.accessToken);
+      let account = { sub, wallet: adr };
+      if (scope?.includes('openid')) {
+        account = await getAccount(session.accessToken, config);
+      } else {
+        // TODO: use introspection endpoint if not openid 
+        // scope to make sure the token is still valid
       }
 
       if (afterCallback) {
@@ -277,7 +278,7 @@ const sessionRoute = async (
       
       res.send({
         nonce: session.nonce,
-        account: session.account,
+        account,
       });
     } catch (error) {
       // attempt to refresh the token
@@ -299,7 +300,7 @@ const sessionRoute = async (
 
 const verifyCodeRoute = async (
   req: NextApiRequest,
-  res: NextApiResponse<void>,
+  res: NextApiResponse<{ account: any, idToken: string | undefined; }>,
   sessionConfig: IronSessionOptions,
   config: NextServerSIWOPConfig['config'],
   afterCallback?: RouteHandlerOptions['afterToken']
@@ -315,7 +316,7 @@ const verifyCodeRoute = async (
     const session = await getSession(req, res, sessionConfig);
 
     // fetch access token
-    const response = await fetch(`${config?.authApiUrl}/connect/oauth2-token`, {
+    const response = await fetch(`${config?.authApiUrl}/connect/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -341,30 +342,33 @@ const verifyCodeRoute = async (
     }
 
     // persist session data
+    delete session.codeChallenge;
+    delete session.codeVerifier;
     session.accessToken = data.access_token;
     session.refreshToken = data.refresh_token;
-
-    // fetch account data
-    const account = await getAccount(data.access_token, config);
-    if (account) {
-      session.account = {
-        id: account.id,
-        wallet: account.wallet,
-        name: account.connectedAvatar ? account.connectedAvatar.name : null,
-        // TODO thumbnail
-        image: account.connectedAvatar ? account.connectedAvatar.token.image : null,
-      };
-    }
-
     await session.save();
     
     if (afterCallback) {
       await afterCallback(req, res, session, {
         ...data,
-        decoded_access_token: jwtDecode(data.access_token),
       });
     }
-    res.status(200).end();
+    const { sub, adr } = jwtDecode(data.id_token);
+    const acc = { sub, wallet: adr, exp: 0, iat: 0, iss: '', aud: '', nonce: '' };
+    const { exp, iat, iss, aud, nonce, ...account } = data.id_token ? jwtDecode(data.id_token) : acc;
+    
+    if (data.id_token) {
+      // TODO because we are using an authorization code flow
+      // its relatively safe to reuse the nonce here for the id_token, if  
+      // future support for an implicit flow is added we will want to generate 
+      // a separate nonce for the id_token and never expose it to the client
+      const n = 'oidc'+session?.nonce?.substring(2,30)
+      if (n !== nonce) {
+        return res.status(400).end('Invalid id_token nonce');
+      }
+    }
+
+    res.send({ account, idToken: data.id_token });
   } catch (error) {
     console.error(error);
     res.status(400).end(String(error));
@@ -461,7 +465,7 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
           return res.json();
         }}
         createAuthorizationUrl={({ appUrl, nonce, address, code_challenge }) =>
-          `${appUrl}/connect?client_id=${clientId}&scope=${scope.replace(' ', '+')}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&state=${nonce}&wallet=${address}&code_challenge=${code_challenge}&code_challenge_method=S256`
+          `${appUrl}/connect?client_id=${clientId}&scope=${scope.replace(' ', '+')}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&state=${nonce}&nonce=${'oidc'+nonce.substring(2,30)}&code_challenge=${code_challenge}&code_challenge_method=S256${address ? `&wallet=${address}` : ''}`
         }
         verifyCode={({ code }) =>
           fetch(`${apiRoutePrefix}/verify`, {
@@ -470,7 +474,7 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({ code }),
-          }).then((r) => r.ok)
+          }).then((r) => r.json())
         }
         getSession={async () => {
           const res = await fetch(`${apiRoutePrefix}/session`);

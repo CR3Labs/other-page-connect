@@ -30,7 +30,7 @@ import { useConnector } from '../hooks/useConnectors';
 import { WagmiContext, useAccount } from 'wagmi';
 import { Web3ContextProvider } from './contexts/web3';
 import { useChainIsSupported } from '../hooks/useChainIsSupported';
-import { SIWOPContext } from '../siwop';
+import { SIWOPContext } from '@otherpage/connect-siwop';
 
 export const routes = {
   ONBOARDING: 'onboarding',

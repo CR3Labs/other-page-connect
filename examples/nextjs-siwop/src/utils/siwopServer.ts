@@ -2,11 +2,22 @@ import { configureServerSideSIWOP } from '@otherpage/connect-next-siwop';
 
 export const siwopServer = configureServerSideSIWOP({
   config: {
+    authApiUrl: 'http://127.0.0.1:3003/v1',
     audience: '127.0.0.1:3004',
     clientId: process.env.NEXT_PUBLIC_SIWOP_CLIENT_ID,
     redirectUri: process.env.NEXT_PUBLIC_SIWOP_REDIRECT_URI,
     clientSecret: process.env.SIWOP_CLIENT_SECRET,
-    scope: 'avatar.read wallets.read twitter.read discord.read tokens.read communities.read',
+    scope: [
+      'openid',
+      'profile',
+      'email',
+      'avatar.read',
+      'wallets.read',
+      'twitter.read',
+      'discord.read',
+      'tokens.read',
+      'communities.read',
+    ].join(''),
   },
   session: {
     cookieName: 'opconnect-next-siwop',

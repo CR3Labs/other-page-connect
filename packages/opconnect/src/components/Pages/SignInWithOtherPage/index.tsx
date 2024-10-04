@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-
-import { useContext } from '../../OPConnect';
+import React from 'react';
 
 import {
   PageContent,
@@ -16,7 +14,7 @@ import {
 } from './styles';
 
 import { useAccount } from 'wagmi';
-import { useSIWOP } from '../../../siwop';
+import { useSIWOP } from '@otherpage/connect-siwop';
 
 import { TickIcon } from '../../../assets/icons';
 import Avatar from '../../Common/Avatar';
@@ -26,19 +24,21 @@ import { flattenChildren, isMobile } from '../../../utils';
 import useLocales from '../../../hooks/useLocales';
 import Logos from '../../../assets/logos';
 import Button from '../../Common/Button';
-import { SIWOPButton } from '../../Standard/SIWOP';
+import { SiwopButton } from '@otherpage/connect-siwop';
 import FitText from '../../Common/FitText';
 import { ImageContainer } from '../../Common/Avatar/styles';
 import { useQueryClient } from '@tanstack/react-query';
+import { useContext } from '../../OPConnect';
 
 const transition = { duration: 0.2, ease: [0.26, 0.08, 0.25, 1] };
 const copyTransition = { duration: 0.16, ease: [0.26, 0.08, 0.25, 1] };
 
 const SignInWithOtherPage: React.FC = () => {
+  const context = useContext();
   const queryClient = useQueryClient();
   const { clientId, appUrl, isSignedIn, error, data } = useSIWOP();
   const mobile = isMobile();
-  
+  const { address } = useAccount();
   const locales = useLocales({});
   const copy = {
     heading: locales.signInWithOtherPageScreen_signedOut_heading,
@@ -46,8 +46,6 @@ const SignInWithOtherPage: React.FC = () => {
     p: locales.signInWithOtherPageScreen_signedOut_p,
     button: locales.signInWithOtherPageScreen_signedOut_button,
   };
-
-  const { address } = useAccount();
 
   // TODO custom button component?
   const openAccount = () => {
@@ -212,8 +210,10 @@ const SignInWithOtherPage: React.FC = () => {
               Account Settings
             </Button>
           )}
-          <SIWOPButton
+          <SiwopButton
             showSignOutButton={isSignedIn}
+            mode={context.mode}
+            address={address}
           />
         </ModalBody>
       </ModalContent>
