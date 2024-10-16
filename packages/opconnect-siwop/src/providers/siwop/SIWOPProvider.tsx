@@ -150,7 +150,6 @@ export const SIWOPProvider = ({
         // set auth session
         session.refetch().then(() => {
           setStatus(StatusState.SUCCESS);
-          console.log(data.idToken);
           setIdToken(data.idToken);
           onSignIn?.(data);
         });
@@ -163,6 +162,11 @@ export const SIWOPProvider = ({
       });
     }
   
+    // set id_token
+    if (sessionData?.idToken) {
+      setIdToken(sessionData.idToken);
+    }
+
     // Skip if we're still fetching session state from backend
     if (!sessionData || !sessionData.account) return;
 

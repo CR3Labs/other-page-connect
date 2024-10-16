@@ -1,3 +1,5 @@
+"use client";
+
 import Button from '../Button';
 import { ResetContainer } from '../../styles';
 import useIsMounted from '../../hooks/useIsMounted';

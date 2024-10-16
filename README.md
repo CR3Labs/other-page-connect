@@ -14,9 +14,10 @@ and much more...
 
 ## Packages
 
-- [`opconnect`](packages/opconnect) - Wallet connect modal and button components.
-- [`opconnect-next-siwop`](packages/opconnect-next-siwop) - Authenticate your users using their [Other Page](https://other.page) accounts.
-- [`opconnect-next-siwe`](packages/opconnect-next-siwe) - Authenticate your users using an Ethereum Signature.
+- [`opconnect`](packages/opconnect) - Wallet connect modal, button components, and provider.
+- [`opconnect-siwop`](packages/opconnect-siwop) - Sign in with Other Page button components and provider.
+- [`opconnect-next-siwop`](packages/opconnect-next-siwop) - Authenticate your users using their [Other Page](https://other.page) accounts using nextjs.
+- [`opconnect-next-siwe`](packages/opconnect-next-siwe) - Authenticate your users using an Ethereum Signature using nextjs.
 
 ## Quick Start
 

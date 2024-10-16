@@ -7,12 +7,15 @@ export const siwopClient = configureClientSIWOP({
   scope: [
     'openid',
     'profile',
-    'email',
-    'avatar.read',
-    'wallets.read',
-    'twitter.read',
-    'discord.read',
+    // 'email',
+    'badges.read',
+    // 'avatar.read',
+    'avatars.read',
+    // 'wallets.read',
+    // 'twitter.read',
+    // 'discord.read',
     'tokens.read',
     'communities.read',
+    'communities.write',
   ].join(' '), // Your SIWOP scopes
 });

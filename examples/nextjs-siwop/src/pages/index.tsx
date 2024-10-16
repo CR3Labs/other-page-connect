@@ -12,7 +12,7 @@ export default function Home() {
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleSetPrimaryColor(e.target.value as `#${string}`);
   };
-  const { appUrl, clientId, isSignedIn, idToken } = useSIWOP();
+  const { appUrl, clientId, isSignedIn, data, idToken } = useSIWOP();
 
   const openAccount = () => {
     const left = (window.innerWidth / 2) - 400;
