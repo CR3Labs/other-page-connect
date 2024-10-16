@@ -62,7 +62,7 @@ export default function Home() {
             </div>
             <div className="mb-6 flex flex-col items-center gap-2">
               <div className="font-medium">SIWOP Only</div>
-              <SiwopButton showSignOutButton={isSignedIn} showAvatar={true} />
+              <SiwopButton showSignOutButton={isSignedIn} showAvatar={true} prompt="consent" />
             </div>
         </div>
       </div>

@@ -81,7 +81,8 @@ export const SIWOPProvider = ({
     }
   };
 
-  const signIn = async (address?: string) => {
+  const signIn = async ({ address, prompt }: { address?: string; prompt?: 'consent' | 'login' | 'none' }) => {
+    console.log(address, prompt);
     try {
       if (!siwopConfig) {
         throw new Error('SIWOP not configured');
@@ -110,6 +111,7 @@ export const SIWOPProvider = ({
 
       // create url
       const url = siwopConfig.createAuthorizationUrl({
+        prompt,
         address,
         nonce: nonce.data,
         code_challenge: codeChallenge, 

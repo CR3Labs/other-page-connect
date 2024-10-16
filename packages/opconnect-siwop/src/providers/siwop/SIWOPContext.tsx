@@ -26,6 +26,7 @@ export type SIWOPConfig = {
   createAuthorizationUrl: (args: {
     nonce: string;
     address?: string;
+    prompt?: 'login' | 'consent' | 'none';
     code_challenge: string;
     appUrl: string;
   }) => string;
@@ -51,7 +52,7 @@ export type SIWOPContextValue = Required<SIWOPConfig> & {
   session: ReturnType<typeof useQuery<SIWOPSession | null>>;
   status: StatusState;
   idToken: string | undefined;
-  signIn: (address?: string) => Promise<SIWOPSession | false >;
+  signIn: ({ address, prompt }: { address?: string; prompt?: 'consent' | 'login' | 'none' }) => Promise<SIWOPSession | false >;
   resetStatus: () => void;
 };
 

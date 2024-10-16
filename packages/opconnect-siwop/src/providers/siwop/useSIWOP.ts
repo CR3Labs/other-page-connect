@@ -14,7 +14,13 @@ type HookProps = {
   isReady: boolean;
 
   reset: () => void;
-  signIn: (address?: string) => Promise<boolean>;
+  signIn: ({
+    address,
+    prompt,
+  }: {
+    address?: string;
+    prompt?: 'consent' | 'login' | 'none';
+  }) => Promise<boolean>;
   signOut: () => Promise<boolean>;
 };
 
@@ -84,9 +90,9 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
     isLoading,
     isSuccess,
     isReady,
-    signIn: async (address?: string) => {
+    signIn: async ({ address, prompt }) => {
       if (!isSignedIn) {
-        const data = await signIn(address);
+        const data = await signIn({ address, prompt });
         if (data) onSignIn?.(data);
       }
     },
