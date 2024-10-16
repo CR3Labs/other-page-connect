@@ -149,6 +149,7 @@ export const SIWOPProvider = ({
         if (!data) {
           console.error('Code verification failed');
           setStatus(StatusState.ERROR);
+          setIsAuthorizing(false);
           return;
         }
 
@@ -198,7 +199,7 @@ export const SIWOPProvider = ({
     //   console.warn('Network changed, signing out of SIWOP session');
     //   // signOutAndRefetch();
     // }
-  }, [sessionData, queryParams]);
+  }, [nonce, sessionData, queryParams]);
 
   return (
     <SIWOPContext.Provider

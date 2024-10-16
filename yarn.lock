@@ -3862,7 +3862,7 @@ __metadata:
     typescript: ^4.9.5
     viem: ^2.13.0
   peerDependencies:
-    "@otherpage/connect": ">=0.3.0"
+    "@otherpage/connect": ">=0.4.0"
     next: ">=12.x"
     react: 17.x || 18.x
     react-dom: 17.x || 18.x
@@ -3881,7 +3881,7 @@ __metadata:
     typescript: ^4.9.5
     viem: ^2.13.0
   peerDependencies:
-    "@otherpage/connect": ">=0.3.0"
+    "@otherpage/connect": ">=0.4.0"
     next: ">=12.x"
     react: 17.x || 18.x
     react-dom: 17.x || 18.x
@@ -3889,7 +3889,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@otherpage/connect-siwop@workspace:packages/opconnect-siwop":
+"@otherpage/connect-siwop@^0.5.0, @otherpage/connect-siwop@workspace:packages/opconnect-siwop":
   version: 0.0.0-use.local
   resolution: "@otherpage/connect-siwop@workspace:packages/opconnect-siwop"
   dependencies:
@@ -3919,7 +3919,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@otherpage/connect@workspace:packages/opconnect"
   dependencies:
-    "@otherpage/connect-siwop": "workspace:packages/opconnect-siwop"
+    "@otherpage/connect-siwop": ^0.5.0
     "@rollup/plugin-image": ^3.0.3
     "@types/node": 18.7.18
     "@types/qrcode": ^1.4.2
