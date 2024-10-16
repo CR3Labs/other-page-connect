@@ -12,6 +12,7 @@ const enUS: LocaleProps = {
   tryAgainQuestion: 'Try Again?',
   learnMore: 'Learn More',
   redirecting: 'Redirecting...',
+  loading: 'Loading...',
   signIn: 'Sign In',
   signOut: 'Sign Out',
   signedIn: 'Signed In',

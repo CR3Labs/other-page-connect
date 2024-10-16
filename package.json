@@ -1,6 +1,6 @@
 {
   "name": "opconnect-packages",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Other Page Wallet Connect",
   "main": "packages/opconnect/src/index.ts",
   "private": true,
@@ -21,6 +21,7 @@
     "dev:vite": "yarn workspace vite run dev",
     "dev:testbench": "yarn workspace testbench run dev",
     "build": "node build.js && yarn workspace @otherpage/connect run build && yarn workspace @otherpage/connect-next-siwe run build && yarn workspace @otherpage/connect-next-siwop run build && cp README.md packages/opconnect/README.md",
+    "build:opconnect-siwop": "yarn workspace @otherpage/connect-siwop run build",
     "build:opconnect-next-siwe": "yarn workspace @otherpage/connect-next-siwe run build",
     "build:opconnect-next-siwop": "yarn workspace @otherpage/connect-next-siwop run build",
     "build:opconnect": "yarn workspace @otherpage/connect run build",

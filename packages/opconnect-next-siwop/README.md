@@ -62,7 +62,7 @@ const siwopServer = configureServerSideSIWOP({
     scope: 'avatar.read wallets.read twitter.read', // Matching scopes
   },
   session: {
-    cookieName: 'opconnect-next-siwop',
+    cookieName: '_opc',
     password: process.env.SESSION_SECRET,
     cookieOptions: {
       secure: process.env.NODE_ENV === 'production',

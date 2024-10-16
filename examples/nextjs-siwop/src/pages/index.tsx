@@ -2,7 +2,6 @@ import { useAppContext } from '@/contexts/app-provider';
 import { SiwopButton, useSIWOP } from '@otherpage/connect-siwop';
 import { ConnectButton } from '@otherpage/connect';
 import { useEffect } from 'react';
-import { useAccount } from 'wagmi';
 // import { Unity, useUnityContext } from "react-unity-webgl";
 
 export default function Home() {

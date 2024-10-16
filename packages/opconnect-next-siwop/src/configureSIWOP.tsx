@@ -68,12 +68,15 @@ type NextClientSIWOPConfig = {
 
 type NextSIWOPSession<TSessionData extends Object = {}> = IronSession &
   TSessionData & {
-    codeVerifier?: string;
     codeChallenge?: string;
-    accessToken?: string;
-    refreshToken?: string;
+    idToken?: string;
     nonce?: string;
     account?: any; // TODO type this?
+
+    // server-side only
+    codeVerifier?: string;
+    accessToken?: string; 
+    refreshToken?: string;
   };
 
 type NextSIWOPProviderProps = Omit<
@@ -161,7 +164,41 @@ const getSession = async <TSessionData extends Object = {}>(
     res,
     sessionConfig
   )) as NextSIWOPSession<TSessionData>;
-  return session;
+
+  const tokens = (await getIronSession(
+    req,
+    res,
+    {
+      ...sessionConfig,
+      cookieName: sessionConfig.cookieName + '_t',
+    }
+  )) as NextSIWOPSession<TSessionData>;
+
+  const id = (await getIronSession(
+    req,
+    res,
+    {
+      ...sessionConfig,
+      cookieName: sessionConfig.cookieName + '_id',
+    }
+  )) as NextSIWOPSession<TSessionData>;
+
+  return {
+    session,
+    tokens,
+    id,
+  };
+};
+
+const destroySession = async (
+  req: IncomingMessage,
+  res: any, // ServerResponse<IncomingMessage>,
+  sessionConfig: IronSessionOptions
+) => {
+  const { session, tokens, id } = await getSession(req, res, sessionConfig);
+  session?.destroy();
+  tokens?.destroy();
+  id?.destroy();
 };
 
 // ---- routes ---- //
@@ -175,8 +212,8 @@ const logoutRoute = async (
   switch (req.method) {
     case 'GET':
       // TODO revoke token
-      const session = await getSession(req, res, sessionConfig);
-      session.destroy();
+      await destroySession(req, res, sessionConfig);
+
       if (afterCallback) {
         await afterCallback(req, res);
       }
@@ -196,7 +233,7 @@ const nonceRoute = async (
 ) => {
   switch (req.method) {
     case 'GET':
-      const session = await getSession(req, res, sessionConfig);
+      const { session } = await getSession(req, res, sessionConfig);
       if (!session.nonce) {
         session.nonce = generateSiweNonce();
         await session.save();
@@ -220,7 +257,7 @@ const pkceRoute = async (
 ) => {
   switch (req.method) {
     case 'GET':
-      const session = await getSession(req, res, sessionConfig);
+      const { session } = await getSession(req, res, sessionConfig);
       if (!session.codeVerifier) {
         const { codeChallenge, codeVerifier } = await generatePKCE();
         session.codeVerifier = codeVerifier;
@@ -251,47 +288,63 @@ const sessionRoute = async (
     return res.end();
   }
 
-    const session = await getSession(req, res, sessionConfig);
+    const { session, tokens, id } = await getSession(req, res, sessionConfig);
 
     if (!session) {
       res.status(401).end();
     }
 
-    if (!session.accessToken) {
-      return res.send(session);
+    if (!tokens?.accessToken) {
+      return res.send({
+        nonce: session.nonce
+      });
     }
 
     // retrieve account to ensure session is still vaild
     try {
-      const { sub, adr, scope } = jwtDecode(session.accessToken);
+      const { sub, adr, scope } = jwtDecode(tokens.accessToken);
       let account = { sub, wallet: adr };
       if (scope?.includes('openid')) {
-        account = await getAccount(session.accessToken, config);
+        // check idToken expiration
+        if (id?.idToken) {
+          const { exp } = jwtDecode(id.idToken);
+          const now = Math.floor(new Date().getTime()/1000);
+          if ((exp || 0) < now) {
+            throw new Error('id_token expired');
+          }
+        }
+
+        // try to fetch account
+        // NOTE: will throw if access_token is expired
+        account = await getAccount(tokens.accessToken, config);
+        
       } else {
         // TODO: use introspection endpoint if not openid 
         // scope to make sure the token is still valid
       }
 
       if (afterCallback) {
-        await afterCallback(req, res, session);
+        await afterCallback(req, res, { ...session, ...tokens, ...id, account });
       }
       
       res.send({
         nonce: session.nonce,
         account,
+        idToken: id?.idToken,
       });
     } catch (error) {
       // attempt to refresh the token
-      if (!req.query.retry && session.refreshToken) {
+      if (!req.query.retry && tokens.refreshToken) {
         req.query.retry = '1';
-        const token = await refreshToken(session.refreshToken, config);
+        // TODO this doesnt return an id token yet
+        const token = await refreshToken(tokens.refreshToken, config);
         if (token) {
-          session.accessToken = token.access_token;
-          session.refreshToken = token.refresh_token;
-          await session.save();
+          tokens.accessToken = token.access_token;
+          tokens.refreshToken = token.refresh_token;
+          await tokens.save();
           return sessionRoute(req, res, sessionConfig, config, afterCallback);
         }
-        session.destroy();
+        await destroySession(req, res, sessionConfig);
       }
       console.error(error);
       res.status(401).end();
@@ -300,20 +353,20 @@ const sessionRoute = async (
 
 const verifyCodeRoute = async (
   req: NextApiRequest,
-  res: NextApiResponse<{ account: any, idToken: string | undefined; }>,
+  res: NextApiResponse<{ account?: any, idToken?: string | undefined; error?: string; }>,
   sessionConfig: IronSessionOptions,
   config: NextServerSIWOPConfig['config'],
   afterCallback?: RouteHandlerOptions['afterToken']
 ) => {
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+    res.status(405).json({error: `Method ${req.method} Not Allowed` });
     return res.end();
   }
 
   try {
-    // fetch current session
-    const session = await getSession(req, res, sessionConfig);
+    // fetch current session data
+    const { session, tokens, id } = await getSession(req, res, sessionConfig);
 
     // fetch access token
     const response = await fetch(`${config?.authApiUrl}/connect/token`, {
@@ -333,20 +386,21 @@ const verifyCodeRoute = async (
     });
 
     if (!response.ok) {
-      throw new Error('Failed to retrieve access token');
+      return res.status(401).json({ error: 'Failed to fetch access token.' });
     }
 
     const data = await response.json();
     if (!data.access_token) {
-      return res.status(422).end('Unable to fetch access token.');
+      return res.status(422).json({ error: 'Unable to fetch access token.' });
     }
 
     // persist session data
     delete session.codeChallenge;
     delete session.codeVerifier;
-    session.accessToken = data.access_token;
-    session.refreshToken = data.refresh_token;
+    tokens.accessToken = data.access_token;
+    tokens.refreshToken = data.refresh_token;
     await session.save();
+    await tokens.save();
     
     if (afterCallback) {
       await afterCallback(req, res, session, {
@@ -364,11 +418,14 @@ const verifyCodeRoute = async (
       // a separate nonce for the id_token and never expose it to the client
       const n = 'oidc'+session?.nonce?.substring(2,30)
       if (n !== nonce) {
-        return res.status(400).end('Invalid id_token nonce');
+        return res.status(401).json({ error: 'Invalid id_token nonce' });
       }
+
+      id.idToken = data.id_token;
+      await id.save();
     }
 
-    res.send({ account, idToken: data.id_token });
+    res.send({ account, idToken: id?.idToken });
   } catch (error) {
     console.error(error);
     res.status(400).end(String(error));
@@ -392,7 +449,7 @@ export const configureServerSideSIWOP = <TSessionData extends Object = {}>({
   config.authApiUrl = config.authApiUrl || API_URL;
 
   const sessionConfig: IronSessionOptions = {
-    cookieName: cookieName ?? 'opconnect-next-siwop',
+    cookieName: cookieName ?? '_opc',
     password: password ?? envVar('SESSION_SECRET'),
     cookieOptions: {
       secure: process.env.NODE_ENV === 'production',
@@ -427,8 +484,15 @@ export const configureServerSideSIWOP = <TSessionData extends Object = {}>({
 
   return {
     apiRouteHandler,
-    getSession: async (req: IncomingMessage, res: ServerResponse) =>
-      await getSession<TSessionData>(req, res, sessionConfig),
+    getSession: async (req: IncomingMessage, res: ServerResponse) => {
+      const {session, tokens, id } = await getSession<TSessionData>(req, res, sessionConfig);
+
+      return {
+        ...session,
+        ...tokens,
+        ...id,
+      };
+    }
   };
 };
 
@@ -483,11 +547,13 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
           }
           const {
             nonce,
-            account
+            account,
+            idToken
           } = await res.json();
           return account ? { 
             nonce,
             account,
+            idToken,
           } : null;
         }}
         signOut={() => fetch(`${apiRoutePrefix}/logout`).then((res) => res.ok)}
