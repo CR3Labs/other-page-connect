@@ -29,6 +29,7 @@ const enUS: LocaleProps = {
   confirmInWallet: 'Confirm in Wallet',
   awaitingConfirmation: 'Awaiting Confirmation',
   redirecting: 'Redirecting...',
+  loading: 'Loading...',
   signIn: 'Sign In',
   signOut: 'Sign Out',
   signedIn: 'Signed In',

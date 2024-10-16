@@ -1,5 +1,3 @@
-"use client";
-
 import Button from '../Button';
 import { ResetContainer } from '../../styles';
 import useIsMounted from '../../hooks/useIsMounted';
@@ -49,7 +47,7 @@ export const SiwopButtonRender: React.FC<ButtonProps> = ({
 
   function getButtonLabel() {
     if (isSuccess) return locales.signedIn;
-    if (isLoading) return locales.redirecting;
+    if (isLoading) return locales.loading;
     if (isRejected) return locales.tryAgain;
     if (isError) return error ?? 'Unknown Error';
     if (isReady) return locales.signIn;

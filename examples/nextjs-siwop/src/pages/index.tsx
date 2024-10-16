@@ -2,7 +2,6 @@ import { useAppContext } from '@/contexts/app-provider';
 import { SiwopButton, useSIWOP } from '@otherpage/connect-siwop';
 import { ConnectButton } from '@otherpage/connect';
 import { useEffect } from 'react';
-import { useAccount } from 'wagmi';
 // import { Unity, useUnityContext } from "react-unity-webgl";
 
 export default function Home() {
@@ -12,7 +11,7 @@ export default function Home() {
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleSetPrimaryColor(e.target.value as `#${string}`);
   };
-  const { appUrl, clientId, isSignedIn, data, idToken } = useSIWOP();
+  const { appUrl, clientId, isSignedIn, idToken } = useSIWOP();
 
   const openAccount = () => {
     const left = (window.innerWidth / 2) - 400;

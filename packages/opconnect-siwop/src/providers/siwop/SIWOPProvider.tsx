@@ -1,5 +1,6 @@
 import { ReactNode, useContext, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import useQueryParams from '../../hooks/useQueryParams';
 
 import {
   SIWOPContext,
@@ -30,6 +31,8 @@ export const SIWOPProvider = ({
   const [status, setStatus] = useState<StatusState>(StatusState.READY);
   const resetStatus = () => setStatus(StatusState.READY);
   const [idToken, setIdToken] = useState<string>();
+  const [authorizing, setIsAuthorizing] = useState(false);  
+  const queryParams = useQueryParams();
 
   // Only allow for mounting SIWOPProvider once, so we avoid weird global state
   // collisions.
@@ -123,15 +126,21 @@ export const SIWOPProvider = ({
   };
 
   useEffect(() => {
+    if (authorizing) return;
+
+    // retrieve oauth params from query
+    const code = queryParams?.get('code');
+    const state = queryParams?.get('state');
+
     // retrieve code from url
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    const state = urlParams.get('state');
     if (nonce.data && code && state) {
+      setIsAuthorizing(true);
+
       // Check state cookie or set error
       if (nonce.data !== state) { 
         console.error('Invalid nonce');
         setStatus(StatusState.ERROR);
+        setIsAuthorizing(false);
         return;
       }
 
@@ -143,10 +152,6 @@ export const SIWOPProvider = ({
           return;
         }
 
-        if (data.idToken) {
-          setIdToken(data.idToken);
-        }
-
         // set auth session
         session.refetch().then(() => {
           setStatus(StatusState.SUCCESS);
@@ -156,9 +161,12 @@ export const SIWOPProvider = ({
 
         // remove code from url
         window.history.replaceState({}, document.title, window.location.pathname);
+
+        setIsAuthorizing(false);
       }).catch((e) => {
         console.error(e);
         setStatus(StatusState.ERROR);
+        setIsAuthorizing(false);
       });
     }
   
@@ -190,7 +198,7 @@ export const SIWOPProvider = ({
     //   console.warn('Network changed, signing out of SIWOP session');
     //   // signOutAndRefetch();
     // }
-  }, [sessionData]);
+  }, [sessionData, queryParams]);
 
   return (
     <SIWOPContext.Provider

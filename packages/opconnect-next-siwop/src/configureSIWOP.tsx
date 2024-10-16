@@ -353,14 +353,14 @@ const sessionRoute = async (
 
 const verifyCodeRoute = async (
   req: NextApiRequest,
-  res: NextApiResponse<{ account: any, idToken: string | undefined; }>,
+  res: NextApiResponse<{ account?: any, idToken?: string | undefined; error?: string; }>,
   sessionConfig: IronSessionOptions,
   config: NextServerSIWOPConfig['config'],
   afterCallback?: RouteHandlerOptions['afterToken']
 ) => {
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+    res.status(405).json({error: `Method ${req.method} Not Allowed` });
     return res.end();
   }
 
@@ -386,12 +386,12 @@ const verifyCodeRoute = async (
     });
 
     if (!response.ok) {
-      throw new Error('Failed to retrieve access token');
+      return res.status(401).json({ error: 'Failed to fetch access token.' });
     }
 
     const data = await response.json();
     if (!data.access_token) {
-      return res.status(422).end('Unable to fetch access token.');
+      return res.status(422).json({ error: 'Unable to fetch access token.' });
     }
 
     // persist session data
@@ -418,7 +418,7 @@ const verifyCodeRoute = async (
       // a separate nonce for the id_token and never expose it to the client
       const n = 'oidc'+session?.nonce?.substring(2,30)
       if (n !== nonce) {
-        return res.status(400).end('Invalid id_token nonce');
+        return res.status(401).json({ error: 'Invalid id_token nonce' });
       }
 
       id.idToken = data.id_token;

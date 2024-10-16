@@ -7,8 +7,6 @@ import {
   Arrow,
   ArrowLine,
   ArrowChevron,
-  DownloadArrow,
-  DownloadArrowInner,
   ButtonContainerInner,
   SpinnerContainer,
 } from './styles';
@@ -31,11 +29,9 @@ const Button: React.FC<ButtonProps> = ({
   roundedIcon,
   waiting,
   arrow,
-  download,
   href,
   style,
   onClick,
-  fullWidth,
 }) => {
   const key =
     typeof children === 'string'
@@ -82,41 +78,7 @@ const Button: React.FC<ButtonProps> = ({
           {icon && iconPosition === 'left' && (
             <IconContainer $rounded={roundedIcon}>{icon}</IconContainer>
           )}
-          {download && (
-            <DownloadArrow>
-              <DownloadArrowInner>
-                <Arrow
-                  width="13"
-                  height="12"
-                  viewBox="0 0 13 12"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <ArrowLine
-                    stroke="currentColor"
-                    x1="1"
-                    y1="6"
-                    x2="12"
-                    y2="6"
-                    strokeWidth="var(--stroke-width)"
-                    strokeLinecap="round"
-                  />
-                  <ArrowChevron
-                    stroke="currentColor"
-                    d="M7.51431 1.5L11.757 5.74264M7.5 10.4858L11.7426 6.24314"
-                    strokeWidth="var(--stroke-width)"
-                    strokeLinecap="round"
-                  />
-                </Arrow>
-              </DownloadArrowInner>
-            </DownloadArrow>
-          )}
-          <InnerContainer
-            style={{
-              paddingLeft: arrow ? 6 : 0,
-              width: fullWidth ? '100%' : '',
-            }}
-          >
+          <InnerContainer>
             <FitText>{children}</FitText>
           </InnerContainer>
           {icon && iconPosition === 'right' && (
