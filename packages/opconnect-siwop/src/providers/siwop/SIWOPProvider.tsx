@@ -17,7 +17,7 @@ type Props = SIWOPConfig & {
 
 export const SIWOPProvider = ({
   children,
-  appUrl = 'https://alpha.other.page',
+  appUrl = 'https://other.page',
   enabled = true,
   nonceRefetchInterval = 1000 * 60 * 5,
   sessionRefetchInterval = 1000 * 60 * 5,
