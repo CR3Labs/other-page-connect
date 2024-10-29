@@ -4,7 +4,7 @@ Sign in With Other Page acts as a drop in replacement of other forms of authenti
 
 >SIWOP is based on a slightly modified version of the OAuth2 protocol, specifically designed to work along side standard Web3 wallet connections.
 >
->[Read the Full documentation](https://alpha-admin.other.page/docs/)
+>[Read the Full documentation](https://portal.other.page/docs/)
 
 ## Required Config
 

@@ -65,7 +65,7 @@ npm install @otherpage/connect wagmi viem@2.x @tanstack/react-query
 
 **Sign In With Other Page (SIWOP)**
 
-If you intend to use Sign in With Other Page (SIWOP) to log users into your app, you will need to create a connect app in the [Other Page Community Dashboard](https://alpha-admin.other.page) and set the require configuration. See: [examples/nextjs-siwop/README.md](examples/nextjs-siwop/README.md) for a list.
+If you intend to use Sign in With Other Page (SIWOP) to log users into your app, you will need to create a connect app in the [Other Page Community Dashboard](https://portal.other.page) and set the require configuration. See: [examples/nextjs-siwop/README.md](examples/nextjs-siwop/README.md) for a list.
 
 **WalletConnect 2.0**
 

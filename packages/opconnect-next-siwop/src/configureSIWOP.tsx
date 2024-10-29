@@ -9,7 +9,7 @@ import {
 } from 'viem/siwe';
 import { generatePKCE, jwtDecode } from './util';
 
-const API_URL = 'https://alpha-api.other.page/v1';
+const API_URL = 'https://api.other.page/v1';
 
 type RouteHandlerOptions = {
   afterNonce?: (

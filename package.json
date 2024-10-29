@@ -20,7 +20,7 @@
     "dev:nextjs-siwop": "yarn workspace nextjs-siwop run dev",
     "dev:vite": "yarn workspace vite run dev",
     "dev:testbench": "yarn workspace testbench run dev",
-    "build": "node build.js && yarn workspace @otherpage/connect run build && yarn workspace @otherpage/connect-next-siwe run build && yarn workspace @otherpage/connect-next-siwop run build && cp README.md packages/opconnect/README.md",
+    "build": "node build.js && yarn build:opconnect-siwop && yarn build:opconnect && yarn build:opconnect-next-siwe && yarn build:opconnect-next-siwop && cp README.md packages/opconnect/README.md",
     "build:opconnect-siwop": "yarn workspace @otherpage/connect-siwop run build",
     "build:opconnect-next-siwe": "yarn workspace @otherpage/connect-next-siwe run build",
     "build:opconnect-next-siwop": "yarn workspace @otherpage/connect-next-siwop run build",
