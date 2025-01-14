@@ -6,7 +6,7 @@ export const config = createConfig(
   getDefaultConfig({
     appName: 'OPConnect Next.js demo',
     chains: [mainnet, polygon, optimism, arbitrum],
-    walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
+    // walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
   })
 );
 

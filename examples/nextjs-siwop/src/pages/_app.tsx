@@ -8,7 +8,7 @@ import { AppProvider, useAppContext } from '@/contexts/app-provider';
 
 const config = createConfig(
   getDefaultConfig({
-    walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
+    // walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
     appName: 'My OPConnect App',
     ssr: true,
   })
@@ -22,21 +22,33 @@ function App({ Component, pageProps }: AppProps) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <siwopClient.Provider appUrl="http://127.0.0.1:3001">
-          <OPConnectProvider mode={mode} primaryColor={primaryColor} options={{
-            // NOTE: enter your own terms and privacy policy URLs here
-            disclaimer: (
-              <div>
-                By connecting your wallet you agree to the{' '}
-                <a href="https://cr3labs.com/terms" target="_blank" rel="noreferrer">
-                  Terms of Service
-                </a>{' '}
-                and{' '}
-                <a href="https://cr3labs.com/privacy" target="_blank" rel="noreferrer">
-                  Privacy Policy
-                </a>
-              </div>
-            ),
-          }}>
+          <OPConnectProvider
+            mode={mode}
+            primaryColor={primaryColor}
+            options={{
+              // NOTE: enter your own terms and privacy policy URLs here
+              disclaimer: (
+                <div>
+                  By connecting your wallet you agree to the{' '}
+                  <a
+                    href="https://cr3labs.com/terms"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Terms of Service
+                  </a>{' '}
+                  and{' '}
+                  <a
+                    href="https://cr3labs.com/privacy"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Privacy Policy
+                  </a>
+                </div>
+              ),
+            }}
+          >
             <Component {...pageProps} />
           </OPConnectProvider>
         </siwopClient.Provider>
