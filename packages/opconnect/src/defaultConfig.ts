@@ -16,8 +16,8 @@ type DefaultConfigProps = {
   appDescription?: string;
   appUrl?: string;
 
-  // WC 2.0 requires a project ID (get one here: https://cloud.walletconnect.com/sign-in)
-  walletConnectProjectId: string;
+  // WC 2.0 requires a project ID (get one here: https://cloud.walletconnect.com/sign-in) (deprecated)
+  walletConnectProjectId?: string;
 } & Partial<CreateConfigParameters>;
 
 const defaultConfig = ({
@@ -25,7 +25,7 @@ const defaultConfig = ({
   appIcon,
   appDescription,
   appUrl,
-  walletConnectProjectId,
+  // walletConnectProjectId,
 
   chains = [mainnet, polygon, optimism, arbitrum],
   client,
@@ -48,7 +48,7 @@ const defaultConfig = ({
         description: appDescription,
         url: appUrl,
       },
-      walletConnectProjectId,
+      // walletConnectProjectId,
     });
 
   const config: CreateConfigParameters<any, any> = {

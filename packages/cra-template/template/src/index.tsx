@@ -9,7 +9,7 @@ import { OPConnectProvider, getDefaultConfig } from '@otherpage/connect';
 const config = createConfig(
   getDefaultConfig({
     appName: 'My App Name',
-    walletConnectProjectId: process.env.REACT_APP_WALLETCONNECT_PROJECT_ID!,
+    // walletConnectProjectId: process.env.REACT_APP_WALLETCONNECT_PROJECT_ID!,
   })
 );
 

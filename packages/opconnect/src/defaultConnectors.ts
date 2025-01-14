@@ -13,13 +13,13 @@ type DefaultConnectorsProps = {
     description?: string;
     url?: string;
   };
-  walletConnectProjectId?: string;
+  // walletConnectProjectId?: string;
 };
 
 const defaultConnectors = ({
   app,
-  walletConnectProjectId,
-}: DefaultConnectorsProps): CreateConnectorFn[] => {
+}: // walletConnectProjectId,
+DefaultConnectorsProps): CreateConnectorFn[] => {
   const hasAllAppData = app.name && app.icon && app.description && app.url;
   const shouldUseSafeConnector =
     !(typeof window === 'undefined') && window?.parent !== window;
@@ -46,22 +46,22 @@ const defaultConnectors = ({
     })
   );
 
-  if (walletConnectProjectId) {
-    connectors.push(
-      walletConnect({
-        showQrModal: false,
-        projectId: walletConnectProjectId,
-        metadata: hasAllAppData
-          ? {
-              name: app.name,
-              description: app.description!,
-              url: app.url!,
-              icons: [app.icon!],
-            }
-          : undefined,
-      })
-    );
-  }
+  // if (walletConnectProjectId) {
+  //   connectors.push(
+  //     walletConnect({
+  //       showQrModal: false,
+  //       projectId: walletConnectProjectId,
+  //       metadata: hasAllAppData
+  //         ? {
+  //             name: app.name,
+  //             description: app.description!,
+  //             url: app.url!,
+  //             icons: [app.icon!],
+  //           }
+  //         : undefined,
+  //     })
+  //   );
+  // }
   /*
   connectors.push(
     injected({

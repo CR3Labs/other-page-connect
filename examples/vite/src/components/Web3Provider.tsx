@@ -7,7 +7,7 @@ import { OPConnectProvider, getDefaultConfig } from '@otherpage/connect';
 const config = createConfig(
   getDefaultConfig({
     appName: 'OPConnect Vite demo',
-    walletConnectProjectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID!,
+    // walletConnectProjectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID!,
   })
 );
 

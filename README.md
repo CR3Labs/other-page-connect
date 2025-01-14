@@ -67,9 +67,9 @@ npm install @otherpage/connect wagmi viem@2.x @tanstack/react-query
 
 If you intend to use Sign in With Other Page (SIWOP) to log users into your app, you will need to create a connect app in the [Other Page Community Dashboard](https://portal.other.page) and set the require configuration. See: [examples/nextjs-siwop/README.md](examples/nextjs-siwop/README.md) for a list.
 
-**WalletConnect 2.0**
+**WalletConnect 2.0 (Deprecated)**
 
-OPConnect utilises WalletConnect's SDK to help with connecting wallets. If you wish to use WalletConnect 2.0, it requires a `walletConnectProjectId` which you can create quickly and easily for free over at [WalletConnect Cloud](https://cloud.walletconnect.com/sign-in).
+OPConnect currently utilises WalletConnect's SDK to help with connecting wallets, though this will be deprecated in favor of Reuse in a future update. If you wish to use WalletConnect 2.0, it requires a `walletConnectProjectId` which you can create quickly and easily for free over at [WalletConnect Cloud](https://cloud.walletconnect.com/sign-in).
 
 ## 3\. Implementation
 
@@ -99,7 +99,7 @@ const config = createConfig(
     },
 
     // Required API Keys
-    walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
+    // walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID, (deprecated)
 
     // Required App Info
     appName: 'Your App Name',
@@ -158,7 +158,6 @@ const MyComponent = () => {
 
 [Sign in With Other Page](packages/opconnect-next-siwop/README.md) acts as a drop in replacement of other forms of authentication for your app. Using SIWOP enables your users to login once across all of your apps and bring their avatars and profile data with them.
 
-
 ## Additional Build Tooling Setup
 
 Some build tools require additional setup to work with ConnectKit.
@@ -199,7 +198,6 @@ export const Web3Provider = ({ children }) => {
 ## Examples
 
 There are various runnable examples included in this repository in the [examples folder](https://github.com/cr3labs/opconnect/tree/main/examples):
-
 
 - [Create React App Example (TypeScript)](https://github.com/cr3labs/opconnect/main/examples/cra)
 - [Next.js Example (TypeScript)](https://github.com/cr3labs/opconnect/main/examples/nextjs)

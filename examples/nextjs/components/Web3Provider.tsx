@@ -7,7 +7,7 @@ import { OPConnectProvider, getDefaultConfig } from '@otherpage/connect';
 const config = createConfig(
   getDefaultConfig({
     appName: 'OPConnect Next.js demo',
-    walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
+    // walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
   })
 );
 
