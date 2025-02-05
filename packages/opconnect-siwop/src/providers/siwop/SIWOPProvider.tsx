@@ -70,7 +70,6 @@ export const SIWOPProvider = ({
   };
 
   const onError = (error: any) => {
-    console.error('signIn error', error.code, error.message);
     switch (error.code) {
       case 400: // User denied scopes
       case 'ACTION_REJECTED': // User denied scopes
@@ -82,7 +81,6 @@ export const SIWOPProvider = ({
   };
 
   const signIn = async ({ address, prompt }: { address?: string; prompt?: 'consent' | 'login' | 'none' }) => {
-    console.log(address, prompt);
     try {
       if (!siwopConfig) {
         throw new Error('SIWOP not configured');

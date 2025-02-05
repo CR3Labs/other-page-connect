@@ -32,9 +32,9 @@ export const siwopServer = configureServerSideSIWOP({
   },
   options: {
     async afterToken(req, res, session, token) {
-      // NOTE: This is where you can add custom logic to handle the token
-      // e.g persist it to a datastore or make follow up API requests
+      // NOTE: This is where you can add custom logic to handle the tokens
+      // e.g persist them to a datastore or make follow up API requests
       console.log('Session:', session, 'Token:', token);
-    }
+    },
   }
 });

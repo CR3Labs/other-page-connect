@@ -43,7 +43,7 @@ export const useSIWOP = ({ onSignIn, onSignOut }: UseSIWOPConfig = {}):
       error: new Error('useSIWOP hook must be inside a SIWOPProvider.'),
       isRejected: false,
       isError: true,
-      isLoading: false,
+      isLoading: true,
       isSuccess: false,
       isReady: false,
       reset: () => {},

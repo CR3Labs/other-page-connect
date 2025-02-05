@@ -41,7 +41,7 @@ type NextServerSIWOPToken = {
   token_type: string;
   expires_in: number;
   refresh_token: string;
-  id_token: string;
+  id_token?: string;
   scope: string;
 };
 
@@ -69,7 +69,6 @@ type NextClientSIWOPConfig = {
 type NextSIWOPSession<TSessionData extends Object = {}> = IronSession &
   TSessionData & {
     codeChallenge?: string;
-    idToken?: string;
     nonce?: string;
     account?: any; // TODO type this?
 
@@ -123,7 +122,7 @@ const getAccount = async (
   });
 
   if (!response.ok) {
-    throw new Error('Failed to fetch account data');
+    throw new Error('Session expired');
   }
 
   return response.json(); 
@@ -174,19 +173,9 @@ const getSession = async <TSessionData extends Object = {}>(
     }
   )) as NextSIWOPSession<TSessionData>;
 
-  const id = (await getIronSession(
-    req,
-    res,
-    {
-      ...sessionConfig,
-      cookieName: sessionConfig.cookieName + '_id',
-    }
-  )) as NextSIWOPSession<TSessionData>;
-
   return {
     session,
     tokens,
-    id,
   };
 };
 
@@ -195,10 +184,9 @@ const destroySession = async (
   res: any, // ServerResponse<IncomingMessage>,
   sessionConfig: IronSessionOptions
 ) => {
-  const { session, tokens, id } = await getSession(req, res, sessionConfig);
+  const { session, tokens } = await getSession(req, res, sessionConfig);
   session?.destroy();
   tokens?.destroy();
-  id?.destroy();
 };
 
 // ---- routes ---- //
@@ -288,7 +276,7 @@ const sessionRoute = async (
     return res.end();
   }
 
-    const { session, tokens, id } = await getSession(req, res, sessionConfig);
+    const { session, tokens } = await getSession(req, res, sessionConfig);
 
     if (!session) {
       res.status(401).end();
@@ -305,15 +293,6 @@ const sessionRoute = async (
       const { sub, adr, scope } = jwtDecode(tokens.accessToken);
       let account = { sub, wallet: adr };
       if (scope?.includes('openid')) {
-        // check idToken expiration
-        if (id?.idToken) {
-          const { exp } = jwtDecode(id.idToken);
-          const now = Math.floor(new Date().getTime()/1000);
-          if ((exp || 0) < now) {
-            throw new Error('id_token expired');
-          }
-        }
-
         // try to fetch account
         // NOTE: will throw if access_token is expired
         account = await getAccount(tokens.accessToken, config);
@@ -324,13 +303,12 @@ const sessionRoute = async (
       }
 
       if (afterCallback) {
-        await afterCallback(req, res, { ...session, ...tokens, ...id, account });
+        await afterCallback(req, res, { ...session, ...tokens, account });
       }
       
       res.send({
         nonce: session.nonce,
         account,
-        idToken: id?.idToken,
       });
     } catch (error) {
       // attempt to refresh the token
@@ -366,7 +344,7 @@ const verifyCodeRoute = async (
 
   try {
     // fetch current session data
-    const { session, tokens, id } = await getSession(req, res, sessionConfig);
+    const { session, tokens } = await getSession(req, res, sessionConfig);
 
     // fetch access token
     const response = await fetch(`${config?.authApiUrl}/connect/token`, {
@@ -390,6 +368,7 @@ const verifyCodeRoute = async (
     }
 
     const data = await response.json();
+
     if (!data.access_token) {
       return res.status(422).json({ error: 'Unable to fetch access token.' });
     }
@@ -420,12 +399,9 @@ const verifyCodeRoute = async (
       if (n !== nonce) {
         return res.status(401).json({ error: 'Invalid id_token nonce' });
       }
-
-      id.idToken = data.id_token;
-      await id.save();
     }
 
-    res.send({ account, idToken: id?.idToken });
+    res.send({ account, idToken: data.id_token });
   } catch (error) {
     console.error(error);
     res.status(400).end(String(error));
@@ -485,12 +461,11 @@ export const configureServerSideSIWOP = <TSessionData extends Object = {}>({
   return {
     apiRouteHandler,
     getSession: async (req: IncomingMessage, res: ServerResponse) => {
-      const {session, tokens, id } = await getSession<TSessionData>(req, res, sessionConfig);
+      const {session, tokens } = await getSession<TSessionData>(req, res, sessionConfig);
 
       return {
         ...session,
         ...tokens,
-        ...id,
       };
     }
   };
@@ -548,12 +523,10 @@ export const configureClientSIWOP = <TSessionData extends Object = {}>({
           const {
             nonce,
             account,
-            idToken
           } = await res.json();
           return account ? { 
             nonce,
             account,
-            idToken,
           } : null;
         }}
         signOut={() => fetch(`${apiRoutePrefix}/logout`).then((res) => res.ok)}

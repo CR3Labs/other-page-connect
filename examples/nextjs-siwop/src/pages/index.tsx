@@ -11,7 +11,7 @@ export default function Home() {
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleSetPrimaryColor(e.target.value as `#${string}`);
   };
-  const { appUrl, clientId, isSignedIn, idToken } = useSIWOP();
+  const { appUrl, clientId, isSignedIn, data, idToken } = useSIWOP();
 
   const openAccount = () => {
     const left = (window.innerWidth / 2) - 400;
@@ -20,17 +20,20 @@ export default function Home() {
   };
 
   useEffect(() => {
+    if (data) {
+      console.log("Account:", data);
+    }
     if (idToken) {
       console.log("OpenID:", idToken);
     }
-  }, [idToken]);
+  }, [data, idToken]);
 
   return (
     <main className="flex min-h-[calc(100vh-100px)] w-screen relative flex-col">
       <div className="flex justify-between bg-black p-4">
         <img className="w-10" src="https://cdn-icons-png.freepik.com/512/16440/16440737.png" />
         <div className="flex items-center">
-        <ConnectButton />
+        {/* <ConnectButton /> */}
         {isSignedIn && <button className="bg-neutral-900 text-white rounded-md p-3 ml-1 text-sm" onClick={openAccount}>
           Account
           </button>}
@@ -58,7 +61,7 @@ export default function Home() {
         <div className="h-[400px] w-full rounded-lg flex justify-center items-center flex-col">
             <div className="mb-6 flex flex-col items-center gap-2">
               <div className="font-medium">Wallet Connect + SIWOP</div>
-              <ConnectButton />
+              {/* <ConnectButton /> */}
             </div>
             <div className="mb-6 flex flex-col items-center gap-2">
               <div className="font-medium">SIWOP Only</div>
