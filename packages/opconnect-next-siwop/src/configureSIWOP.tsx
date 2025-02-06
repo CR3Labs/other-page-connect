@@ -102,6 +102,14 @@ type ConfigureServerSIWOPResult<TSessionData extends Object = {}> = {
     req: IncomingMessage,
     res: ServerResponse
   ) => Promise<NextSIWOPSession<TSessionData>>;
+  refreshSession: (
+    req: IncomingMessage,
+    res: ServerResponse
+  ) => Promise<NextSIWOPSession<TSessionData>>;
+  getAccount: (
+    req: IncomingMessage,
+    res: ServerResponse
+  ) => Promise<any>;
 };
 
 type ConfigureClientSIWOPResult<TSessionData extends Object = {}> = {
@@ -129,28 +137,41 @@ const getAccount = async (
 }
 
 const refreshToken = async (
-  refreshToken: string,
-  config: NextServerSIWOPConfig['config']
+  session: NextSIWOPSession<{}>,
+  config: NextServerSIWOPConfig['config'],
 ) => {
-  const response = await fetch(`${API_URL}/connect/token`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      grant_type: 'refresh_token',
-      client_id: process.env.NEXT_PUBLIC_SIWOP_CLIENT_ID,
-      client_secret: process.env.SIWOP_CLIENT_SECRET,
-      refresh_token: refreshToken,
-      scope: config.scope,
-    }),
-  });
 
-  if (!response.ok) {
+  try {
+    const response = await fetch(`${config.authApiUrl}/connect/token`, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        grant_type: 'refresh_token',
+        client_id: process.env.NEXT_PUBLIC_SIWOP_CLIENT_ID,
+        client_secret: process.env.SIWOP_CLIENT_SECRET,
+        refresh_token: session.refreshToken,
+        scope: config.scope,
+      }),
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+    
+    // persist refreshed access token and refresh token
+    const tokens = await response.json();
+
+    session.accessToken = tokens.access_token;
+    session.refreshToken = tokens.refresh_token;
+    await session.save();
+
+    return tokens;
+  } catch (error) {
+    console.error(error);
     return null;
   }
-
-  return response.json();
 }
 
 const getSession = async <TSessionData extends Object = {}>(
@@ -314,12 +335,8 @@ const sessionRoute = async (
       // attempt to refresh the token
       if (!req.query.retry && tokens.refreshToken) {
         req.query.retry = '1';
-        // TODO this doesnt return an id token yet
-        const token = await refreshToken(tokens.refreshToken, config);
-        if (token) {
-          tokens.accessToken = token.access_token;
-          tokens.refreshToken = token.refresh_token;
-          await tokens.save();
+        const refreshedTokens = await refreshToken(tokens, config);
+        if (refreshedTokens) {
           return sessionRoute(req, res, sessionConfig, config, afterCallback);
         }
         await destroySession(req, res, sessionConfig);
@@ -461,12 +478,38 @@ export const configureServerSideSIWOP = <TSessionData extends Object = {}>({
   return {
     apiRouteHandler,
     getSession: async (req: IncomingMessage, res: ServerResponse) => {
-      const {session, tokens } = await getSession<TSessionData>(req, res, sessionConfig);
+      const { session, tokens } = await getSession<TSessionData>(req, res, sessionConfig);
 
       return {
         ...session,
         ...tokens,
       };
+    },
+    refreshSession: async (req: IncomingMessage, res: ServerResponse) => {
+      const { session, tokens } = await getSession<TSessionData>(req, res, sessionConfig);
+
+      if (!tokens?.refreshToken) {
+        throw new Error(`Session invalid or did not include 'offline_access' scope`);
+      }
+      
+      const refreshedTokens = await refreshToken(tokens, config);
+      if (!refreshedTokens) {
+        throw new Error('Session refresh token no longer valid');
+      }
+
+      return {
+        ...session,
+        ...tokens,
+      };
+    },
+    getAccount: async (req: IncomingMessage, res: ServerResponse) => {
+      const { tokens } = await getSession<TSessionData>(req, res, sessionConfig);
+
+      if (!tokens?.accessToken) {
+        throw new Error('Session invalid');
+      }
+
+      return getAccount(tokens.accessToken, config);
     }
   };
 };

@@ -17,5 +17,5 @@ export const siwopClient = configureClientSIWOP({
     'tokens.read',
     'communities.read',
     'communities.write',
-  ].join(' '), // Your SIWOP scopes
+  ].join(' '), // Your SIWOP scopes (NOTE: must match the scopes in the server config)
 });

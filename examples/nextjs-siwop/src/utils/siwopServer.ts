@@ -2,7 +2,6 @@ import { configureServerSideSIWOP } from '@otherpage/connect-next-siwop';
 
 export const siwopServer = configureServerSideSIWOP({
   config: {
-    authApiUrl: 'http://127.0.0.1:3003/v1',
     audience: '127.0.0.1:3004',
     clientId: process.env.NEXT_PUBLIC_SIWOP_CLIENT_ID,
     redirectUri: process.env.NEXT_PUBLIC_SIWOP_REDIRECT_URI,
@@ -20,7 +19,7 @@ export const siwopServer = configureServerSideSIWOP({
       'tokens.read',
       'communities.read',
       'communities.write',
-    ].join(''),
+    ].join(' '),
   },
   session: {
     password: process.env.SESSION_SECRET,

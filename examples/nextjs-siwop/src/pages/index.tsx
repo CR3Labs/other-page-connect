@@ -24,7 +24,7 @@ export default function Home() {
       console.log("Account:", data);
     }
     if (idToken) {
-      console.log("OpenID:", idToken);
+      console.log("OpenID Token:", idToken);
     }
   }, [data, idToken]);
 
